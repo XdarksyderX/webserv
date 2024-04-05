@@ -33,7 +33,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@$(CXX) $(CXXFLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJ_DIR)/*.o
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@rm -rf $(NAME)
