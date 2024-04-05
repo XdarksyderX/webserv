@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:43:07 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 21:14:41 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/05 23:49:02 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <string>
 # include <vector>
+# include <stack>
 # include <cstring>
 # include <fstream>
 # include <sstream>
@@ -24,188 +25,78 @@
 
 /**
  * @class Parser
- * @brief Class for parsing configuration files and building corresponding configuration objects.
+ * @brief Class responsible for parsing configuration files to construct ServerConfig objects.
  * 
- * The Parser is responsible for opening and reading a configuration file, interpreting its content
- * to construct and return an instance of ServerConfig that reflects the found configurations.
+ * The Parser opens and reads a configuration file, interpreting its content to construct
+ * and return instances of ServerConfig that represent the server configurations found within the file.
  */
 class Parser
 {
     private:
         std::string configFilePath; ///< Path to the configuration file.
-        std::ifstream configFile; ///< File stream to read the configuration file.
-		std::vector<ServerConfig> serverConfigs; ///< Vector of ServerConfig objects.
-        const static char commentChar = '#'; ///< Character used to denote comments in the configuration file.
-        /**
-         * @brief Parse a server block from the configuration file.
-         * 
-         * This function parses a block of configuration specific to a server,
-         * extracting and setting various server-related parameters such as port,
-         * host, server name, root directory, index file, and specific location
-         * configurations.
-         * 
-         * @return ServerConfig The parsed server configuration.
-         */
-        ServerConfig parseServerBlock();
+        std::ifstream configFile;   ///< File stream for reading the configuration.
+        std::vector<ServerConfig> serverConfigs; ///< Vector of ServerConfig objects.
 
-        /**
-         * @brief Parse a location block from the configuration file.
-         * 
-         * This function parses a block of configuration specific to a location (URI path)
-         * within a server, extracting and setting various parameters such as root directory,
-         * allowed methods, index file, autoindex setting, and redirection rules.
-         * 
-         * @param serverConfig Reference to the current server configuration object.
-         * @return LocationConfig The parsed location configuration.
-         */
-        LocationConfig parseLocationBlock(ServerConfig &serverConfig);
+        ServerConfig parseServerBlock(); ///< Parses a server block from the configuration file.
+        void processServerLine(const std::string &line, ServerConfig &serverConfig); ///< Processes a line within a server block.
+        LocationConfig parseLocationBlock(ServerConfig &serverConfig); ///< Parses a location block within a server block.
+        void processLocationLine(const std::string &line, LocationConfig &locationConfig); ///< Processes a line within a location block.
+        static void parseLine(std::string &str); ///< Cleans a line from the configuration file removing comments and whitespace.
 
-        /**
-         * @brief Process and clean a line of configuration.
-         * 
-         * This static function takes a string and processes it by removing comments,
-         * trailing semicolons, and leading/trailing whitespace. It's used to preprocess
-         * each line of the configuration file before parsing.
-         * 
-         * @param str The line of configuration to be processed and cleaned.
-         */
-        static void parseLine(std::string &str);
+        // Methods to process specific ServerConfig directives.
+        void processListenDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processHostDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processServerNameDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processRootDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processIndexDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processErrorPageDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processClientMaxBodySizeDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processLocationDirective(std::istringstream &iss, ServerConfig &serverConfig);
+
+        // Methods to process specific LocationConfig directives.
+        void processLocationRootDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processLocationIndexDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processAllowMethodsDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processAliasDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processAutoindexDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processReturnDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processCgiPathDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processCgiExtDirective(std::istringstream &iss, LocationConfig &locationConfig);
 
     public:
-        /**
-         * @brief Constructor for Parser that takes the path to the configuration file.
-         * @param configFilePath Path to the configuration file to be parsed.
-         */
-        Parser(const std::string& configFilePath);
+        Parser(const std::string& configFilePath); ///< Constructor that takes the path to the configuration file.
+        Parser(const Parser &other); ///< Copy constructor.
+        ~Parser(); ///< Destructor.
 
-        /**
-         * @brief Copy constructor.
-         * @param other Another Parser object from which to copy data.
-         */
-        Parser(const Parser &other);
+        Parser &operator=(const Parser &other); ///< Assignment operator.
 
-        /**
-         * @brief Destructor for Parser.
-         */
-        ~Parser();
+        std::vector<ServerConfig> &parse(); ///< Parses the configuration file and returns a vector of ServerConfig objects.
 
-        /**
-         * @brief Assignment operator.
-         * @param other Another Parser object from which to copy data.
-         * @return Reference to this Parser object.
-         */
-        Parser &operator=(const Parser &other);
-
-        /**
-         * @brief Parses the configuration file and returns a ServerConfig object.
-         * @return A ServerConfig vector object with the parsed server configurations from the file.
-         * @throws FileNotFoundException If the configuration file cannot be opened.
-         * @throws SyntaxErrorException If there is a syntax error in the configuration file.
-         * @throws InvalidDirectiveException If an invalid directive is encountered.
-         * @throws InvalidValueException If an invalid value is found for a configuration.
-         * @throws MissingMandatoryException If a mandatory configuration is missing.
-         * @throws BlockMismatchException If there is a mismatch in the configuration blocks.
-         * @throws ConfigurationException If there is a general error in the configuration.
-         */
-        std::vector<ServerConfig>	&parse();
-
-        /**
-         * @class FileNotFoundException
-         * @brief Exception thrown when the configuration file cannot be found or opened.
-         */
+        // Exception classes for various error scenarios encountered during parsing.
         class FileNotFoundException : public std::exception
         {
             public:
-                /**
-                 * @brief Provides a description of the error.
-                 * @return A character string describing the error.
-                 */
-                virtual const char *what() const throw();
+                virtual const char *what() const throw(); ///< Describes the file not found error.
         };
 
-        /**
-         * @class SyntaxErrorException
-         * @brief Exception thrown when there is a syntax error in the configuration file.
-         */
         class SyntaxErrorException : public std::exception
         {
             public:
-                /**
-                 * @brief Provides a description of the error.
-                 * @return A character string describing the error.
-                 */
-                virtual const char *what() const throw();
+                virtual const char *what() const throw(); ///< Describes the syntax error encountered.
         };
 
-        /**
-         * @class InvalidDirectiveException
-         * @brief Exception thrown when an invalid directive is found in the configuration file.
-         */
         class InvalidDirectiveException : public std::exception
         {
             public:
-                /**
-                 * @brief Provides a description of the error.
-                 * @return A character string describing the error.
-                 */
-                virtual const char *what() const throw();
+                virtual const char *what() const throw(); ///< Describes the invalid directive error.
         };
 
-        /**
-         * @class InvalidValueException
-         * @brief Exception thrown when an invalid value is found for a configuration setting.
-         */
-        class InvalidValueException : public std::exception
-        {
-            public:
-                /**
-                 * @brief Provides a description of the error.
-                 * @return A character string describing the error.
-                 */
-                virtual const char *what() const throw();
-        };
-
-        /**
-         * @class MissingMandatoryException
-         * @brief Exception thrown when a mandatory configuration setting is missing.
-         */
         class MissingMandatoryException : public std::exception
         {
             public:
-                /**
-                 * @brief Provides a description of the error.
-                 * @return A character string describing the error.
-                 */
-                virtual const char *what() const throw();
-        };
-
-        /**
-         * @class BlockMismatchException
-         * @brief Exception thrown when there is a mismatch in the configuration blocks.
-         */
-        class BlockMismatchException : public std::exception
-        {
-            public:
-                /**
-                 * @brief Provides a description of the error.
-                 * @return A character string describing the error.
-                 */
-                virtual const char *what() const throw();
-        };
-
-        /**
-         * @class ConfigurationException
-         * @brief Exception thrown when there is a general error in the configuration.
-         */
-        class ConfigurationException : public std::exception
-        {
-            public:
-                /**
-                 * @brief Provides a description of the error.
-                 * @return A character string describing the error.
-                 */
-                virtual const char *what() const throw();
+                virtual const char *what() const throw(); ///< Describes the missing mandatory setting error.
         };
 };
 
 #endif
+

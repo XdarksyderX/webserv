@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:20:30 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 20:56:30 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/05 22:49:13 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ class LocationConfig
 		bool autoindex; ///< Flag to enable or disable directory listing.
 		std::string returnPath; ///< Path for redirection.
 		std::string alias; ///< Alias for the location.
-		std::map<std::string, std::string> cgiInfo; ///< Mapping of file extensions to CGI interpreter paths.
+		std::vector<std::string> cgiPaths; ///< Path to the CGI interpreter.
+		std::vector<std::string> cgiExtensions; ///< Extension for CGI scripts.
 
 
 	public:
@@ -60,11 +61,13 @@ class LocationConfig
 		void setAutoindex(bool autoindex);
 		void setReturnPath(const std::string& path);
 		void setAlias(const std::string& alias);
-		void setCgiInfo(const std::map<std::string, std::string>& info);
+		std::vector<std::string> getCgiPaths() const;
+		std::vector<std::string> getCgiExtensions() const;
 
 		// Additional methods
 		void addAllowMethod(const std::string& method);
-		void addCgiMapping(const std::string& extension, const std::string& interpreterPath);
+		void addCgiPath(const std::string& interpreterPath);
+		void addCgiExtension(const std::string& extension);
 
 		friend std::ostream& operator<<(std::ostream& os, const LocationConfig& config);
 };

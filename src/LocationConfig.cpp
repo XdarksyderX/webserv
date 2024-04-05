@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 20:56:53 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/05 22:49:20 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ LocationConfig &LocationConfig::operator=(const LocationConfig &other)
         autoindex = other.autoindex;
         returnPath = other.returnPath;
         alias = other.alias;
-        cgiInfo = other.cgiInfo;
     }
     return *this;
 }
@@ -80,9 +79,14 @@ std::string LocationConfig::getAlias() const
     return alias;
 }
 
-std::map<std::string, std::string> LocationConfig::getCgiInfo() const
+std::vector<std::string> LocationConfig::getCgiPaths() const
 {
-    return cgiInfo;
+    return cgiPaths;
+}
+
+std::vector<std::string> LocationConfig::getCgiExtensions() const
+{
+    return cgiExtensions;
 }
 
 void LocationConfig::setRoot(const std::string &r)
@@ -120,20 +124,21 @@ void LocationConfig::setAlias(const std::string &a)
     alias = a;
 }
 
-void LocationConfig::setCgiInfo(const std::map<std::string, std::string> &ci)
+void LocationConfig::addCgiPath(const std::string& interpreterPath)
 {
-    cgiInfo = ci;
+    cgiPaths.push_back(interpreterPath);
 }
 
-void LocationConfig::addCgiMapping(const std::string &extension, const std::string &interpreterPath)
+void LocationConfig::addCgiExtension(const std::string& extension)
 {
-    cgiInfo[extension] = interpreterPath;
+    cgiExtensions.push_back(extension);
+
 }
 
 std::ostream& operator<<(std::ostream& os, const LocationConfig& config)
 {
-    os << "Location Configuration:" << std::endl;
-    os << "Root: " << config.root << std::endl;
-    os << "Index: " << config.index << std::endl;
+    os << "\tLocation Configuration:" << std::endl;
+    os << "\tRoot: " << config.root << std::endl;
+    os << "\tIndex: " << config.index << std::endl;
     return os;
 }

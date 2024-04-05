@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 20:52:28 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/05 22:40:09 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ std::ostream &operator<<(std::ostream &os, const ServerConfig &config)
 
     os << "Locations:" << std::endl;
     for (std::map<std::string, LocationConfig>::const_iterator it = config.locations.begin(); it != config.locations.end(); ++it)
-        os << "  Path: " << it->first << " -> Location Config Pointer: " << it->second << std::endl;
+        os << "\tPath: " << it->first << it->second << std::endl;
 
     return os;
 }

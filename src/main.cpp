@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:41:20 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 20:42:52 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/05 23:43:40 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int main(int argc, char **argv)
 		Parser parser(argv[1]);
 		std::vector<ServerConfig> serverConfigs = parser.parse();
 		for (size_t i = 0; i < serverConfigs.size(); i++)
+		{
 			std::cout << serverConfigs[i] << std::endl;
+			std::cout << "NUMBER OF LOCATIONS: " << serverConfigs[i].getLocations().size() << std::endl;
+		}
+		std::cout << "NUMBER OF SERVERS: " << serverConfigs.size() << std::endl;
 	}
 	catch (const std::exception &e)
 	{
