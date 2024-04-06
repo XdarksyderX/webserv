@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:33:17 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 18:48:59 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/06 11:51:47 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,31 @@
 # include <iostream>
 # include <string>
 
+# include "Time.hpp"
+
 /**
  * @brief Class for logging messages with different severity levels.
  */
 class Logger
 {
 	public:
-		static const unsigned short ERROR = 0; ///< Error level
-		static const unsigned short WARNING = 1; ///< Warning level
-		static const unsigned short INFO = 2; ///< Information level
+		/**
+		 * @brief Enum for different severity levels.
+		 */
+		enum Level
+		{
+        	ERROR,   ///< Error level
+        	WARNING, ///< Warning level
+        	INFO     ///< Information level
+		};
 
 		/**
 		 * @brief Logs a message with a specified severity level.
 		 * @param message Message to log.
 		 * @param level Severity level of the message (default is INFO).
+		 * @param printTime Whether to print the current time before the message (default is false).
 		 */
-		static void log(const std::string &message, unsigned short level = INFO);
+		static void log(const std::string &message, Level level = INFO, bool printTime = false);
 
 	private:
 		Logger();

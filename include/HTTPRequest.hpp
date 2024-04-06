@@ -1,0 +1,94 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HTTPRequest.hpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/06 12:36:18 by migarci2          #+#    #+#             */
+/*   Updated: 2024/04/06 14:55:31 by migarci2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef HTTPREQUEST_HPP
+# define HTTPREQUEST_HPP
+
+# include <string>
+# include <map>
+
+/**
+ * @enum HTTPMethod
+ * @brief Defines the supported HTTP methods for requests.
+ *
+ * This enumeration defines the types of HTTP methods that can be used in HTTP requests.
+ * These methods correspond to the various actions that can be performed on the resources
+ * identified by URIs. The NONE value is used to represent an undefined or unsupported method.
+ */
+enum HTTPMethod
+{
+    GET,    ///< Represents an HTTP GET request, used to retrieve data.
+    POST,   ///< Represents an HTTP POST request, used to submit data to be processed.
+    PUT,    ///< Represents an HTTP PUT request, used to create or update a resource.
+    DELETE, ///< Represents an HTTP DELETE request, used to delete a resource.
+    NONE    ///< Used to represent an undefined or unsupported HTTP method.
+};
+
+/**
+ * @class HTTPRequest
+ * @brief Represents an HTTP request.
+ *
+ * This class encapsulates all components of an HTTP request, including
+ * the method, URI, HTTP version, body, and headers.
+ */
+class HTTPRequest
+{
+	private:
+		HTTPMethod method; ///< HTTP method (GET, POST, PUT, DELETE, NONE).
+        std::string uri; ///< URI of the request.
+        std::string httpVersion; ///< HTTP version.
+        std::string body; ///< Request body.
+        std::map<std::string, std::string> headers; ///< HTTP request headers.
+
+	public:
+		HTTPRequest();
+		HTTPRequest(const HTTPRequest &other);
+		~HTTPRequest();
+		HTTPRequest &operator=(const HTTPRequest &other);
+		HTTPMethod getMethod() const;
+		std::string getUri() const;
+		std::string getHttpVersion() const;
+		std::string getBody() const;
+		std::map<std::string, std::string> getHeaders() const;
+		void setMethod(HTTPMethod method);
+		void setUri(const std::string &uri);
+		void setHttpVersion(const std::string &httpVersion);
+		void setBody(const std::string &body);
+
+		/**
+         * @brief Adds a header to the request.
+         * @param key The header key.
+         * @param value The header value.
+         */
+        void addHeader(const std::string &key, const std::string &value);
+
+        /**
+         * @brief Gets a header from the request.
+         * @param key The header key to retrieve.
+         * @return The header value if found, otherwise an empty string.
+         */
+        std::string getHeader(const std::string &key) const;
+
+        /**
+         * @brief Clears the request content, resetting all fields to their default values.
+         */
+        void clear();
+
+        /**
+         * @brief Converts an HTTP method string to an HTTPMethod enumeration value.
+         * @param method The HTTP method string to convert.
+         * @return The corresponding HTTPMethod value.
+         */
+        static HTTPMethod  getMethodFromString(const std::string &method);
+};
+
+#endif
