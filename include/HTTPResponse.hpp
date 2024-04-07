@@ -6,12 +6,12 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 13:03:47 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 16:04:47 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:27:13 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HTTPRESPONSE_HPP
-# define HTTPRESPONSE_HPP
+#ifndef HTTP_RESPONSE_HPP
+# define HTTP_RESPONSE_HPP
 
 # include <string>
 # include <map>

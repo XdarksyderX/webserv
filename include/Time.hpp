@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 11:14:08 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 11:57:10 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/06 16:28:33 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ class Time
 		 * @return std::string The current time formatted as a string.
 		 */
 		static std::string getCurrentTime();
+		/**
+		 */
+		static std::string getHTTPFormatCurrentTime();
 };
 
 

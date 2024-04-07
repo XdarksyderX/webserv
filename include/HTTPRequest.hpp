@@ -6,12 +6,12 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:36:18 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 14:55:31 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:27:31 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HTTPREQUEST_HPP
-# define HTTPREQUEST_HPP
+#ifndef HTTP_REQUEST_HPP
+# define HTTP_REQUEST_HPP
 
 # include <string>
 # include <map>
