@@ -6,11 +6,12 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:45:31 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 15:30:40 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 20:58:30 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HTTPRequestParser.hpp"
+#include <iostream>
 
 void	HTTPRequestParser::parseRequestLine(HTTPRequest &request, const std::string &requestLine)
 {
@@ -51,14 +52,16 @@ HTTPRequest	HTTPRequestParser::parseRequest(const std::string &rawRequest)
 	parseRequestLine(request, rawRequest.substr(start, end - start));
 	start = end + 2;
 	end = rawRequest.find("\r\n", start);
-	while (end != std::string::npos)
+	while (end != std::string::npos && start < end)
 	{
+		if (start == end)
+			break;
 		parseRequestHeaders(request, rawRequest.substr(start, end - start));
 		start = end + 2;
 		end = rawRequest.find("\r\n", start);
 	}
-	start += 2;
-	request.setBody(rawRequest.substr(start));
+	if (start < rawRequest.size())
+		request.setBody(rawRequest.substr(start + 2));
 	return request;
 }
 

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/07 13:40:40 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 21:28:27 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,42 +46,9 @@ void HTTPServer::initializeServerSocket()
         throw ListenError();
 }
 
-void	HTTPServer::listenForConnections()
+int	HTTPServer::getSocketFD() const
 {
-	std::vector<struct pollfd> FDs;
-	struct sockaddr_in clientAddress;
-	socklen_t clientAddressLength = sizeof(clientAddress);
-	int newSD;
-
-	struct pollfd serverFD;
-	serverFD.fd = socketFD;
-	serverFD.events = POLLIN;
-	FDs.push_back(serverFD);
-	while (true)
-	{
-		if (poll(FDs.data(), FDs.size(), -1) < 0)
-			throw ListenError();
-		checkAndCloseInactiveConnections();
-		for (size_t i = 0; i < FDs.size(); ++i)
-		{
-			if (FDs[i].revents & POLLIN)
-			{
-				if (FDs[i].fd == socketFD)
-				{
-					newSD = accept(socketFD, (struct sockaddr *)&clientAddress, &clientAddressLength);
-					if (newSD < 0)
-						throw AcceptError();
-					FDs.push_back({newSD, POLLIN, 0});
-					connections[newSD] = time(NULL);
-				}
-				else
-				{
-					acceptConnection(FDs[i].fd);
-					connections[FDs[i].fd] = time(NULL);
-				}
-			}
-		}
-	}
+	return socketFD;
 }
 
 HTTPRequest	HTTPServer::receiveRequest(int clientSocketFD)
@@ -91,36 +58,81 @@ HTTPRequest	HTTPServer::receiveRequest(int clientSocketFD)
 	std::string requestString;
 	HTTPRequest request;
 
-	while ((bytesRead = recv(clientSocketFD, buffer, sizeof(buffer), 0)) > 0)
-		requestString.append(buffer, bytesRead);
+	bytesRead = recv(clientSocketFD, buffer, 1024, 0);
+	while (bytesRead > 0 && requestString.find("\r\n\r\n") == std::string::npos)
+	{
+        requestString.append(buffer, bytesRead);
+        if (requestString.find("\r\n\r\n") != std::string::npos)
+			break ;
+        bytesRead = recv(clientSocketFD, buffer, sizeof(buffer), 0);
+    }
+
 	request = HTTPRequestParser::parseRequest(requestString);
+	std::string server = serverConfig.getHost() + ":" + Logger::to_string(serverConfig.getPort());
+	Logger::logRequest(request, clientSocketFD, server, true);
 	return request;
+}
+
+void HTTPServer::sendResponse(const HTTPResponse &response, int clientSocketFD)
+{
+    std::string responseString = HTTPResponseBuilder::buildResponse(response);
+    const char* pData = responseString.c_str();
+    size_t bytesToSend = responseString.length();
+    ssize_t bytesSent;
+
+    while (bytesToSend > 0)
+    {
+        bytesSent = send(clientSocketFD, pData, bytesToSend, 0);
+        bytesToSend -= bytesSent;
+        pData += bytesSent;
+    }
 }
 
 HTTPResponse	HTTPServer::processRequest(const HTTPRequest &request)
 {
-	
+	(void) request;
+	HTTPResponse response;
+	response.setHttpVersion("1.1");
+	response.setStatusCode(200);
+	response.setStatusMessage("OK");
+	response.setBody("Hello, world!");
+	response.addHeader("Content-Type", "text/plain");
+	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
+	return response;
 }
 
-void	HTTPServer::acceptConnection(int clientSocketFD)
+void	HTTPServer::acceptConnection()
 {
-	
+	struct sockaddr_in clientAddress;
+	socklen_t clientAddressLength = sizeof(clientAddress);
+	int clientSocketFD = accept(socketFD, (struct sockaddr *)&clientAddress, &clientAddressLength);
+	if (clientSocketFD < 0)
+		throw AcceptError();
+	HTTPRequest request = receiveRequest(clientSocketFD);
+	HTTPResponse response = processRequest(request);
+	sendResponse(response, clientSocketFD);
+	connections[clientSocketFD] = time(NULL);
+	checkAndCloseInactiveConnections();
 }
 
 void	HTTPServer::checkAndCloseInactiveConnections()
 {
+	static time_t lastTime = time(NULL);
 	time_t currentTime = time(NULL);
+	if (currentTime - lastTime < CONNECTION_TIMEOUT)
+		return ;
 	std::map<int, time_t>::iterator it;
 	for (it = connections.begin(); it != connections.end();)
 	{
 		if (currentTime - it->second > CONNECTION_TIMEOUT)
 		{
 			close(it->first);
-			it = connections.erase(it);
+			connections.erase(it);
 		}
 		else
 			++it;
 	}
+	lastTime = currentTime;
 }
 
 const char	*HTTPServer::SocketError::what() const throw()

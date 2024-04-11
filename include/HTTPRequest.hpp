@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:36:18 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 22:27:31 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:53:28 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ class HTTPRequest
          * @return The corresponding HTTPMethod value.
          */
         static HTTPMethod  getMethodFromString(const std::string &method);
+
+        /**
+         * @brief Converts an HTTPMethod enumeration value to an HTTP method string.
+         * @param method The HTTPMethod value to convert.
+        */
+        static std::string getMethodString(HTTPMethod method);
 };
 
 #endif

@@ -1,6 +1,6 @@
 # Directories for dev
 .vscode/
-./.idea/
+.idea/
 *.DS_Store
 
 # Prerequisites

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 15:56:19 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 21:05:15 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,22 @@ void	HTTPResponseBuilder::buildStatusLine(std::string &buildResponse, const HTTP
 	buildResponse += "\r\n";
 }
 
-void	HTTPResponseBuilder::buildHeaders(std::string &buildResponse, const HTTPResponse &response)
+void HTTPResponseBuilder::buildHeaders(std::string &buildResponse, const HTTPResponse &response)
 {
-	std::map<std::string, std::string>::const_iterator it;
-    for (it = response.getHeaders().begin(); it != response.getHeaders().end(); ++it)
+    const std::map<std::string, std::string> &headers = response.getHeaders();
+
+    for (std::map<std::string, std::string>::const_iterator it = headers.begin(); it != headers.end(); ++it)
 	{
-        buildResponse += it->first;
-        buildResponse += ": ";
-        buildResponse += it->second;
-        buildResponse += "\r\n";
+        if (!it->first.empty() && !it->second.empty())
+		{
+			buildResponse += it->first;
+			buildResponse += ": ";
+			buildResponse += it->second;
+			buildResponse += "\r\n";
+		}
     }
 }
+
 
 std::string HTTPResponseBuilder::buildResponse(const HTTPResponse &response)
 {

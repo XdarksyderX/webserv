@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:15:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 22:26:33 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:53:58 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,18 @@ HTTPMethod  HTTPRequest::getMethodFromString(const std::string &method)
         return DELETE;
     else
         return NONE;
+}
+
+std::string HTTPRequest::getMethodString(HTTPMethod method)
+{
+    if (method == GET)
+        return "GET";
+    else if (method == POST)
+        return "POST";
+    else if (method == PUT)
+        return "PUT";
+    else if (method == DELETE)
+        return "DELETE";
+    else
+        return "";
 }

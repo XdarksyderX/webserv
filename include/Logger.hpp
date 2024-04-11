@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:33:17 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 11:51:47 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 21:19:50 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@
 
 # include <iostream>
 # include <string>
+# include <sstream>
+# include <netinet/in.h>
+# include <arpa/inet.h>
+# include <sys/socket.h>
 
 # include "Time.hpp"
+# include "HTTPRequest.hpp"
 
 /**
  * @brief Class for logging messages with different severity levels.
@@ -46,6 +51,29 @@ class Logger
 		 * @param printTime Whether to print the current time before the message (default is false).
 		 */
 		static void log(const std::string &message, Level level = INFO, bool printTime = false);
+
+		/**
+		 * @brief Converts an integer to a string.
+		 * @param number Integer to convert.
+		 * @return std::string The integer as a string.
+		 */
+		static std::string to_string(int number);
+
+		/**
+		 * @brief Logs an HTTP request.
+		 * @param request The HTTP request to log.
+		 * @param clientSocketFD The file descriptor of the client socket.
+		 * @param port The port number of server
+		 * @param printTime Whether to print the current time before the message (default is false).
+		*/
+		static void	logRequest(const HTTPRequest &request, int clientSocketFD,
+						const std::string &server, bool printTime);
+
+		/**
+		 * @brief Gets the IP address of a client socket.
+		 * @param clientSocketFD The file descriptor of the client socket.
+		 */
+		static std::string	getClientSocketIP(int clientSocketFD);
 
 	private:
 		Logger();

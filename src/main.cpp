@@ -6,12 +6,14 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:41:20 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 12:02:02 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:27:04 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
 #include "Logger.hpp"
+
+#include "ServerManager.hpp"
 
 int main(int argc, char **argv)
 {
@@ -29,6 +31,33 @@ int main(int argc, char **argv)
 	{
 		Parser parser(configFile);
 		serverConfigs = parser.parse();
+	}
+	catch (const std::exception &e)
+	{
+		Logger::log(e.what(), Logger::ERROR);
+		return 1;
+	}
+
+	ServerManager serverManager;
+	for (size_t i = 0; i < serverConfigs.size(); i++)
+	{
+		try
+		{
+			serverManager.addServer(new HTTPServer(serverConfigs[i]));
+			Logger::log("Server started on "
+							+ serverConfigs[i].getHost()
+							+ ":"
+							+ Logger::to_string(static_cast<int>(serverConfigs[i].getPort())),
+						Logger::INFO);
+		}
+		catch (const std::exception &e)
+		{
+			Logger::log(e.what(), Logger::ERROR);
+			return 1;
+		}
+	}
+	try {
+		serverManager.startServers();
 	}
 	catch (const std::exception &e)
 	{

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:36:56 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/07 13:44:25 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:39:41 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <arpa/inet.h>
 # include <sys/socket.h>
 # include <netinet/in.h>
-# include <poll.h>
 # include <exception>
 # include <cstring>
 # include <map>
@@ -26,6 +25,7 @@
 
 # include "HTTPRequestParser.hpp"
 # include "HTTPResponseBuilder.hpp"
+# include "Logger.hpp"
 # include "ServerConfig.hpp"
 
 /**
@@ -39,7 +39,7 @@
 class HTTPServer
 {
 	private:
-		static const time_t CONNECTION_TIMEOUT; ///< Timeout for closing inactive connections.
+		static const time_t CONNECTION_TIMEOUT = 10; ///< Timeout for closing inactive connections.
 		int socketFD; ///< File descriptor for the server's listening socket.
 		ServerConfig &serverConfig; ///< Configuration settings for the server.
 		std::map<int, time_t> connections; ///< Active connections with their last activity time.
@@ -50,20 +50,9 @@ class HTTPServer
 		void	initializeServerSocket();
 
 		/**
-		 * @brief Listens for and manages incoming connections using non-blocking I/O.
-		 */
-		void	listenForConnections();
-
-		/**
 		 * @brief Checks and closes inactive connections that have exceeded the timeout.
 		 */
 		void	checkAndCloseInactiveConnections();
-
-		/**
-		 * @brief Accepts a new connection from a client.
-		 * @param clientSocketFD The file descriptor for the client's socket.
-		 */
-		void	acceptConnection(int clientSocketFD);
 
 		/**
 		 * @brief Receives and parses an HTTP request from the client.
@@ -83,7 +72,7 @@ class HTTPServer
 		 * @brief Sends an HTTP response to the client.
 		 * @param response An HTTPResponse object representing the server's response to send.
 		 */
-		void sendResponse(const HTTPResponse &response);
+		void sendResponse(const HTTPResponse &response, int clientSocketFD);
 
 	public:
 		/**
@@ -98,9 +87,15 @@ class HTTPServer
 		~HTTPServer();
 
 		/**
-		 * @brief Runs the server, entering the main loop to listen for and process connections.
+		 * @brief Gets the file descriptor for the server's listening socket.
+		 * @return The file descriptor for the server's socket.
 		 */
-		void run();
+		int getSocketFD() const;
+
+		/**
+		 * @brief Accepts a new connection from a client.
+		 */
+		void	acceptConnection();
 
 		/**
 		 * @class SocketError
