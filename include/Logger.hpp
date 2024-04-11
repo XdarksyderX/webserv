@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:33:17 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 22:56:13 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 23:40:59 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ class Logger
 		 * @param level Severity level of the message (default is INFO).
 		 * @param printTime Whether to print the current time before the message (default is false).
 		 */
-		static void log(const std::string &message, Level level = INFO, bool printTime = false);
+		static void log(const std::string &message, Level level = INFO, bool printTime = false, bool printEndline = true);
 
 		/**
 		 * @brief Prints webserv header.
@@ -81,8 +81,14 @@ class Logger
 		 */
 		static std::string	getClientSocketIP(int clientSocketFD);
 
+		/**
+		 * @brief Switch verbose mode
+		 */
+		static void	switchPrint();
+
 	private:
 		Logger();
+		static bool printEnabled;
 };
 
 #endif

@@ -6,14 +6,39 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:41:20 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 22:57:51 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 23:46:55 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <csignal>
 
 #include "Parser.hpp"
 #include "Logger.hpp"
 
 #include "ServerManager.hpp"
+
+ServerManager serverManager;
+
+void	signalHandler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		std::cout << "\033[?1049h\033[H";
+
+		std::string input;
+		Logger::log("Are you sure you want to stop the servers? (y/N): ", Logger::WARNING, false, false);
+		std::getline(std::cin, input);
+		std::cout << "\033[?1049l";
+		if (input.empty() || (input[0] != 'y' && input[0] != 'Y'))
+		{
+            Logger::log("Servers will continue running...", Logger::INFO, false);
+            return;
+        }
+		std::cout << std::endl;
+		Logger::log("Stopping servers...", Logger::INFO);
+		serverManager.stopServers();
+	}
+}
 
 int main(int argc, char **argv)
 {
@@ -26,6 +51,8 @@ int main(int argc, char **argv)
 		Logger::log("Usage: ./webserv [config_file]", Logger::ERROR);
 		return 1;
 	}
+
+	signal(SIGINT, signalHandler);
 
 	std::vector<ServerConfig> serverConfigs;
 	try
@@ -40,7 +67,6 @@ int main(int argc, char **argv)
 	}
 
 	int serverCount = 0;
-	ServerManager serverManager;
 	for (size_t i = 0; i < serverConfigs.size(); i++)
 	{
 		try

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:21:28 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 22:22:00 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 23:33:08 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 ServerManager::ServerManager()
 {
-	
+	running = false;
 }
 
 ServerManager::ServerManager(const std::vector<HTTPServer *> &servers)
 	: servers(servers)
 {
+	running = false;
 	updatePollFDs();
 }
 
@@ -34,6 +35,7 @@ ServerManager &ServerManager::operator=(const ServerManager &other)
 	if (this != &other)
 	{
 		servers = other.servers;
+		running = false;
 		updatePollFDs();
 	}
 	return *this;
@@ -64,9 +66,10 @@ std::vector<HTTPServer *> ServerManager::getServers() const
 
 void ServerManager::startServers()
 {
-	while (true)
+	running = true;
+	while (running)
 	{
-		if (poll(pollFDs.data(), pollFDs.size(), -1) < 0)
+		if (poll(pollFDs.data(), pollFDs.size(), -1) < 0 && errno != EINTR)
 			throw PollError();
 		for (size_t i = 0; i < pollFDs.size(); i++)
 		{
@@ -81,6 +84,11 @@ void ServerManager::startServers()
 			}
 		}
 	}
+}
+
+void	ServerManager::stopServers()
+{
+	running = false;
 }
 
 const char	*ServerManager::PollError::what() const throw()
