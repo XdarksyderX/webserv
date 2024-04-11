@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 21:28:27 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 21:55:05 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,24 +115,24 @@ void	HTTPServer::acceptConnection()
 	checkAndCloseInactiveConnections();
 }
 
-void	HTTPServer::checkAndCloseInactiveConnections()
+void HTTPServer::checkAndCloseInactiveConnections()
 {
-	static time_t lastTime = time(NULL);
-	time_t currentTime = time(NULL);
-	if (currentTime - lastTime < CONNECTION_TIMEOUT)
-		return ;
-	std::map<int, time_t>::iterator it;
-	for (it = connections.begin(); it != connections.end();)
+    static time_t lastTime = time(NULL);
+    time_t currentTime = time(NULL);
+
+    if (currentTime - lastTime < CONNECTION_TIMEOUT)
+        return;
+    std::map<int, time_t>::iterator it = connections.begin();
+    while (it != connections.end())
 	{
-		if (currentTime - it->second > CONNECTION_TIMEOUT)
+        std::map<int, time_t>::iterator current_it = it++;
+        if (currentTime - current_it->second > CONNECTION_TIMEOUT)
 		{
-			close(it->first);
-			connections.erase(it);
-		}
-		else
-			++it;
-	}
-	lastTime = currentTime;
+            close(current_it->first);
+            connections.erase(current_it);
+        }
+    }
+    lastTime = currentTime;
 }
 
 const char	*HTTPServer::SocketError::what() const throw()
