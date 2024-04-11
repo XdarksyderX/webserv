@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:05:43 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 18:25:36 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:17:00 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ class ServerManager
 		 */
 		void startServers();
 
+		std::vector<HTTPServer *> getServers() const;
+
+		/**
+		 * @class PollError
+		 * @brief Exception thrown when an error occurs during polling.
+		 */
 		class PollError : public std::exception
 		{
 			const char	*what() const throw();

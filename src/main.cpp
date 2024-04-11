@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:41:20 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 18:27:04 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:57:51 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 int main(int argc, char **argv)
 {
+	Logger::logHeader();
 	std::string configFile = "config/webserv.conf";
 	if (argc == 2)
 		configFile = argv[1];
@@ -38,17 +39,22 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
+	int serverCount = 0;
 	ServerManager serverManager;
 	for (size_t i = 0; i < serverConfigs.size(); i++)
 	{
 		try
 		{
 			serverManager.addServer(new HTTPServer(serverConfigs[i]));
-			Logger::log("Server started on "
-							+ serverConfigs[i].getHost()
-							+ ":"
-							+ Logger::to_string(static_cast<int>(serverConfigs[i].getPort())),
-						Logger::INFO);
+			std::string serverName = (serverConfigs[i].getServerName() == "default") ? "" : serverConfigs[i].getServerName() + " ";
+			Logger::log("Server " + serverName
+						+ "started on "
+						+ serverConfigs[i].getHost()
+						+ ":"
+						+ Logger::to_string(static_cast<int>(serverConfigs[i].getPort()))
+						+ "",
+					Logger::INFO);
+			serverCount++;
 		}
 		catch (const std::exception &e)
 		{
@@ -64,6 +70,9 @@ int main(int argc, char **argv)
 		Logger::log(e.what(), Logger::ERROR);
 		return 1;
 	}
+
+	for (size_t i = 0; i < serverManager.getServers().size(); i++)
+		delete serverManager.getServers()[i];
 
 	return 0;
 }

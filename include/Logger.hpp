@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:33:17 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 21:19:50 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:56:13 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 # include "Time.hpp"
 # include "HTTPRequest.hpp"
+# include "HTTPResponse.hpp"
 
 /**
  * @brief Class for logging messages with different severity levels.
@@ -53,6 +54,11 @@ class Logger
 		static void log(const std::string &message, Level level = INFO, bool printTime = false);
 
 		/**
+		 * @brief Prints webserv header.
+		 */
+		static void	logHeader();
+
+		/**
 		 * @brief Converts an integer to a string.
 		 * @param number Integer to convert.
 		 * @return std::string The integer as a string.
@@ -66,8 +72,8 @@ class Logger
 		 * @param port The port number of server
 		 * @param printTime Whether to print the current time before the message (default is false).
 		*/
-		static void	logRequest(const HTTPRequest &request, int clientSocketFD,
-						const std::string &server, bool printTime);
+		static void	logRequest(const HTTPRequest &request, const HTTPResponse &response, int clientSocketFD,
+					const std::string &server, bool printTime);
 
 		/**
 		 * @brief Gets the IP address of a client socket.

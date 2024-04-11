@@ -6,13 +6,16 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:21:28 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 19:30:24 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:22:00 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ServerManager.hpp"
 
-ServerManager::ServerManager() {}
+ServerManager::ServerManager()
+{
+	
+}
 
 ServerManager::ServerManager(const std::vector<HTTPServer *> &servers)
 	: servers(servers)
@@ -52,6 +55,11 @@ void ServerManager::addServer(HTTPServer *server)
 {
 	servers.push_back(server);
 	updatePollFDs();
+}
+
+std::vector<HTTPServer *> ServerManager::getServers() const
+{
+	return servers;
 }
 
 void ServerManager::startServers()

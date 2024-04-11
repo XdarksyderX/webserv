@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 21:55:05 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:46:35 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ HTTPServer::HTTPServer(ServerConfig &serverConfig) : serverConfig(serverConfig)
 
 HTTPServer::~HTTPServer()
 {
+	std::map<int, time_t>::iterator it = connections.begin();
+	while (it != connections.end())
+	{
+        std::map<int, time_t>::iterator current_it = it++;
+		close(current_it->first);
+		connections.erase(current_it);
+    }	
 	close(socketFD);
 }
 
@@ -68,8 +75,6 @@ HTTPRequest	HTTPServer::receiveRequest(int clientSocketFD)
     }
 
 	request = HTTPRequestParser::parseRequest(requestString);
-	std::string server = serverConfig.getHost() + ":" + Logger::to_string(serverConfig.getPort());
-	Logger::logRequest(request, clientSocketFD, server, true);
 	return request;
 }
 
@@ -108,9 +113,16 @@ void	HTTPServer::acceptConnection()
 	int clientSocketFD = accept(socketFD, (struct sockaddr *)&clientAddress, &clientAddressLength);
 	if (clientSocketFD < 0)
 		throw AcceptError();
+
 	HTTPRequest request = receiveRequest(clientSocketFD);
 	HTTPResponse response = processRequest(request);
+
+	std::string server = serverConfig.getHost()
+					+ ":"
+					+ Logger::to_string(serverConfig.getPort());
+
 	sendResponse(response, clientSocketFD);
+	Logger::logRequest(request, response, clientSocketFD, server, true);
 	connections[clientSocketFD] = time(NULL);
 	checkAndCloseInactiveConnections();
 }
