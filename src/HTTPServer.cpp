@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/15 20:54:04 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:59:49 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,18 +132,14 @@ void HTTPServer::checkAndCloseInactiveConnections()
 {
     static struct timeval lastTime;
     if (lastTime.tv_sec == 0 && lastTime.tv_usec == 0)
-        gettimeofday(&lastTime, NULL); // Initialize lastTime on first call
+        gettimeofday(&lastTime, NULL);
 
     struct timeval currentTime;
     gettimeofday(&currentTime, NULL);
-
-    // Calculate elapsed time in microseconds
     long elapsedTime = (currentTime.tv_sec - lastTime.tv_sec) * 1000000L 
                         + (currentTime.tv_usec - lastTime.tv_usec);
-
     if (elapsedTime < CONNECTION_TIMEOUT)
         return;
-
     for (std::map<int, struct timeval>::iterator it = connections.begin(); it != connections.end();)
     {
         std::map<int, struct timeval>::iterator current_it = it++;
