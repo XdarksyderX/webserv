@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 22:46:35 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:54:04 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ HTTPServer::HTTPServer(ServerConfig &serverConfig) : serverConfig(serverConfig)
 
 HTTPServer::~HTTPServer()
 {
-	std::map<int, time_t>::iterator it = connections.begin();
+	std::map<int, struct timeval>::iterator it = connections.begin();
 	while (it != connections.end())
 	{
-        std::map<int, time_t>::iterator current_it = it++;
+        std::map<int, struct timeval>::iterator current_it = it++;
 		close(current_it->first);
 		connections.erase(current_it);
     }	
@@ -120,32 +120,44 @@ void	HTTPServer::acceptConnection()
 	std::string server = serverConfig.getHost()
 					+ ":"
 					+ Logger::to_string(serverConfig.getPort());
-
 	sendResponse(response, clientSocketFD);
 	Logger::logRequest(request, response, clientSocketFD, server, true);
-	connections[clientSocketFD] = time(NULL);
+	struct timeval currentTime;
+	gettimeofday(&currentTime, NULL);
+	connections[clientSocketFD] = currentTime;
 	checkAndCloseInactiveConnections();
 }
 
 void HTTPServer::checkAndCloseInactiveConnections()
 {
-    static time_t lastTime = time(NULL);
-    time_t currentTime = time(NULL);
+    static struct timeval lastTime;
+    if (lastTime.tv_sec == 0 && lastTime.tv_usec == 0)
+        gettimeofday(&lastTime, NULL); // Initialize lastTime on first call
 
-    if (currentTime - lastTime < CONNECTION_TIMEOUT)
+    struct timeval currentTime;
+    gettimeofday(&currentTime, NULL);
+
+    // Calculate elapsed time in microseconds
+    long elapsedTime = (currentTime.tv_sec - lastTime.tv_sec) * 1000000L 
+                        + (currentTime.tv_usec - lastTime.tv_usec);
+
+    if (elapsedTime < CONNECTION_TIMEOUT)
         return;
-    std::map<int, time_t>::iterator it = connections.begin();
-    while (it != connections.end())
-	{
-        std::map<int, time_t>::iterator current_it = it++;
-        if (currentTime - current_it->second > CONNECTION_TIMEOUT)
-		{
+
+    for (std::map<int, struct timeval>::iterator it = connections.begin(); it != connections.end();)
+    {
+        std::map<int, struct timeval>::iterator current_it = it++;
+        long connectionAge = (currentTime.tv_sec - current_it->second.tv_sec) * 1000000L
+                            + (currentTime.tv_usec - current_it->second.tv_usec);
+        if (connectionAge > CONNECTION_TIMEOUT)
+        {
             close(current_it->first);
             connections.erase(current_it);
         }
     }
     lastTime = currentTime;
 }
+
 
 const char	*HTTPServer::SocketError::what() const throw()
 {

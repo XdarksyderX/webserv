@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:36:56 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 17:39:41 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:40:09 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <exception>
 # include <cstring>
 # include <map>
-# include <ctime>
+# include <sys/time.h>
 
 # include "HTTPRequestParser.hpp"
 # include "HTTPResponseBuilder.hpp"
@@ -39,10 +39,10 @@
 class HTTPServer
 {
 	private:
-		static const time_t CONNECTION_TIMEOUT = 10; ///< Timeout for closing inactive connections.
+		static const time_t CONNECTION_TIMEOUT = 1; ///< Timeout for closing inactive connections.
 		int socketFD; ///< File descriptor for the server's listening socket.
 		ServerConfig &serverConfig; ///< Configuration settings for the server.
-		std::map<int, time_t> connections; ///< Active connections with their last activity time.
+		std::map<int, struct timeval> connections; ///< Active connections with their last activity time.
 
 		/**
 		 * @brief Initializes the server socket based on the server configuration.

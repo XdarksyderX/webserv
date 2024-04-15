@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:39:37 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 23:43:41 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:53:36 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void Logger::log(const std::string &message, Level level, bool printTime, bool p
 void Logger::logRequest(const HTTPRequest &request, const HTTPResponse &response, int clientSocketFD,
 		const std::string &server, bool printTime)
 {
-	if (!printEnabled)
+	if (printEnabled)
 	{
 		std::string ip = getClientSocketIP(clientSocketFD);
 		std::string message = std::string("[") + server + "] "
