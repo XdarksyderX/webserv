@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/15 20:59:49 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:36:20 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ HTTPRequest	HTTPServer::receiveRequest(int clientSocketFD)
 
 void HTTPServer::sendResponse(const HTTPResponse &response, int clientSocketFD)
 {
-    std::string responseString = HTTPResponseBuilder::buildResponse(response);
+    std::string responseString = HTTPResponseBuilder::assembleResponse(response);
     const char* pData = responseString.c_str();
     size_t bytesToSend = responseString.length();
     ssize_t bytesSent;
@@ -95,15 +95,8 @@ void HTTPServer::sendResponse(const HTTPResponse &response, int clientSocketFD)
 
 HTTPResponse	HTTPServer::processRequest(const HTTPRequest &request)
 {
-	(void) request;
-	HTTPResponse response;
-	response.setHttpVersion("1.1");
-	response.setStatusCode(200);
-	response.setStatusMessage("OK");
-	response.setBody("Hello, world!");
-	response.addHeader("Content-Type", "text/plain");
-	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
-	return response;
+	HTTPResponseBuilder responseBuilder(serverConfig, request);
+	return responseBuilder.buildResponse();
 }
 
 void	HTTPServer::acceptConnection()
@@ -115,6 +108,11 @@ void	HTTPServer::acceptConnection()
 		throw AcceptError();
 
 	HTTPRequest request = receiveRequest(clientSocketFD);
+    if (!request.getHeader("Host").empty() && request.getHeader("Host") != serverConfig.getHost() + ":" + Logger::to_string(serverConfig.getPort()))
+    {
+        close(clientSocketFD);
+        return;
+    }
 	HTTPResponse response = processRequest(request);
 
 	std::string server = serverConfig.getHost()

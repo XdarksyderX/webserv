@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 13:03:47 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/06 22:27:13 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:07:51 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ class HTTPResponse
         std::map<std::string, std::string> headers; ///< HTTP response headers.
 
     public:
+
         HTTPResponse();
         HTTPResponse(const HTTPResponse &other);
         ~HTTPResponse();
