@@ -10,7 +10,7 @@
 ---
 
 <p align="center">
-	<a href="#project-overview">About</a> •
+	<a href="webserv">About</a> •
 	<a href="#how-to-use">How to use</a> •
 	<a href="#features">Features</a> •
 	<a href="#mandatory">Mandatory</a> •
@@ -22,13 +22,10 @@
 
 This project is about writing your ow HTTP server. You will be able to test it with an actual browser. HTTP is one of the most used protocols on the internet. Knowing its arcane will be useful, even if you won’t be working on a website.
 
-## Project Overview
-
-The objective of this project is to create a fully functional HTTP web server.
+<!-- aqui va una img del proyecto funcionando -->
 
 >[Click](./docs/en.subject.pdf) to view the project `subject`.
 >
->[Click](https://m4nnb3ll.medium.com/webserv-building-a-non-blocking-web-server-in-c-98-a-42-project-04c7365e4ec7) to view a project guide.
 
 ## How to Use
 ### Compile
