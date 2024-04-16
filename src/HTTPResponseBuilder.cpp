@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 19:37:49 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:41:55 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,21 @@ HTTPResponseBuilder::HTTPResponseBuilder(const ServerConfig &sC, const HTTPReque
 	
 }
 
-const LocationConfig *HTTPResponseBuilder::findMatchingLocation()
+std::string HTTPResponseBuilder::findMatchingLocation()
 {
     std::string bestMatchKey = "";
-    const LocationConfig *bestMatch = NULL;
 
     const std::map<std::string, LocationConfig>& locations = serverConfig.getLocations();
     if (locations.empty())
         return NULL;
-    std::map<std::string, LocationConfig>::const_iterator it;
+    std::map<std::string, LocationConfig>::const_iterator it = locations.find("/");
     for (it = locations.begin(); it != locations.end(); ++it)
 	{
         if (request.getUri().find(it->first) == 0 && it->first.length() > bestMatchKey.length())
-		{
             bestMatchKey = it->first;
-            bestMatch = &(it->second);
-        }
     }
-    return bestMatch;
+
+    return bestMatchKey;
 }
 
 std::string		HTTPResponseBuilder::simpleErrorPage(int errorCode)
@@ -117,33 +114,63 @@ HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
 	return response;
 }
 
-HTTPResponse HTTPResponseBuilder::handleDefaultRequest() {
-    HTTPResponse response;
-    if (request.getMethod() != GET)
-        return handleErrorPage(405);
-
-    std::string filePath = Utils::joinPaths(serverConfig.getRoot(), request.getUri());
-    if (Utils::directoryExists(filePath))
-        filePath = Utils::joinPaths(filePath, serverConfig.getIndex());
-
-    if (!Utils::fileExists(filePath))
-        return handleErrorPage(404);
-
-    response.setStatusCode(200);
-    response.setStatusMessage("OK");
-    response.setBody(Utils::getFileContent(filePath));
-    response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(filePath)));
-    response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));  // Use std::to_string for standard C++
-    response.addHeader("Date", Time::getHTTPFormatCurrentTime());
-    response.addHeader("Server", "webserv");
-    return response;
+HTTPResponse	HTTPResponseBuilder::handleGetRequest(const LocationConfig *location)
+{
+	HTTPResponse response;
+	std::string root = serverConfig.getRoot();
+	std::string resource = Utils::joinPaths(root, request.getUri());
+	std::string directory;
+	if (Utils::directoryExists(resource))
+	{
+		directory = resource;
+		resource = Utils::joinPaths(resource, location->getIndex());
+	}
+	resource = Utils::preventFileTraversal(resource);
+	if (!Utils::fileExists(resource))
+	{
+		if (location->getAutoindex() && !directory.empty())
+		{
+			response.setBody(Utils::createHTMLDirectoryListing(directory));
+			response.addHeader("Content-Type", "text/html");
+		}
+		else
+			return handleErrorPage(404);
+	}
+	else
+	{
+		response.setBody(Utils::getFileContent(resource));
+		response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
+	}
+	response.setStatusCode(200);
+	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
+	response.addHeader("Date", Time::getHTTPFormatCurrentTime());
+	response.addHeader("Server", "webserv");
+	return response;
 }
-
 
 HTTPResponse	HTTPResponseBuilder::buildResponse()
 {
-	const LocationConfig *location = findMatchingLocation();
-	if (location)
-		(void) location;//return handleLocationRequest(*location);
-	return handleDefaultRequest();
+	LocationConfig location;
+	std::string locationName = findMatchingLocation();
+	if (locationName.empty())
+	{
+		const std::map<std::string, LocationConfig>& locations = serverConfig.getLocations();
+		std::map<std::string, LocationConfig>::const_iterator it = locations.find("/");
+		std::map<std::string, LocationConfig>::const_iterator itEnd = locations.end();
+		if (it == itEnd)
+			return handleErrorPage(404);
+		else
+			location = it->second;
+    }
+	else
+	{
+		location = serverConfig.getLocations().at(locationName);
+	}
+
+	if (!Utils::hasElement(location.getAllowMethods(), request.getMethod()))
+		return handleErrorPage(405);
+
+	if (request.getMethod() == GET)
+		return handleGetRequest(&location);
+	return handleErrorPage(405);
 }

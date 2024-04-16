@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:35:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 00:03:21 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:34:20 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ class HTTPResponseBuilder
 		 */
 		static void	assembleHeaders(std::string &assembleResponse, const HTTPResponse &response);
 
-		const LocationConfig	*findMatchingLocation();
+		std::string findMatchingLocation();
 
 		static std::map<std::string, std::string>	createMIMEMap();
 		static std::map<int, std::string> 			createStatusCodesMap();
+
+		HTTPResponse	handleGetRequest(const LocationConfig *location);
 		
-		HTTPResponse	handleLocationRequest(const LocationConfig &locationConfig);
-		HTTPResponse	handleDefaultRequest();
 		HTTPResponse	handleErrorPage(int errorCode);
 		std::string		simpleErrorPage(int errorCode);
 
@@ -77,6 +77,8 @@ class HTTPResponseBuilder
 		 * @return An HTTPResponse object representing the response to the request.
 		 */
 		HTTPResponse	buildResponse();
+
+		
 };
 
 #endif

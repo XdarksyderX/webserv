@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 22:49:20 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:59:25 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 LocationConfig::LocationConfig()
 {
     autoindex = true;
-	allowMethods.push_back("GET");
+	allowMethods.push_back(GET);
 	index = "index.html";
 	root = "";
 }
@@ -23,7 +23,7 @@ LocationConfig::LocationConfig()
 LocationConfig::LocationConfig(std::string serverRoot)
 {
 	autoindex = true;
-	allowMethods.push_back("GET");
+	allowMethods.push_back(GET);
 	index = "index.html";
 	root = serverRoot;
 }
@@ -54,7 +54,7 @@ std::string LocationConfig::getRoot() const
     return root;
 }
 
-std::vector<std::string> LocationConfig::getAllowMethods() const
+std::vector<HTTPMethod> LocationConfig::getAllowMethods() const
 {
     return allowMethods;
 }
@@ -94,12 +94,12 @@ void LocationConfig::setRoot(const std::string &r)
     root = r;
 }
 
-void LocationConfig::setAllowMethods(const std::vector<std::string> &methods)
+void LocationConfig::setAllowMethods(const std::vector<HTTPMethod> &methods)
 {
     allowMethods = methods;
 }
 
-void LocationConfig::addAllowMethod(const std::string &method)
+void LocationConfig::addAllowMethod(HTTPMethod method)
 {
     allowMethods.push_back(method);
 }
@@ -133,6 +133,16 @@ void LocationConfig::addCgiExtension(const std::string& extension)
 {
     cgiExtensions.push_back(extension);
 
+}
+
+LocationConfig	LocationConfig::createDefaultLocation(const ServerConfig &serverConfig)
+{
+    LocationConfig location(serverConfig.getRoot());
+    location.setIndex(serverConfig.getIndex());
+    std::vector<HTTPMethod> methods;
+    methods.push_back(GET);
+    location.setAllowMethods(methods);
+    return location;
 }
 
 std::ostream& operator<<(std::ostream& os, const LocationConfig& config)

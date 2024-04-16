@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:18:42 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 20:38:12 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/16 20:22:51 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <map>
 
 # include "LocationConfig.hpp"
+
+class LocationConfig;
 
 /**
  * @brief ServerConfig class holds the configuration for a single server.

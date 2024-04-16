@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:20:30 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 22:49:13 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:47:33 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <map>
 # include <vector>
 
+# include "ServerConfig.hpp"
+# include "HTTPRequest.hpp"
+
+
+class ServerConfig;
+
 /**
  * @brief LocationConfig class holds the configuration specific to a location (URI path) within a server.
  * 
@@ -28,7 +34,7 @@ class LocationConfig
 {
 	private:
 		std::string root; ///< The root directory for this location.
-		std::vector<std::string> allowMethods; ///< Allowed HTTP methods for this location.
+		std::vector<HTTPMethod> allowMethods; ///< Allowed HTTP methods for this location.
 		std::string index; ///< Default index file for this location.
 		bool autoindex; ///< Flag to enable or disable directory listing.
 		std::string returnPath; ///< Path for redirection.
@@ -47,7 +53,7 @@ class LocationConfig
 
 		// Getters
 		std::string getRoot() const;
-		std::vector<std::string> getAllowMethods() const;
+		std::vector<HTTPMethod> getAllowMethods() const;
 		std::string getIndex() const;
 		bool getAutoindex() const;
 		std::string getReturnPath() const;
@@ -56,7 +62,7 @@ class LocationConfig
 
 		// Setters
 		void setRoot(const std::string& root);
-		void setAllowMethods(const std::vector<std::string>& methods);
+		void setAllowMethods(const std::vector<HTTPMethod>& methods);
 		void setIndex(const std::string& index);
 		void setAutoindex(bool autoindex);
 		void setReturnPath(const std::string& path);
@@ -65,9 +71,15 @@ class LocationConfig
 		std::vector<std::string> getCgiExtensions() const;
 
 		// Additional methods
-		void addAllowMethod(const std::string& method);
+		void addAllowMethod(HTTPMethod method);
 		void addCgiPath(const std::string& interpreterPath);
 		void addCgiExtension(const std::string& extension);
+
+		/**
+		 * @brief Creates a default LocationConfig object with default values for /.
+		 * @return A LocationConfig object with default values.
+		 */
+		static LocationConfig	createDefaultLocation(const ServerConfig &serverConfig);
 
 		friend std::ostream& operator<<(std::ostream& os, const LocationConfig& config);
 };

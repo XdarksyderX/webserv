@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 19:38:05 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:52:40 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,52 @@ bool	Utils::directoryExists(const std::string &path)
 	return info.st_mode & S_IFDIR;
 }
 
+std::string		Utils::getNodeName(const std::string &path)
+{
+	size_t pos = path.find_last_of('/');
+	if (pos == std::string::npos)
+		return path;
+	return path.substr(pos + 1);
+}
+
+
+std::string		Utils::createHTMLDirectoryListing(const std::string &directory)
+{
+	std::string html;
+	html += "<!DOCTYPE html>\n<html>\n<head>\n<title>Index of ";
+	html += directory;
+	html += "</title>\n</head>\n<body>\n<h1>Index of ";
+	html += directory;
+	html += "</h1>\n<ul>\n";
+	DIR *dir = opendir(directory.c_str());
+	if (dir == NULL)
+		return "";
+	std::string dirName = Utils::getNodeName(directory);
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != NULL)
+	{
+		html += "<li><a href=\"";
+		html += dirName + "/" + entry->d_name;
+		html += "\">";
+		html += entry->d_name;
+		html += "</a></li>\n";
+	}
+	html += "</ul>\n</body>\n</html>\n";
+	closedir(dir);
+	return html;
+}
+
+std::string Utils::preventFileTraversal(const std::string &path)
+{
+	std::string result = path;
+	size_t pos = result.find("..");
+	while (pos != std::string::npos)
+	{
+		size_t slashPos = result.rfind('/', pos);
+		if (slashPos == std::string::npos)
+			return "";
+		result.erase(slashPos, pos + 2 - slashPos);
+		pos = result.find("..");
+	}
+	return result;
+}

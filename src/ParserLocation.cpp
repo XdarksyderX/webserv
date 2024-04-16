@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:28:14 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 23:45:32 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:48:59 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,19 @@ void Parser::processLocationIndexDirective(std::istringstream &iss, LocationConf
 void Parser::processAllowMethodsDirective(std::istringstream &iss, LocationConfig &locationConfig)
 {
     std::string method;
-    std::vector<std::string> methods;
+    std::vector<HTTPMethod> methods;
     while (iss >> method)
     {
-        methods.push_back(method);
+        if (method == "GET")
+            methods.push_back(GET);
+        else if (method == "POST")
+            methods.push_back(POST);
+        else if (method == "DELETE")
+            methods.push_back(DELETE);
+        else if (method == "PUT")
+            methods.push_back(PUT);
+        else
+            throw Parser::InvalidDirectiveException();
     }
     if (methods.empty())
         throw Parser::InvalidDirectiveException();

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:27:44 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 23:45:43 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:01:47 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ ServerConfig Parser::parseServerBlock()
 	}
 	if (!bracesStack.empty())
 		throw Parser::SyntaxErrorException();
+	std::map<std::string, LocationConfig>::const_iterator it = serverConfig.getLocations().find("/");
+	std::map<std::string, LocationConfig>::const_iterator itEnd = serverConfig.getLocations().end();
+	if (it == itEnd)
+	{
+		LocationConfig defaultLocation = LocationConfig::createDefaultLocation(serverConfig);
+		serverConfig.addLocation("/", defaultLocation);
+	}
 	return serverConfig;
 }
 
