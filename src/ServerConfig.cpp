@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 22:40:09 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:06:13 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ ServerConfig &ServerConfig::operator=(const ServerConfig &other)
         errorPages = other.errorPages;
         clientMaxBodySize = other.clientMaxBodySize;
         locations = other.locations;
+        uploadsDirectory = other.uploadsDirectory;
     }
     return *this;
 }
@@ -83,6 +84,11 @@ size_t ServerConfig::getClientMaxBodySize() const
 std::map<std::string, LocationConfig> ServerConfig::getLocations() const
 {
     return locations;
+}
+
+std::string ServerConfig::getUploadsDirectory() const
+{
+    return uploadsDirectory;
 }
 
 void ServerConfig::setPort(unsigned short p)
@@ -133,6 +139,11 @@ void ServerConfig::addErrorPage(int errorCode, const std::string &path)
 void ServerConfig::addLocation(const std::string &path, const LocationConfig &config)
 {
     locations[path] = config;
+}
+
+void ServerConfig::setUploadsDirectory(const std::string &uD)
+{
+    uploadsDirectory = uD;
 }
 
 std::ostream &operator<<(std::ostream &os, const ServerConfig &config)

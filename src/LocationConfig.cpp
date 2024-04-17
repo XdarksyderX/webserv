@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 23:59:25 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:06:39 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ LocationConfig &LocationConfig::operator=(const LocationConfig &other)
         autoindex = other.autoindex;
         returnPath = other.returnPath;
         alias = other.alias;
+        uploadPath = other.uploadPath;
     }
     return *this;
 }
@@ -77,6 +78,11 @@ std::string LocationConfig::getReturnPath() const
 std::string LocationConfig::getAlias() const
 {
     return alias;
+}
+
+std::string LocationConfig::getUploadPath() const
+{
+    return uploadPath;
 }
 
 std::vector<std::string> LocationConfig::getCgiPaths() const
@@ -122,6 +128,11 @@ void LocationConfig::setReturnPath(const std::string &rp)
 void LocationConfig::setAlias(const std::string &a)
 {
     alias = a;
+}
+
+void LocationConfig::setUploadPath(const std::string &uP)
+{
+    uploadPath = uP;
 }
 
 void LocationConfig::addCgiPath(const std::string& interpreterPath)

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:27:44 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 23:01:47 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:16:10 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void Parser::processServerLine(const std::string &line, ServerConfig &serverConf
 		processClientMaxBodySizeDirective(iss, serverConfig);
 	else if (word == "location")
 		processLocationDirective(iss, serverConfig);
+	else if (word == "upload_dir")
+		processUploadsDirectoryDirective(iss, serverConfig);
 	else
 	{
 		std::cout << "Invalid directive SERVER: " << word << std::endl;
@@ -151,4 +153,12 @@ void Parser::processLocationDirective(std::istringstream &iss, ServerConfig &ser
 		throw Parser::InvalidDirectiveException();
 	LocationConfig locationConfig = parseLocationBlock(serverConfig);
 	serverConfig.addLocation(path, locationConfig);
+}
+
+void Parser::processUploadsDirectoryDirective(std::istringstream &iss, ServerConfig &serverConfig)
+{
+	std::string path;
+	if (!(iss >> path))
+		throw Parser::InvalidDirectiveException();
+	serverConfig.setUploadsDirectory(path);
 }

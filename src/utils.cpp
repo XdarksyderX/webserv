@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 00:52:40 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:46:55 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,21 @@ std::string		Utils::createHTMLDirectoryListing(const std::string &directory)
 {
 	std::string html;
 	html += "<!DOCTYPE html>\n<html>\n<head>\n<title>Index of ";
-	html += directory;
+	html += Utils::joinPaths("", directory.substr(directory.find('/') + 1));
 	html += "</title>\n</head>\n<body>\n<h1>Index of ";
-	html += directory;
+	html += directory.substr(directory.find('/') + 1);
 	html += "</h1>\n<ul>\n";
 	DIR *dir = opendir(directory.c_str());
 	if (dir == NULL)
 		return "";
 	std::string dirName = Utils::getNodeName(directory);
 	struct dirent *entry;
+	html += "<li><a href=\"..\">..</a></li>\n";
+	html += "<li><a href=\".\">.</a></li>\n";
 	while ((entry = readdir(dir)) != NULL)
 	{
+		if (entry->d_name[0] == '.')
+			continue;
 		html += "<li><a href=\"";
 		html += dirName + "/" + entry->d_name;
 		html += "\">";
@@ -110,4 +114,14 @@ std::string Utils::preventFileTraversal(const std::string &path)
 		pos = result.find("..");
 	}
 	return result;
+}
+
+bool	Utils::createFile(const std::string &path, const std::string &content)
+{
+	std::ofstream file(path.c_str());
+	if (!file.is_open())
+		return false;
+	file << content;
+	file.close();
+	return true;
 }

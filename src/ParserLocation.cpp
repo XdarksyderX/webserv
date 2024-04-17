@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:28:14 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 23:48:59 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:00:31 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void Parser::processLocationLine(const std::string &line, LocationConfig &locati
         processCgiPathDirective(iss, locationConfig);
     else if (word == "cgi_ext")
         processCgiExtDirective(iss, locationConfig);
+    else if (word == "upload_path")
+        processUploadPathDirective(iss, locationConfig);
     else
 	{
 		std::cout << "Invalid directive LOCATION: " << word << std::endl;
@@ -143,4 +145,12 @@ void Parser::processCgiExtDirective(std::istringstream &iss, LocationConfig &loc
         locationConfig.addCgiExtension(extension);
     if (locationConfig.getCgiExtensions().empty())
         throw Parser::InvalidDirectiveException();
+}
+
+void Parser::processUploadPathDirective(std::istringstream &iss, LocationConfig &locationConfig)
+{
+    std::string uploadPath;
+    if (!(iss >> uploadPath))
+        throw Parser::InvalidDirectiveException();
+    locationConfig.setUploadPath(uploadPath);
 }

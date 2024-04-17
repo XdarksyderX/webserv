@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:43:07 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 23:49:02 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:10:50 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ class Parser
         void processErrorPageDirective(std::istringstream &iss, ServerConfig &serverConfig);
         void processClientMaxBodySizeDirective(std::istringstream &iss, ServerConfig &serverConfig);
         void processLocationDirective(std::istringstream &iss, ServerConfig &serverConfig);
+        void processUploadsDirectoryDirective(std::istringstream &iss, ServerConfig &serverConfig);
 
         // Methods to process specific LocationConfig directives.
         void processLocationRootDirective(std::istringstream &iss, LocationConfig &locationConfig);
@@ -62,6 +63,7 @@ class Parser
         void processReturnDirective(std::istringstream &iss, LocationConfig &locationConfig);
         void processCgiPathDirective(std::istringstream &iss, LocationConfig &locationConfig);
         void processCgiExtDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processUploadPathDirective(std::istringstream &iss, LocationConfig &locationConfig);
 
     public:
         Parser(const std::string& configFilePath); ///< Constructor that takes the path to the configuration file.

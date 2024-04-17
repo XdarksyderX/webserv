@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:18:42 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 20:22:51 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:12:44 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ class ServerConfig
         std::map<int, std::string> errorPages; ///< Mapping of error codes to error page paths.
         size_t clientMaxBodySize; ///< Maximum allowed size for client request body.
         std::map<std::string, LocationConfig> locations; ///< Location-specific configurations.
+        std::string  uploadsDirectory; ///< Directory where uploaded files are stored.
 
     public:
         ServerConfig();
@@ -55,6 +56,7 @@ class ServerConfig
         std::map<int, std::string> getErrorPages() const;
         size_t getClientMaxBodySize() const;
         std::map<std::string, LocationConfig> getLocations() const;
+        std::string getUploadsDirectory() const;
 
         // Setters
         void setPort(unsigned short p);
@@ -65,6 +67,7 @@ class ServerConfig
         void setErrorPages(const std::map<int, std::string>& pages);
         void setClientMaxBodySize(size_t size);
         void setLocations(const std::map<std::string, LocationConfig>& locs);
+        void setUploadsDirectory(const std::string& dir);
 
         /**
          * @brief Add or update an error page path for a specific error code.

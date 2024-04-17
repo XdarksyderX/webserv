@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 00:41:55 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:04:36 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,50 @@ HTTPResponse	HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
 	return response;
 }
 
+HTTPResponse	HTTPResponseBuilder::handlePostRequest(const LocationConfig *location)
+{
+	HTTPResponse response;
+	std::string root = serverConfig.getRoot();
+	std::string resource = Utils::joinPaths(root, request.getUri());
+	std::string directory;
+	if (Utils::directoryExists(resource))
+	{
+		directory = resource;
+		resource = Utils::joinPaths(resource, location->getIndex());
+	}
+	resource = Utils::preventFileTraversal(resource);
+	if (!Utils::fileExists(resource))
+	{
+		if (location->getAutoindex() && !directory.empty())
+		{
+			response.setBody(Utils::createHTMLDirectoryListing(directory));
+			response.addHeader("Content-Type", "text/html");
+		}
+		else
+			return handleErrorPage(404);
+	}
+	else
+	{
+		response.setBody(Utils::getFileContent(resource));
+		response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
+	}
+	response.setStatusCode(200);
+	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
+	response.addHeader("Date", Time::getHTTPFormatCurrentTime());
+	response.addHeader("Server", "webserv");
+	return response;
+}
+
 HTTPResponse	HTTPResponseBuilder::buildResponse()
 {
+	if (request.getHeader("Content-Length") != "")
+	{
+		size_t contentLength = static_cast<size_t>(std::atoi(request.getHeader("Content-Length").c_str()));
+		if (contentLength > serverConfig.getClientMaxBodySize() 
+			|| contentLength != request.getBody().length())
+			return handleErrorPage(413);
+	}
+	
 	LocationConfig location;
 	std::string locationName = findMatchingLocation();
 	if (locationName.empty())
@@ -172,5 +214,7 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 
 	if (request.getMethod() == GET)
 		return handleGetRequest(&location);
+	if (request.getMethod() == POST)
+		return handleErrorPage(405);
 	return handleErrorPage(405);
 }

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 00:49:58 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 09:54:33 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace Utils
 	std::string		getNodeName(const std::string &path);
 	bool			fileExists(const std::string &path);
 	bool			directoryExists(const std::string &path);
-
+	bool			createFile(const std::string &path, const std::string &content);
 
 	template <typename T>
 	bool			hasElement(const std::vector<T> &elements,const T &element)
