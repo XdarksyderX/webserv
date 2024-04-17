@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:43:07 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 11:10:50 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:04:47 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <exception>
 
 # include "ServerConfig.hpp"
+# include "utils.hpp"
 
 /**
  * @class Parser
@@ -40,7 +41,7 @@ class Parser
         ServerConfig parseServerBlock(); ///< Parses a server block from the configuration file.
         void processServerLine(const std::string &line, ServerConfig &serverConfig); ///< Processes a line within a server block.
         LocationConfig parseLocationBlock(ServerConfig &serverConfig); ///< Parses a location block within a server block.
-        void processLocationLine(const std::string &line, LocationConfig &locationConfig); ///< Processes a line within a location block.
+        void processLocationLine(const std::string &line, LocationConfig &locationConfig, ServerConfig &serverConfig); ///< Processes a line within a location block.
         static void parseLine(std::string &str); ///< Cleans a line from the configuration file removing comments and whitespace.
 
         // Methods to process specific ServerConfig directives.
@@ -58,12 +59,10 @@ class Parser
         void processLocationRootDirective(std::istringstream &iss, LocationConfig &locationConfig);
         void processLocationIndexDirective(std::istringstream &iss, LocationConfig &locationConfig);
         void processAllowMethodsDirective(std::istringstream &iss, LocationConfig &locationConfig);
-        void processAliasDirective(std::istringstream &iss, LocationConfig &locationConfig);
         void processAutoindexDirective(std::istringstream &iss, LocationConfig &locationConfig);
-        void processReturnDirective(std::istringstream &iss, LocationConfig &locationConfig);
         void processCgiPathDirective(std::istringstream &iss, LocationConfig &locationConfig);
         void processCgiExtDirective(std::istringstream &iss, LocationConfig &locationConfig);
-        void processUploadPathDirective(std::istringstream &iss, LocationConfig &locationConfig);
+        void processUploadPathDirective(std::istringstream &iss, LocationConfig &locationConfig, const ServerConfig &serverConfig);
 
     public:
         Parser(const std::string& configFilePath); ///< Constructor that takes the path to the configuration file.
@@ -75,7 +74,7 @@ class Parser
         std::vector<ServerConfig> &parse(); ///< Parses the configuration file and returns a vector of ServerConfig objects.
 
         // Exception classes for various error scenarios encountered during parsing.
-        class FileNotFoundException : public std::exception
+        class ConfigFileNotFoundException : public std::exception
         {
             public:
                 virtual const char *what() const throw(); ///< Describes the file not found error.
@@ -97,6 +96,12 @@ class Parser
         {
             public:
                 virtual const char *what() const throw(); ///< Describes the missing mandatory setting error.
+        };
+
+        class ResourceNotFoundException : public std::exception
+        {
+            public:
+                virtual const char *what() const throw(); ///< Describes the resource not found error.
         };
 };
 

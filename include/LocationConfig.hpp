@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:20:30 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 14:56:48 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:41:06 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ class LocationConfig
 		std::vector<HTTPMethod> allowMethods; ///< Allowed HTTP methods for this location.
 		std::string index; ///< Default index file for this location.
 		bool autoindex; ///< Flag to enable or disable directory listing.
-		std::string returnPath; ///< Path for redirection.
-		std::string alias; ///< Alias for the location.
 		std::string uploadPath; ///< Path for file uploads.
 		std::vector<std::string> cgiPaths; ///< Path to the CGI interpreter.
 		std::vector<std::string> cgiExtensions; ///< Extension for CGI scripts.
@@ -57,8 +55,6 @@ class LocationConfig
 		std::vector<HTTPMethod> getAllowMethods() const;
 		std::string getIndex() const;
 		bool getAutoindex() const;
-		std::string getReturnPath() const;
-		std::string getAlias() const;
 		std::map<std::string, std::string> getCgiInfo() const;
 		std::string getUploadPath() const;
 
@@ -67,8 +63,6 @@ class LocationConfig
 		void setAllowMethods(const std::vector<HTTPMethod>& methods);
 		void setIndex(const std::string& index);
 		void setAutoindex(bool autoindex);
-		void setReturnPath(const std::string& path);
-		void setAlias(const std::string& alias);
 		void setUploadPath(const std::string &uploadPath);
 		std::vector<std::string> getCgiPaths() const;
 		std::vector<std::string> getCgiExtensions() const;

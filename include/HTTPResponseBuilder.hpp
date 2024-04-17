@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:35:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 09:40:36 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:42:41 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ class HTTPResponseBuilder
 
 		HTTPResponse	handleGetRequest(const LocationConfig *location);
 		HTTPResponse	handlePostRequest(const LocationConfig *location);
-		HTTPResponse	handlePutRequest(const LocationConfig *location);
 		HTTPResponse	handleDeleteRequest(const LocationConfig *location);
 		
 		HTTPResponse	handleErrorPage(int errorCode);

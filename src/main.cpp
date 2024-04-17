@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:41:20 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 23:46:55 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:01:01 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int main(int argc, char **argv)
 			return 1;
 		}
 	}
+	std::cout << std::endl;
 	try {
 		serverManager.startServers();
 	}

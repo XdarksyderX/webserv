@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:15:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 17:53:58 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:53:30 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,5 @@ std::string HTTPRequest::getMethodString(HTTPMethod method)
     else if (method == DELETE)
         return "DELETE";
     else
-        return "";
+        return "UNKNOWN";
 }

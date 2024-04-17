@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:12:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/05 23:28:09 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:25:48 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Parser::Parser(const std::string &configFilePath) : configFilePath(configFilePat
 {
     configFile.open(configFilePath.c_str());
     if (!configFile.is_open())
-        throw Parser::FileNotFoundException();
+        throw Parser::ConfigFileNotFoundException();
 }
 
 Parser::Parser(const Parser &other)
@@ -26,7 +26,7 @@ Parser::Parser(const Parser &other)
     {
         configFile.open(configFilePath.c_str());
         if (!configFile.is_open())
-            throw Parser::FileNotFoundException();
+            throw Parser::ConfigFileNotFoundException();
     }
 }
 
@@ -46,7 +46,7 @@ Parser &Parser::operator=(const Parser &other)
             configFile.close();
             configFile.open(configFilePath.c_str());
             if (!configFile.is_open())
-                throw Parser::FileNotFoundException();
+                throw Parser::ConfigFileNotFoundException();
         }
     }
     return *this;
@@ -95,7 +95,7 @@ std::vector<ServerConfig> &Parser::parse()
     return serverConfigs;
 }
 
-const char *Parser::FileNotFoundException::what() const throw()
+const char *Parser::ConfigFileNotFoundException::what() const throw()
 {
 	return "Configuration file not found.";
 }
@@ -113,4 +113,9 @@ const char *Parser::InvalidDirectiveException::what() const throw()
 const char *Parser::MissingMandatoryException::what() const throw()
 {
 	return "Missing mandatory configuration setting.";
+}
+
+const char *Parser::ResourceNotFoundException::what() const throw()
+{
+    return "Some resource not found in the configuration.";
 }

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 10:46:55 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:44:19 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ std::string		Utils::createHTMLDirectoryListing(const std::string &directory)
 		return "";
 	std::string dirName = Utils::getNodeName(directory);
 	struct dirent *entry;
-	html += "<li><a href=\"..\">..</a></li>\n";
 	html += "<li><a href=\".\">.</a></li>\n";
+	html += "<li><a href=\"..\">..</a></li>\n";
 	while ((entry = readdir(dir)) != NULL)
 	{
 		if (entry->d_name[0] == '.')

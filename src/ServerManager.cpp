@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:21:28 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 00:17:39 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:11:38 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void ServerManager::startServers()
 	running = true;
 	while (running)
 	{
-		if (poll(pollFDs.data(), pollFDs.size(), -1) < 0 && errno != EINTR)
-			throw PollError();
+		if (poll(pollFDs.data(), pollFDs.size(), -1) < 0)
+			continue;
 		for (size_t i = 0; i < pollFDs.size(); i++)
 		{
 			if (pollFDs[i].revents & POLLIN)

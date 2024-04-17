@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:27:44 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 11:16:10 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:24:55 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void Parser::processServerLine(const std::string &line, ServerConfig &serverConf
 		processUploadsDirectoryDirective(iss, serverConfig);
 	else
 	{
-		std::cout << "Invalid directive SERVER: " << word << std::endl;
 		throw Parser::InvalidDirectiveException();
 	}
 }
@@ -118,6 +117,8 @@ void Parser::processRootDirective(std::istringstream &iss, ServerConfig &serverC
 	std::string root;
 	if (!(iss >> root))
 		throw Parser::InvalidDirectiveException();
+	if (!Utils::directoryExists(root))
+		throw Parser::ResourceNotFoundException();
 	serverConfig.setRoot(root);
 }
 
@@ -135,6 +136,8 @@ void Parser::processErrorPageDirective(std::istringstream &iss, ServerConfig &se
 	std::string path;
 	if (!(iss >> code >> path))
 		throw Parser::InvalidDirectiveException();
+	if (!Utils::fileExists(Utils::joinPaths(serverConfig.getRoot(), path)))
+		throw Parser::ResourceNotFoundException();
 	serverConfig.addErrorPage(code, path);
 }
 
@@ -160,5 +163,7 @@ void Parser::processUploadsDirectoryDirective(std::istringstream &iss, ServerCon
 	std::string path;
 	if (!(iss >> path))
 		throw Parser::InvalidDirectiveException();
+	if (!Utils::directoryExists(path))
+		throw Parser::ResourceNotFoundException();
 	serverConfig.setUploadsDirectory(path);
 }

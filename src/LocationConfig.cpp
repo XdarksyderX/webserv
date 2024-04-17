@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 15:06:39 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:40:52 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ LocationConfig &LocationConfig::operator=(const LocationConfig &other)
         allowMethods = other.allowMethods;
         index = other.index;
         autoindex = other.autoindex;
-        returnPath = other.returnPath;
-        alias = other.alias;
         uploadPath = other.uploadPath;
     }
     return *this;
@@ -68,16 +66,6 @@ std::string LocationConfig::getIndex() const
 bool LocationConfig::getAutoindex() const
 {
     return autoindex;
-}
-
-std::string LocationConfig::getReturnPath() const
-{
-    return returnPath;
-}
-
-std::string LocationConfig::getAlias() const
-{
-    return alias;
 }
 
 std::string LocationConfig::getUploadPath() const
@@ -120,16 +108,6 @@ void LocationConfig::setAutoindex(bool ai)
     autoindex = ai;
 }
 
-void LocationConfig::setReturnPath(const std::string &rp)
-{
-    returnPath = rp;
-}
-
-void LocationConfig::setAlias(const std::string &a)
-{
-    alias = a;
-}
-
 void LocationConfig::setUploadPath(const std::string &uP)
 {
     uploadPath = uP;
@@ -152,6 +130,7 @@ LocationConfig	LocationConfig::createDefaultLocation(const ServerConfig &serverC
     location.setIndex(serverConfig.getIndex());
     std::vector<HTTPMethod> methods;
     methods.push_back(GET);
+    location.setUploadPath(serverConfig.getUploadsDirectory());
     location.setAllowMethods(methods);
     return location;
 }

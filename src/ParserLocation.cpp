@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:28:14 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 15:00:31 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:17:10 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ LocationConfig Parser::parseLocationBlock(ServerConfig &serverConfig)
                 break;
         }
         if (!bracesStack.empty())
-            processLocationLine(line, locationConfig);
+            processLocationLine(line, locationConfig, serverConfig);
     }
     if (!bracesStack.empty())
         throw Parser::SyntaxErrorException();
     return locationConfig;
 }
 
-void Parser::processLocationLine(const std::string &line, LocationConfig &locationConfig)
+void Parser::processLocationLine(const std::string &line, LocationConfig &locationConfig,
+    ServerConfig &serverConfig)
 {
     std::istringstream iss(line);
     std::string word;
@@ -48,18 +49,14 @@ void Parser::processLocationLine(const std::string &line, LocationConfig &locati
         processLocationIndexDirective(iss, locationConfig);
     else if (word == "allow_methods")
         processAllowMethodsDirective(iss, locationConfig);
-    else if (word == "alias")
-        processAliasDirective(iss, locationConfig);
     else if (word == "autoindex")
         processAutoindexDirective(iss, locationConfig);
-    else if (word == "return")
-        processReturnDirective(iss, locationConfig);
     else if (word == "cgi_path")
         processCgiPathDirective(iss, locationConfig);
     else if (word == "cgi_ext")
         processCgiExtDirective(iss, locationConfig);
     else if (word == "upload_path")
-        processUploadPathDirective(iss, locationConfig);
+        processUploadPathDirective(iss, locationConfig, serverConfig);
     else
 	{
 		std::cout << "Invalid directive LOCATION: " << word << std::endl;
@@ -105,14 +102,6 @@ void Parser::processAllowMethodsDirective(std::istringstream &iss, LocationConfi
     locationConfig.setAllowMethods(methods);
 }
 
-void Parser::processAliasDirective(std::istringstream &iss, LocationConfig &locationConfig)
-{
-    std::string alias;
-    if (!(iss >> alias))
-        throw Parser::InvalidDirectiveException();
-    locationConfig.setAlias(alias);
-}
-
 void Parser::processAutoindexDirective(std::istringstream &iss, LocationConfig &locationConfig)
 {
     std::string autoindex;
@@ -121,19 +110,13 @@ void Parser::processAutoindexDirective(std::istringstream &iss, LocationConfig &
     locationConfig.setAutoindex(autoindex == "on");
 }
 
-void Parser::processReturnDirective(std::istringstream &iss, LocationConfig &locationConfig)
-{
-    std::string returnPath;
-    if (!(iss >> returnPath))
-        throw Parser::InvalidDirectiveException();
-    locationConfig.setReturnPath(returnPath);
-}
-
 void Parser::processCgiPathDirective(std::istringstream &iss, LocationConfig &locationConfig)
 {
     std::string cgiPath;
     if (!(iss >> cgiPath))
         throw Parser::InvalidDirectiveException();
+    if (!Utils::fileExists(cgiPath))
+        throw Parser::ResourceNotFoundException();
     locationConfig.addCgiPath(cgiPath);
 }
 
@@ -147,10 +130,12 @@ void Parser::processCgiExtDirective(std::istringstream &iss, LocationConfig &loc
         throw Parser::InvalidDirectiveException();
 }
 
-void Parser::processUploadPathDirective(std::istringstream &iss, LocationConfig &locationConfig)
+void Parser::processUploadPathDirective(std::istringstream &iss, LocationConfig &locationConfig, const ServerConfig &serverConfig)
 {
     std::string uploadPath;
     if (!(iss >> uploadPath))
         throw Parser::InvalidDirectiveException();
+    if (!Utils::directoryExists(Utils::joinPaths(serverConfig.getUploadsDirectory(), uploadPath)))
+        throw Parser::ResourceNotFoundException();
     locationConfig.setUploadPath(uploadPath);
 }
