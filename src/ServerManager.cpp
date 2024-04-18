@@ -69,7 +69,7 @@ void ServerManager::startServers()
 	running = true;
 	while (running)
 	{
-		if (poll(pollFDs.data(), pollFDs.size(), -1) < 0)
+		if (poll(pollFDs.data(), pollFDs.size(), 1000) < 0)
 			continue;
 		for (size_t i = 0; i < pollFDs.size(); i++)
 		{
