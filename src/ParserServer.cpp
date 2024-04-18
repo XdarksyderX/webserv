@@ -48,8 +48,9 @@ ServerConfig Parser::parseServerBlock()
 	}
 	if (!bracesStack.empty())
 		throw Parser::SyntaxErrorException();
-	std::map<std::string, LocationConfig>::const_iterator it = serverConfig.getLocations().find("/");
-	std::map<std::string, LocationConfig>::const_iterator itEnd = serverConfig.getLocations().end();
+	const std::map<std::string, LocationConfig>& locations = serverConfig.getLocations();
+	std::map<std::string, LocationConfig>::const_iterator it = locations.find("/");
+	std::map<std::string, LocationConfig>::const_iterator itEnd = locations.end();
 	if (it == itEnd)
 	{
 		LocationConfig defaultLocation = LocationConfig::createDefaultLocation(serverConfig);

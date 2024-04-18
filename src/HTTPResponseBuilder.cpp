@@ -94,8 +94,9 @@ HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
 	HTTPResponse response;
 	response.setStatusCode(errorCode);
 	response.setStatusMessage(STATUS_CODES.at(errorCode));
-	std::map<int, std::string>::const_iterator it = serverConfig.getErrorPages().find(errorCode);
-	std::map<int, std::string>::const_iterator itEnd = serverConfig.getErrorPages().end();
+	const std::map<int, std::string>& errorPages = serverConfig.getErrorPages();
+	std::map<int, std::string>::const_iterator it = errorPages.find(errorCode);
+	std::map<int, std::string>::const_iterator itEnd = errorPages.end();
 	if (it != itEnd)
 	{
 		std::string filePath = Utils::joinPaths(serverConfig.getRoot(),
