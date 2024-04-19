@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:44:19 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:20:49 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,12 @@ bool	Utils::createFile(const std::string &path, const std::string &content)
 	file << content;
 	file.close();
 	return true;
+}
+
+bool	Utils::isValidSocket(int socketFD)
+{
+	int optval;
+    socklen_t optlen = sizeof(optval);
+    int result = getsockopt(socketFD, SOL_SOCKET, SO_TYPE, &optval, &optlen);
+    return result == 0;
 }

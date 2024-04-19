@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/16 19:36:20 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/19 23:45:51 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void HTTPServer::initializeServerSocket()
     if (setsockopt(socketFD, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0)
         throw SocketOptionError();
 
+    int flags = fcntl(socketFD, F_GETFL, 0);
+    if (flags < 0)
+        throw SocketOptionError();
     memset(&serverAddress, 0, sizeof(serverAddress));
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = inet_addr(serverConfig.getHost().c_str());
@@ -65,14 +68,18 @@ HTTPRequest	HTTPServer::receiveRequest(int clientSocketFD)
 	std::string requestString;
 	HTTPRequest request;
 
-	bytesRead = recv(clientSocketFD, buffer, 1024, 0);
-	while (bytesRead > 0 && requestString.find("\r\n\r\n") == std::string::npos)
+	do
 	{
+        bytesRead = recv(clientSocketFD, buffer, sizeof(buffer), 0);
+        if (bytesRead < 0)
+        {
+            close(clientSocketFD);
+            throw SocketError();
+        } 
         requestString.append(buffer, bytesRead);
         if (requestString.find("\r\n\r\n") != std::string::npos)
 			break ;
-        bytesRead = recv(clientSocketFD, buffer, sizeof(buffer), 0);
-    }
+    } while (bytesRead > 0 && requestString.find("\r\n\r\n") == std::string::npos);
 
 	request = HTTPRequestParser::parseRequest(requestString);
 	return request;
@@ -88,6 +95,11 @@ void HTTPServer::sendResponse(const HTTPResponse &response, int clientSocketFD)
     while (bytesToSend > 0)
     {
         bytesSent = send(clientSocketFD, pData, bytesToSend, 0);
+        if (bytesSent < 0)
+        {
+            close(clientSocketFD);
+            throw SocketError();
+        }
         bytesToSend -= bytesSent;
         pData += bytesSent;
     }
@@ -99,7 +111,7 @@ HTTPResponse	HTTPServer::processRequest(const HTTPRequest &request)
 	return responseBuilder.buildResponse();
 }
 
-void	HTTPServer::acceptConnection()
+int	HTTPServer::acceptConnection()
 {
 	struct sockaddr_in clientAddress;
 	socklen_t clientAddressLength = sizeof(clientAddress);
@@ -111,19 +123,43 @@ void	HTTPServer::acceptConnection()
     if (!request.getHeader("Host").empty() && request.getHeader("Host") != serverConfig.getHost() + ":" + Logger::to_string(serverConfig.getPort()))
     {
         close(clientSocketFD);
-        return;
+        return -1;
     }
+    updateClientActivity(clientSocketFD);
 	HTTPResponse response = processRequest(request);
+    responsesToSend[clientSocketFD].push(std::make_pair(request, response));
+    return clientSocketFD;
+}
 
-	std::string server = serverConfig.getHost()
-					+ ":"
-					+ Logger::to_string(serverConfig.getPort());
-	sendResponse(response, clientSocketFD);
-	Logger::logRequest(request, response, clientSocketFD, server, true);
-	struct timeval currentTime;
-	gettimeofday(&currentTime, NULL);
-	connections[clientSocketFD] = currentTime;
-	checkAndCloseInactiveConnections();
+void    HTTPServer::sendFirstPendingResponse(int clientSocketFD)
+{
+    if (responsesToSend.find(clientSocketFD) == responsesToSend.end())
+        return;
+    std::queue<HTTPRequestResponsePair> &clientResponsesToSend = this->responsesToSend[clientSocketFD];
+    if (!responsesToSend.empty())
+    {    
+        HTTPRequestResponsePair connection = clientResponsesToSend.front();
+        HTTPRequest request = connection.first;
+        HTTPResponse response = connection.second;
+        sendResponse(response, clientSocketFD);
+        
+        std::string server = serverConfig.getHost()
+                    + ":"
+                    + Logger::to_string(serverConfig.getPort());
+        Logger::logRequest(request, response, clientSocketFD, server, true);
+        clientResponsesToSend.pop();
+        updateClientActivity(clientSocketFD);
+        checkAndCloseInactiveConnections();
+        if (clientResponsesToSend.empty())
+            responsesToSend.erase(clientSocketFD);
+    }
+}
+
+void    HTTPServer::updateClientActivity(int clientSocketFD)
+{
+    struct timeval currentTime;
+    gettimeofday(&currentTime, NULL);
+    connections[clientSocketFD] = currentTime;
 }
 
 void HTTPServer::checkAndCloseInactiveConnections()
@@ -152,6 +188,12 @@ void HTTPServer::checkAndCloseInactiveConnections()
     lastTime = currentTime;
 }
 
+bool    HTTPServer::isClient(int clientSocketFD) const
+{
+    std::map<int, struct timeval>::const_iterator it = connections.find(clientSocketFD);
+    std::map<int, struct timeval>::const_iterator end = connections.end();
+    return it != end;
+}
 
 const char	*HTTPServer::SocketError::what() const throw()
 {

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:36:56 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/15 20:40:09 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/19 23:56:08 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@
 # include <exception>
 # include <cstring>
 # include <map>
+# include <queue>
 # include <sys/time.h>
 
 # include "HTTPRequestParser.hpp"
 # include "HTTPResponseBuilder.hpp"
 # include "Logger.hpp"
 # include "ServerConfig.hpp"
+
+typedef std::pair<HTTPRequest, HTTPResponse> HTTPRequestResponsePair; 
 
 /**
  * @class HTTPServer
@@ -39,20 +42,16 @@
 class HTTPServer
 {
 	private:
-		static const time_t CONNECTION_TIMEOUT = 1; ///< Timeout for closing inactive connections.
+		static const time_t CONNECTION_TIMEOUT = 1000; ///< Timeout for closing inactive connections.
 		int socketFD; ///< File descriptor for the server's listening socket.
 		ServerConfig &serverConfig; ///< Configuration settings for the server.
 		std::map<int, struct timeval> connections; ///< Active connections with their last activity time.
+		std::map<int, std::queue<HTTPRequestResponsePair> > responsesToSend; ///< Pending responses to send to clients.
 
 		/**
 		 * @brief Initializes the server socket based on the server configuration.
 		 */
 		void	initializeServerSocket();
-
-		/**
-		 * @brief Checks and closes inactive connections that have exceeded the timeout.
-		 */
-		void	checkAndCloseInactiveConnections();
 
 		/**
 		 * @brief Receives and parses an HTTP request from the client.
@@ -70,9 +69,16 @@ class HTTPServer
 
 		/**
 		 * @brief Sends an HTTP response to the client.
-		 * @param response An HTTPResponse object representing the server's response to send.
+		 * @param response An HTTPResponse object representing the server's response.
+		 * @param clientSocketFD The file descriptor for the client's socket.
 		 */
 		void sendResponse(const HTTPResponse &response, int clientSocketFD);
+
+		/**
+		 * @brief Updates the last activity time for a client connection.
+		 * @param clientSocketFD The file descriptor for the client's socket.
+		 */
+		void    updateClientActivity(int clientSocketFD);
 
 	public:
 		/**
@@ -94,8 +100,27 @@ class HTTPServer
 
 		/**
 		 * @brief Accepts a new connection from a client.
+		 * @return The file descriptor for the client's socket.
 		 */
-		void	acceptConnection();
+		int	acceptConnection();
+
+		/**
+		 * @brief Sends the first pending response to a client.
+		 * @param clientSocketFD The file descriptor for the client's socket.
+		 */
+		void sendFirstPendingResponse(int clientSocketFD);
+
+		/**
+		 * @brief Says if a client is in the connections map.
+		 * @param clientSocketFD The file descriptor for the client's socket.
+		 * @return True if the client is in the connections map, false otherwise.
+		 */
+		bool	isClient(int clientSocketFD) const;
+
+		/**
+		 * @brief Checks and closes inactive connections that have exceeded the timeout.
+		 */
+		void	checkAndCloseInactiveConnections();
 
 		/**
 		 * @class SocketError
