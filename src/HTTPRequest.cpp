@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:15:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 16:53:30 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:11:44 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,12 @@ std::string HTTPRequest::getBody() const
     return body;
 }
 
-std::map<std::string, std::string> HTTPRequest::getHeaders() const
+const std::map<std::string, std::string> &HTTPRequest::getHeaders() const
+{
+    return headers;
+}
+
+std::map<std::string, std::string> &HTTPRequest::getHeaders()
 {
     return headers;
 }

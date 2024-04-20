@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:36:18 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 17:53:28 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:11:40 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ class HTTPRequest
 		std::string getUri() const;
 		std::string getHttpVersion() const;
 		std::string getBody() const;
-		std::map<std::string, std::string> getHeaders() const;
+		const std::map<std::string, std::string> &getHeaders() const;
+        std::map<std::string, std::string> &getHeaders();
 		void setMethod(HTTPMethod method);
 		void setUri(const std::string &uri);
 		void setHttpVersion(const std::string &httpVersion);

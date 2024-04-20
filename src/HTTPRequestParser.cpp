@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:45:31 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 20:58:30 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:13:15 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	HTTPRequestParser::parseRequestHeaders(HTTPRequest &request, const std::str
 		throw InvalidRequestHeader();
 	std::string key = headerLine.substr(0, end);
 	std::string value = headerLine.substr(end + 2);
-	request.getHeaders()[key] = value;
+	request.addHeader(key, value);
 }
 
 HTTPRequest	HTTPRequestParser::parseRequest(const std::string &rawRequest)
