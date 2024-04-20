@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/19 20:20:49 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 19:56:43 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ std::string Utils::joinPaths(const std::string &path1, const std::string &path2)
 bool	Utils::fileExists(const std::string &path)
 {
 	std::ifstream file(path.c_str());
-	return file.is_open();
+	return file.is_open() && !directoryExists(path);
 }
 
 bool	Utils::directoryExists(const std::string &path)
@@ -71,7 +71,7 @@ std::string		Utils::getNodeName(const std::string &path)
 }
 
 
-std::string		Utils::createHTMLDirectoryListing(const std::string &directory)
+std::string		Utils::createHTMLDirectoryListing(const std::string &directory, const std::string &path)
 {
 	std::string html;
 	html += "<!DOCTYPE html>\n<html>\n<head>\n<title>Index of ";
@@ -91,7 +91,7 @@ std::string		Utils::createHTMLDirectoryListing(const std::string &directory)
 		if (entry->d_name[0] == '.')
 			continue;
 		html += "<li><a href=\"";
-		html += dirName + "/" + entry->d_name;
+		html += joinPaths(path, entry->d_name);
 		html += "\">";
 		html += entry->d_name;
 		html += "</a></li>\n";
@@ -124,6 +124,11 @@ bool	Utils::createFile(const std::string &path, const std::string &content)
 	file << content;
 	file.close();
 	return true;
+}
+
+bool	Utils::deleteFile(const std::string &path)
+{
+	return remove(path.c_str()) == 0;
 }
 
 bool	Utils::isValidSocket(int socketFD)

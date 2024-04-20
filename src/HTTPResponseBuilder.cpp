@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:41:28 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 20:03:00 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,14 @@ std::string HTTPResponseBuilder::findMatchingLocation()
     return bestMatchKey;
 }
 
+void	HTTPResponseBuilder::addCommonHeaders(HTTPResponse &response)
+{
+	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
+	response.addHeader("Date", Time::getHTTPFormatCurrentTime());
+	response.addHeader("Connection", "close");
+	response.addHeader("Server", "webserv");
+}
+
 std::string		HTTPResponseBuilder::simpleErrorPage(int errorCode)
 {
 	std::string response = "<!DOCTYPE html>\n<html>\n<head>\n<title>";
@@ -87,6 +95,16 @@ std::string		HTTPResponseBuilder::simpleErrorPage(int errorCode)
 	response += STATUS_CODES.at(errorCode);
 	response += "</h1>\n</body>\n</html>\n";
 	return response;
+}
+
+std::string		HTTPResponseBuilder::getLocationUploadPath(const LocationConfig *location)
+{
+	std::string root = serverConfig.getUploadsDirectory();
+	std::string uploadPath = location->getUploadPath();
+
+	if (uploadPath.empty())
+		return "";
+	return Utils::joinPaths(root, uploadPath);
 }
 
 HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
@@ -109,44 +127,88 @@ HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
 		response.setBody(simpleErrorPage(errorCode));
 		response.addHeader("Content-Type", "text/html");
 	}
-	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
-	response.addHeader("Date", Time::getHTTPFormatCurrentTime());
-	response.addHeader("Server", "webserv");
+	addCommonHeaders(response);
 	return response;
 }
 
-HTTPResponse	HTTPResponseBuilder::handleGetRequest(const LocationConfig *location)
+HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *location)
 {
-	HTTPResponse response;
-	std::string root = serverConfig.getRoot();
-	std::string resource = Utils::joinPaths(root, request.getUri());
-	std::string directory;
-	if (Utils::directoryExists(resource))
-	{
-		directory = resource;
-		resource = Utils::joinPaths(resource, location->getIndex());
-	}
-	resource = Utils::preventFileTraversal(resource);
-	if (!Utils::fileExists(resource))
-	{
-		if (location->getAutoindex() && !directory.empty())
-		{
-			response.setBody(Utils::createHTMLDirectoryListing(directory));
-			response.addHeader("Content-Type", "text/html");
-		}
-		else
-			return handleErrorPage(404);
-	}
-	else
-	{
-		response.setBody(Utils::getFileContent(resource));
-		response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
-	}
-	response.setStatusCode(200);
-	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
-	response.addHeader("Date", Time::getHTTPFormatCurrentTime());
-	response.addHeader("Server", "webserv");
-	return response;
+    HTTPResponse response;
+    std::string root = serverConfig.getRoot();
+    std::string resource = Utils::joinPaths(root, request.getUri());
+    std::string indexedResource;
+    std::string directory;
+
+    resource = Utils::preventFileTraversal(resource);
+    if (Utils::fileExists(resource))
+    {
+        response.setBody(Utils::getFileContent(resource));
+        try
+        {
+            response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
+        }
+        catch (const std::exception &e)
+        {
+            response.addHeader("Content-Type", "text/plain");
+        }
+    }
+    else
+    {
+        indexedResource = Utils::joinPaths(resource, location->getIndex());
+        if (Utils::fileExists(indexedResource))
+        {
+            response.setBody(Utils::getFileContent(indexedResource));
+            try
+            {
+                response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(indexedResource)));
+            }
+            catch (const std::exception &e)
+            {
+                response.addHeader("Content-Type", "text/plain");
+            }
+        }
+        else
+        {
+			std::string allowedUploadURI = Utils::joinPaths("","/" + location->getName() + "/" + location->getUploadPath());
+            if (request.getUri().find(allowedUploadURI) != std::string::npos)
+            {
+                std::string uploadPath = getLocationUploadPath(location);
+                resource = Utils::joinPaths(uploadPath, Utils::getNodeName(request.getUri()));
+                if (Utils::fileExists(resource))
+                {
+                    response.setBody(Utils::getFileContent(resource));
+                    try
+                    {
+                        response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
+                    }
+                    catch (const std::exception &e)
+                    {
+                        response.addHeader("Content-Type", "text/plain");
+                    }
+                    response.setStatusCode(200);
+                    addCommonHeaders(response);
+                    return response;
+                }
+                else if (Utils::directoryExists(resource))
+                {
+                    directory = resource;
+                }
+            }
+            if (!directory.empty() && location->getAutoindex())
+            {
+                response.setBody(Utils::createHTMLDirectoryListing(directory, request.getUri()));
+                response.addHeader("Content-Type", "text/html");
+            }
+            else
+            {
+                return handleErrorPage(404);
+            }
+        }
+    }
+
+    response.setStatusCode(200);
+    addCommonHeaders(response);
+    return response;
 }
 
 HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *location)
@@ -160,6 +222,25 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
 
     fullPath = Utils::preventFileTraversal(fullPath);
 
+    std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
+    std::string uriToCheck = request.getUri();
+    if (uriToCheck.find(allowedUploadURI) == std::string::npos)
+    {
+        response.setStatusCode(403);
+        response.setBody("Access denied: Cannot upload outside of the designated directory.");
+        response.addHeader("Content-Type", "text/plain");
+        addCommonHeaders(response);
+        return response;
+    }
+    if (uriToCheck == allowedUploadURI || fileName.empty())
+    {
+        response.setStatusCode(400);
+        response.setBody("No file name provided in the upload path.");
+        response.addHeader("Content-Type", "text/plain");
+        addCommonHeaders(response);
+        return response;
+    }
+
     if (Utils::createFile(fullPath, request.getBody()))
     {
         response.setStatusCode(201);
@@ -168,12 +249,59 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
         response.addHeader("Location", fullPath);
     }
     else
-        return handleErrorPage(500);
+    {
+        response.setStatusCode(500);
+        response.setBody("Failed to create file.");
+        response.addHeader("Content-Type", "text/plain");
+    }
 
-    response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
-    response.addHeader("Date", Time::getHTTPFormatCurrentTime());
-    response.addHeader("Server", "webserv");
+    addCommonHeaders(response);
+    return response;
+}
 
+HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *location)
+{
+	HTTPResponse response;
+    std::string root = serverConfig.getUploadsDirectory();
+    std::string uploadPath = location->getUploadPath();
+    std::string resource = Utils::joinPaths(root, uploadPath);
+    std::string fileName = Utils::getNodeName(request.getUri());
+    std::string fullPath = Utils::joinPaths(resource, fileName);
+
+    fullPath = Utils::preventFileTraversal(fullPath);
+
+    std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
+    std::string uriToCheck = request.getUri();
+    if (uriToCheck.find(allowedUploadURI) == std::string::npos)
+    {
+        response.setStatusCode(403);
+        response.setBody("Access denied: Cannot delete files outside of the designated directory.");
+        response.addHeader("Content-Type", "text/plain");
+        addCommonHeaders(response);
+        return response;
+    }
+    if (uriToCheck == allowedUploadURI || fileName.empty())
+    {
+        response.setStatusCode(400);
+        response.setBody("No file name provided in the path.");
+        response.addHeader("Content-Type", "text/plain");
+        addCommonHeaders(response);
+        return response;
+    }
+    if (Utils::deleteFile(fullPath))
+    {
+        response.setStatusCode(200);
+        response.setBody("File deleted successfully from " + fullPath);
+        response.addHeader("Content-Type", "text/plain");
+        response.addHeader("Location", fullPath);
+    }
+    else
+    {
+        response.setStatusCode(500);
+        response.setBody("Failed to delete file. It may not exist or there is a permission error.");
+        response.addHeader("Content-Type", "text/plain");
+    }
+    addCommonHeaders(response);
     return response;
 }
 
@@ -209,8 +337,10 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 
 	if (request.getMethod() == GET)
 		return handleGetRequest(&location);
-	if ((request.getMethod() == POST || request.getMethod() == PUT) &&
+	else if ((request.getMethod() == POST || request.getMethod() == PUT) &&
 		location.getUploadPath() != "" && serverConfig.getUploadsDirectory() != "")
 		return handlePostRequest(&location);
+	else if (request.getMethod() == DELETE)
+		return handleDeleteRequest(&location);
 	return handleErrorPage(405);
 }

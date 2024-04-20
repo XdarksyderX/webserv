@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:20:30 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:41:06 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:55:48 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ class ServerConfig;
 class LocationConfig
 {
 	private:
+		std::string name; ///< The name of the location.
 		std::string root; ///< The root directory for this location.
 		std::vector<HTTPMethod> allowMethods; ///< Allowed HTTP methods for this location.
 		std::string index; ///< Default index file for this location.
@@ -44,13 +45,14 @@ class LocationConfig
 
 	public:
 		LocationConfig();
-		LocationConfig(std::string rootPath);
+		LocationConfig(const std::string &rootPath, const std::string &name);
 		LocationConfig(const LocationConfig &other);
 		~LocationConfig();
 
 		LocationConfig &operator=(const LocationConfig &other);
 
 		// Getters
+		std::string getName() const;
 		std::string getRoot() const;
 		std::vector<HTTPMethod> getAllowMethods() const;
 		std::string getIndex() const;
@@ -59,6 +61,7 @@ class LocationConfig
 		std::string getUploadPath() const;
 
 		// Setters
+		void setName(const std::string& name);
 		void setRoot(const std::string& root);
 		void setAllowMethods(const std::vector<HTTPMethod>& methods);
 		void setIndex(const std::string& index);

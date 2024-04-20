@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:40:52 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:55:54 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@ LocationConfig::LocationConfig()
 	allowMethods.push_back(GET);
 	index = "index.html";
 	root = "";
+    name = "";
 }
 
-LocationConfig::LocationConfig(std::string serverRoot)
+LocationConfig::LocationConfig(const std::string &serverRoot, const std::string &locationName)
 {
 	autoindex = true;
 	allowMethods.push_back(GET);
 	index = "index.html";
 	root = serverRoot;
+    name = locationName;
 }
 
 LocationConfig::LocationConfig(const LocationConfig &other)
@@ -39,13 +41,21 @@ LocationConfig &LocationConfig::operator=(const LocationConfig &other)
 {
     if (this != &other)
     {
+        name = other.name;
         root = other.root;
         allowMethods = other.allowMethods;
         index = other.index;
         autoindex = other.autoindex;
         uploadPath = other.uploadPath;
+        cgiPaths = other.cgiPaths;
+        cgiExtensions = other.cgiExtensions;
     }
     return *this;
+}
+
+std::string LocationConfig::getName() const
+{
+    return name;
 }
 
 std::string LocationConfig::getRoot() const
@@ -81,6 +91,11 @@ std::vector<std::string> LocationConfig::getCgiPaths() const
 std::vector<std::string> LocationConfig::getCgiExtensions() const
 {
     return cgiExtensions;
+}
+
+void LocationConfig::setName(const std::string &n)
+{
+    name = n;
 }
 
 void LocationConfig::setRoot(const std::string &r)
@@ -126,7 +141,7 @@ void LocationConfig::addCgiExtension(const std::string& extension)
 
 LocationConfig	LocationConfig::createDefaultLocation(const ServerConfig &serverConfig)
 {
-    LocationConfig location(serverConfig.getRoot());
+    LocationConfig location(serverConfig.getRoot(), "");
     location.setIndex(serverConfig.getIndex());
     std::vector<HTTPMethod> methods;
     methods.push_back(GET);

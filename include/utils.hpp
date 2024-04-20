@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 00:11:48 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 19:57:14 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ namespace Utils
      * @param directory The directory to list.
      * @return A string containing an HTML document listing all directory contents.
      */
-    std::string createHTMLDirectoryListing(const std::string &directory);
+    std::string createHTMLDirectoryListing(const std::string &directory, const std::string &path = "");
 
     /**
      * @brief Prevents directory traversal by sanitizing the path.
@@ -78,6 +78,7 @@ namespace Utils
      * @brief Checks if a file exists at the specified path.
      * @param path The path to the file.
      * @return True if the file exists, otherwise false.
+     * @note If the path is a directory, even if it exists, returns false.
      */
     bool fileExists(const std::string &path);
 
@@ -95,6 +96,13 @@ namespace Utils
      * @return True if the file was successfully created, otherwise false.
      */
     bool createFile(const std::string &path, const std::string &content);
+
+    /**
+     * @brief Deletes a file at the specified path.
+     * @param path The path to the file.
+     * @return True if the file was successfully deleted, otherwise false.
+     */
+    bool deleteFile(const std::string &path);
 
     /**
      * @brief Checks if a given socket file descriptor is valid.

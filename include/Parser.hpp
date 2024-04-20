@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:43:07 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 18:04:47 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:01:04 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ class Parser
 
         ServerConfig parseServerBlock(); ///< Parses a server block from the configuration file.
         void processServerLine(const std::string &line, ServerConfig &serverConfig); ///< Processes a line within a server block.
-        LocationConfig parseLocationBlock(ServerConfig &serverConfig); ///< Parses a location block within a server block.
+        LocationConfig parseLocationBlock(ServerConfig &serverConfig, const std::string &name); ///< Parses a location block within a server block.
         void processLocationLine(const std::string &line, LocationConfig &locationConfig, ServerConfig &serverConfig); ///< Processes a line within a location block.
         static void parseLine(std::string &str); ///< Cleans a line from the configuration file removing comments and whitespace.
 

@@ -6,15 +6,15 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:28:14 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 18:17:10 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:00:43 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
 
-LocationConfig Parser::parseLocationBlock(ServerConfig &serverConfig)
+LocationConfig Parser::parseLocationBlock(ServerConfig &serverConfig, const std::string &name)
 {
-    LocationConfig locationConfig(serverConfig.getRoot());
+    LocationConfig locationConfig(serverConfig.getRoot(), name);
     std::string line;
     std::stack<char> bracesStack;
     bracesStack.push('{');
@@ -59,7 +59,6 @@ void Parser::processLocationLine(const std::string &line, LocationConfig &locati
         processUploadPathDirective(iss, locationConfig, serverConfig);
     else
 	{
-		std::cout << "Invalid directive LOCATION: " << word << std::endl;
         throw Parser::InvalidDirectiveException();
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:27:44 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/17 17:24:55 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:42:56 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,15 @@ void Parser::processClientMaxBodySizeDirective(std::istringstream &iss, ServerCo
 
 void Parser::processLocationDirective(std::istringstream &iss, ServerConfig &serverConfig)
 {
-	std::string path;
-	if (!(iss >> path))
-		throw Parser::InvalidDirectiveException();
-	LocationConfig locationConfig = parseLocationBlock(serverConfig);
-	serverConfig.addLocation(path, locationConfig);
-}
+    std::string path;
+    if (!(iss >> path) || path.empty())
+        throw Parser::InvalidDirectiveException();
 
+    std::string name = (path[0] == '/') ? path.substr(1) : path;
+    LocationConfig locationConfig = parseLocationBlock(serverConfig, name);
+    locationConfig.setName(name);
+    serverConfig.addLocation(path, locationConfig);
+}
 void Parser::processUploadsDirectoryDirective(std::istringstream &iss, ServerConfig &serverConfig)
 {
 	std::string path;
