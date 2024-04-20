@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:33:17 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/11 23:40:59 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:47:02 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "Time.hpp"
 # include "HTTPRequest.hpp"
 # include "HTTPResponse.hpp"
+# include "utils.hpp"
 
 /**
  * @brief Class for logging messages with different severity levels.
@@ -57,13 +58,6 @@ class Logger
 		 * @brief Prints webserv header.
 		 */
 		static void	logHeader();
-
-		/**
-		 * @brief Converts an integer to a string.
-		 * @param number Integer to convert.
-		 * @return std::string The integer as a string.
-		 */
-		static std::string to_string(int number);
 
 		/**
 		 * @brief Logs an HTTP request.

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:39:37 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/15 20:53:36 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:46:09 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void Logger::logRequest(const HTTPRequest &request, const HTTPResponse &response
 								+ HTTPRequest::getMethodString(request.getMethod())
 								+ " " + request.getUri()
 								+ " from " + ip
-								+ " - " + Logger::to_string(response.getStatusCode())
+								+ " - " + Utils::to_string(response.getStatusCode())
 								+ " " + response.getStatusMessage();
 		log(message, INFO, printTime);
 	}
@@ -71,13 +71,6 @@ std::string	Logger::getClientSocketIP(int clientSocketFD)
 	getpeername(clientSocketFD, (struct sockaddr *)&addr, &addrLen);
 	return inet_ntoa(addr.sin_addr);
 
-}
-
-std::string Logger::to_string(int number)
-{
-	std::stringstream ss;
-	ss << number;
-	return ss.str();
 }
 
 void	Logger::logHeader()

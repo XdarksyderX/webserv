@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 21:21:48 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 00:04:30 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	HTTPResponseBuilder::assembleStatusLine(std::string &assembleResponse, cons
 	assembleResponse += "HTTP/";
 	assembleResponse += response.getHttpVersion();
 	assembleResponse += " ";
-	assembleResponse += Logger::to_string(response.getStatusCode());
+	assembleResponse += Utils::to_string(response.getStatusCode());
 	assembleResponse += " ";
 	assembleResponse += response.getStatusMessage();
 	assembleResponse += "\r\n";
@@ -75,9 +75,15 @@ std::string HTTPResponseBuilder::findMatchingLocation()
     return bestMatchKey;
 }
 
-void	HTTPResponseBuilder::addCommonHeaders(HTTPResponse &response)
+void	HTTPResponseBuilder::addCommonHeaders(const HTTPRequest &request, HTTPResponse &response)
 {
-	response.addHeader("Content-Length", Logger::to_string(response.getBody().length()));
+	if (request.getHeader("Cookie") == "")
+    {
+        HTTPCookie cookie;
+        std::string cookieHeader = Utils::convertToBase64(HTTPCookie::serializeCookie(cookie)) + "; HttpOnly";
+		response.addHeader("Set-Cookie", cookieHeader);
+    }
+	response.addHeader("Content-Length", Utils::to_string(response.getBody().length()));
 	response.addHeader("Date", Time::getHTTPFormatCurrentTime());
 	response.addHeader("Connection", "close");
 	response.addHeader("Server", "webserv");
@@ -86,11 +92,11 @@ void	HTTPResponseBuilder::addCommonHeaders(HTTPResponse &response)
 std::string		HTTPResponseBuilder::simpleErrorPage(int errorCode)
 {
 	std::string response = "<!DOCTYPE html>\n<html>\n<head>\n<title>";
-	response += Logger::to_string(errorCode);
+	response += Utils::to_string(errorCode);
 	response += " ";
 	response += STATUS_CODES.at(errorCode);
 	response += "</title>\n</head>\n<body>\n<h1>";
-	response += Logger::to_string(errorCode);
+	response += Utils::to_string(errorCode);
 	response += " ";
 	response += STATUS_CODES.at(errorCode);
 	response += "</h1>\n</body>\n</html>\n";
@@ -127,7 +133,7 @@ HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
 		response.setBody(simpleErrorPage(errorCode));
 		response.addHeader("Content-Type", "text/html");
 	}
-	addCommonHeaders(response);
+	addCommonHeaders(request, response);
 	return response;
 }
 
@@ -186,7 +192,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
                         response.addHeader("Content-Type", "text/plain");
                     }
                     response.setStatusCode(200);
-                    addCommonHeaders(response);
+                    addCommonHeaders(request, response);
                     return response;
                 }
                 else if (Utils::directoryExists(resource))
@@ -207,7 +213,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
     }
 
     response.setStatusCode(200);
-    addCommonHeaders(response);
+    addCommonHeaders(request, response);
     return response;
 }
 
@@ -229,7 +235,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
         response.setStatusCode(403);
         response.setBody("Access denied: Cannot upload outside of the designated directory.");
         response.addHeader("Content-Type", "text/plain");
-        addCommonHeaders(response);
+        addCommonHeaders(request, response);
         return response;
     }
     if (uriToCheck == allowedUploadURI || fileName.empty())
@@ -237,7 +243,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
         response.setStatusCode(400);
         response.setBody("No file name provided in the upload path.");
         response.addHeader("Content-Type", "text/plain");
-        addCommonHeaders(response);
+        addCommonHeaders(request, response);
         return response;
     }
 
@@ -255,7 +261,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
         response.addHeader("Content-Type", "text/plain");
     }
 
-    addCommonHeaders(response);
+    addCommonHeaders(request, response);
     return response;
 }
 
@@ -277,7 +283,7 @@ HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *loca
         response.setStatusCode(403);
         response.setBody("Access denied: Cannot delete files outside of the designated directory.");
         response.addHeader("Content-Type", "text/plain");
-        addCommonHeaders(response);
+        addCommonHeaders(request, response);
         return response;
     }
     if (uriToCheck == allowedUploadURI || fileName.empty())
@@ -285,7 +291,7 @@ HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *loca
         response.setStatusCode(400);
         response.setBody("No file name provided in the path.");
         response.addHeader("Content-Type", "text/plain");
-        addCommonHeaders(response);
+        addCommonHeaders(request, response);
         return response;
     }
     if (Utils::deleteFile(fullPath))
@@ -301,7 +307,7 @@ HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *loca
         response.setBody("Failed to delete file. It may not exist or there is a permission error.");
         response.addHeader("Content-Type", "text/plain");
     }
-    addCommonHeaders(response);
+    addCommonHeaders(request, response);
     return response;
 }
 
@@ -314,7 +320,6 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 			|| contentLength != request.getBody().length())
 			return handleErrorPage(413);
 	}
-	
 	LocationConfig location;
 	std::string locationName = findMatchingLocation();
 	if (locationName.empty())

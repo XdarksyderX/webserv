@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 21:40:19 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:46:09 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,11 @@ int	HTTPServer::acceptConnection()
 		throw AcceptError();
 
 	HTTPRequest request = receiveRequest(clientSocketFD);
-    std::string host = serverConfig.getHost() + ":" + Logger::to_string(serverConfig.getPort());
+    std::string host = serverConfig.getHost() + ":" + Utils::to_string(serverConfig.getPort());
     if (request.getHeader("Host").empty() || request.getHeader("Host") != host)
     {
         if (serverConfig.getHost().substr(0, 3) != "127"
-            && request.getHeader("Host") != "localhost:" + Logger::to_string(serverConfig.getPort()))
+            && request.getHeader("Host") != "localhost:" + Utils::to_string(serverConfig.getPort()))
         {
             close(clientSocketFD);
             return -1;
@@ -150,7 +150,7 @@ void    HTTPServer::sendFirstPendingResponse(int clientSocketFD)
         
         std::string server = serverConfig.getHost()
                     + ":"
-                    + Logger::to_string(serverConfig.getPort());
+                    + Utils::to_string(serverConfig.getPort());
         Logger::logRequest(request, response, clientSocketFD, server, true);
         clientResponsesToSend.pop();
         updateClientActivity(clientSocketFD);

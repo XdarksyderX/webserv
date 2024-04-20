@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 19:57:14 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/20 23:54:20 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <string>
 # include <sstream>
+# include <stdint.h>
+# include <vector>
 # include <fstream>
 # include <algorithm> 
 # include <sys/stat.h>
@@ -31,6 +33,13 @@
  */
 namespace Utils
 {
+    /**
+     * @brief Converts an integer to a string.
+     * @param number Integer to convert.
+     * @return std::string The integer as a string.
+     */
+    std::string to_string(int number);
+    
     /**
      * @brief Extracts the file extension from a filename.
      * @param filename The full name of the file.
@@ -110,6 +119,20 @@ namespace Utils
      * @return True if the socket is valid, otherwise false.
      */
     bool isValidSocket(int socketFD);
+
+    /**
+     * @brief Converts a string to base64 encoding.
+     * @param input The string to encode.
+     * @return The base64 encoded string.
+     */
+    std::string convertToBase64(const std::string &input);
+
+    /**
+     * @brief Converts a base64 encoded string to plain text.
+     * @param input The base64 encoded string.
+     * @return The decoded plain text string.
+     */
+    std::string convertFromBase64(const std::string &input);
 
     /**
      * @brief Checks if a vector contains a specific element.
