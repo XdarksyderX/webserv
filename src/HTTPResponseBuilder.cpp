@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 17:22:20 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 22:12:46 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,8 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
         else
         {
 			std::string allowedUploadURI = Utils::joinPaths("","/" + location->getName() + "/" + location->getUploadPath());
-            if (request.getUri().find(allowedUploadURI) != std::string::npos)
+            if (request.getUri().find(allowedUploadURI) != std::string::npos
+                && location->getUploadPath() != "" && serverConfig.getUploadsDirectory() != "")
             {
                 std::string uploadPath = getLocationUploadPath(location);
                 resource = Utils::joinPaths(uploadPath, Utils::getNodeName(request.getUri()));
@@ -200,7 +201,8 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
                     directory = resource;
                 }
             }
-            if (!directory.empty() && location->getAutoindex())
+            directory = Utils::joinPaths(root, request.getUri());
+            if (!directory.empty() && location->getAutoindex() && Utils::directoryExists(directory))
             {
                 response.setBody(Utils::createHTMLDirectoryListing(directory, request.getUri()));
                 response.addHeader("Content-Type", "text/html");
@@ -344,8 +346,6 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 		if (contentLength > serverConfig.getClientMaxBodySize() 
 			|| contentLength != request.getBody().length())
         {
-            std::cout << "Content-Length: " << contentLength << std::endl;
-            std::cout << "Body:\n" << request.getBody() << std::endl;
 			return handleErrorPage(413);
         }
 	}
