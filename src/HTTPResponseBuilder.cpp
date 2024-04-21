@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 16:18:00 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:22:20 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
 
     std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
     std::string uriToCheck = request.getUri();
-    std::string contentType = request.getHeaders().at("Content-Type");
+    std::string contentType = request.getHeader("Content-Type");
 
     if (contentType.find("multipart/form-data") != std::string::npos)
     {
