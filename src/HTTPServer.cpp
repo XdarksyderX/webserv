@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 10:43:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 22:46:09 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:39:54 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,49 @@ int	HTTPServer::getSocketFD() const
 	return socketFD;
 }
 
-HTTPRequest	HTTPServer::receiveRequest(int clientSocketFD)
+HTTPRequest HTTPServer::receiveRequest(int clientSocketFD)
 {
-	char buffer[1024];
-	int bytesRead;
-	std::string requestString;
-	HTTPRequest request;
+    const size_t buffer_size = 1024;
+    char buffer[buffer_size];
+    int bytesRead;
+    std::string requestString;
+    HTTPRequest request;
 
-	do
-	{
-        bytesRead = recv(clientSocketFD, buffer, sizeof(buffer), 0);
-        if (bytesRead < 0)
-        {
-            close(clientSocketFD);
-            throw SocketError();
-        } 
+    while ((bytesRead = recv(clientSocketFD, buffer, buffer_size, 0)) > 0)
+    {
         requestString.append(buffer, bytesRead);
         if (requestString.find("\r\n\r\n") != std::string::npos)
-			break ;
-    } while (bytesRead > 0 && requestString.find("\r\n\r\n") == std::string::npos);
-
-	request = HTTPRequestParser::parseRequest(requestString);
-	return request;
+        {
+            size_t contentLengthPos = requestString.find("Content-Length: ");
+            if (contentLengthPos != std::string::npos)
+            {
+                size_t start = contentLengthPos + 16;
+                size_t end = requestString.find("\r\n", contentLengthPos);
+                int contentLength = atoi(requestString.substr(start, end - start).c_str());
+                size_t headersEnd = requestString.find("\r\n\r\n") + 4;
+                int bodyLength = requestString.length() - headersEnd;
+                while (bodyLength < contentLength)
+                {
+                    bytesRead = recv(clientSocketFD, buffer, buffer_size, 0);
+                    if (bytesRead < 0)
+                    {
+                        close(clientSocketFD);
+                        throw SocketError();
+                    }
+                    requestString.append(buffer, bytesRead);
+                    bodyLength += bytesRead;
+                }
+            }
+            break;
+        }
+    }
+    if (bytesRead < 0)
+    {
+        close(clientSocketFD);
+        throw SocketError();
+    }
+    request = HTTPRequestParser::parseRequest(requestString);
+    return request;
 }
 
 void HTTPServer::sendResponse(const HTTPResponse &response, int clientSocketFD)

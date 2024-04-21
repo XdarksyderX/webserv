@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:45:31 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 21:13:15 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:21:11 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,32 @@ void	HTTPRequestParser::parseRequestHeaders(HTTPRequest &request, const std::str
 	request.addHeader(key, value);
 }
 
-HTTPRequest	HTTPRequestParser::parseRequest(const std::string &rawRequest)
+HTTPRequest HTTPRequestParser::parseRequest(const std::string &rawRequest)
 {
-	HTTPRequest request;
-	std::string::size_type start = 0;
-	std::string::size_type end = rawRequest.find("\r\n");
+    HTTPRequest request;
+    std::string::size_type headerEnd = rawRequest.find("\r\n\r\n");
+    if (headerEnd == std::string::npos)
+        throw InvalidRequestLine();
 
-	if (end == std::string::npos)
-		throw InvalidRequestLine();
-	parseRequestLine(request, rawRequest.substr(start, end - start));
-	start = end + 2;
-	end = rawRequest.find("\r\n", start);
-	while (end != std::string::npos && start < end)
+    std::string headersPart = rawRequest.substr(0, headerEnd);
+    std::string::size_type start = 0;
+    std::string::size_type end = headersPart.find("\r\n");
+
+    parseRequestLine(request, headersPart.substr(start, end - start));
+    start = end + 2;
+    while (start < headerEnd)
 	{
-		if (start == end)
-			break;
-		parseRequestHeaders(request, rawRequest.substr(start, end - start));
-		start = end + 2;
-		end = rawRequest.find("\r\n", start);
-	}
-	if (start < rawRequest.size())
-		request.setBody(rawRequest.substr(start + 2));
-	return request;
+        end = headersPart.find("\r\n", start);
+        if (end == std::string::npos)
+            end = headerEnd;
+        if (start == end)
+            break;
+        parseRequestHeaders(request, headersPart.substr(start, end - start));
+        start = end + 2;
+    }
+    if (headerEnd + 4 < rawRequest.size())
+        request.setBody(rawRequest.substr(headerEnd + 4));
+    return request;
 }
 
 const char *HTTPRequestParser::InvalidRequestLine::what() const throw()

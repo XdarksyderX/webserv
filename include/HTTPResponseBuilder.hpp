@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:35:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 22:49:14 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:00:06 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "HTTPRequest.hpp"
 # include "ServerConfig.hpp"
 # include "utils.hpp"
+# include "HTTPMultiformData.hpp"
 # include "HTTPCookie.hpp"
 
 /**
@@ -55,6 +56,8 @@ class HTTPResponseBuilder
 
 		static std::map<std::string, std::string>	createMIMEMap();
 		static std::map<int, std::string> 			createStatusCodesMap();
+
+		HTTPResponse	handleMultiFormDataRequest(const LocationConfig *location);
 
 		HTTPResponse	handleGetRequest(const LocationConfig *location);
 		HTTPResponse	handlePostRequest(const LocationConfig *location);

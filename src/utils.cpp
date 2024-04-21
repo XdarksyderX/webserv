@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 23:54:37 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:43:16 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,15 @@ bool Utils::createFile(const std::string &path, const std::string &content)
 bool Utils::deleteFile(const std::string &path)
 {
 	return remove(path.c_str()) == 0;
+}
+
+std::string Utils::trim(const std::string& str)
+{
+    size_t first = str.find_first_not_of(" \t\r\n");
+    if (first == std::string::npos)
+        return "";
+    size_t last = str.find_last_not_of(" \t\r\n");
+    return str.substr(first, (last - first + 1));
 }
 
 bool Utils::isValidSocket(int socketFD)

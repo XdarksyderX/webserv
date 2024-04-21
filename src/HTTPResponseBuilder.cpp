@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 00:04:30 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:18:00 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	HTTPResponseBuilder::addCommonHeaders(const HTTPRequest &request, HTTPRespo
 	if (request.getHeader("Cookie") == "")
     {
         HTTPCookie cookie;
-        std::string cookieHeader = Utils::convertToBase64(HTTPCookie::serializeCookie(cookie)) + "; HttpOnly";
+        std::string cookieHeader = "session=" + Utils::convertToBase64(HTTPCookie::serializeCookie(cookie)) + "; HttpOnly";
 		response.addHeader("Set-Cookie", cookieHeader);
     }
 	response.addHeader("Content-Length", Utils::to_string(response.getBody().length()));
@@ -230,6 +230,31 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
 
     std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
     std::string uriToCheck = request.getUri();
+    std::string contentType = request.getHeaders().at("Content-Type");
+
+    if (contentType.find("multipart/form-data") != std::string::npos)
+    {
+        HTTPMultiFormData formData(request);
+        std::vector<HTTPFormFile> files = formData.getFiles();
+        for (size_t i = 0; i < files.size(); ++i)
+        {
+            std::string individualPath = Utils::joinPaths(resource, files[i].getFilename());
+            individualPath = Utils::preventFileTraversal(individualPath);
+            if (!Utils::createFile(individualPath, files[i].getContent()))
+            {
+                response.setStatusCode(500);
+                response.setBody("Failed to create file.");
+                response.addHeader("Content-Type", "text/plain");
+                addCommonHeaders(request, response);
+                return response;
+            }
+        }
+        response.setStatusCode(201);
+        response.setBody("Files created successfully.");
+        response.addHeader("Content-Type", "text/plain");
+        addCommonHeaders(request, response);
+        return response;
+    }
     if (uriToCheck.find(allowedUploadURI) == std::string::npos)
     {
         response.setStatusCode(403);
@@ -246,23 +271,23 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
         addCommonHeaders(request, response);
         return response;
     }
-
     if (Utils::createFile(fullPath, request.getBody()))
     {
         response.setStatusCode(201);
         response.setBody("File created successfully at " + fullPath);
         response.addHeader("Content-Type", "text/plain");
         response.addHeader("Location", fullPath);
+        addCommonHeaders(request, response);
+        return response;
     }
     else
     {
         response.setStatusCode(500);
         response.setBody("Failed to create file.");
         response.addHeader("Content-Type", "text/plain");
+        addCommonHeaders(request, response);
+        return response;
     }
-
-    addCommonHeaders(request, response);
-    return response;
 }
 
 HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *location)
@@ -318,7 +343,11 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 		size_t contentLength = static_cast<size_t>(std::atoi(request.getHeader("Content-Length").c_str()));
 		if (contentLength > serverConfig.getClientMaxBodySize() 
 			|| contentLength != request.getBody().length())
+        {
+            std::cout << "Content-Length: " << contentLength << std::endl;
+            std::cout << "Body:\n" << request.getBody() << std::endl;
 			return handleErrorPage(413);
+        }
 	}
 	LocationConfig location;
 	std::string locationName = findMatchingLocation();

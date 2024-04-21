@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 23:54:20 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:43:40 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,13 @@ namespace Utils
      * @return The decoded plain text string.
      */
     std::string convertFromBase64(const std::string &input);
+
+    /**
+     * @brief Trims leading and trailing whitespace from a string.
+     * @param str The string to trim.
+     * @return The trimmed string.
+     */
+    std::string trim(const std::string& str);
 
     /**
      * @brief Checks if a vector contains a specific element.
