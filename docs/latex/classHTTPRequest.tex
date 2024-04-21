@@ -1,0 +1,146 @@
+\hypertarget{classHTTPRequest}{}\doxysection{HTTPRequest Class Reference}
+\label{classHTTPRequest}\index{HTTPRequest@{HTTPRequest}}
+
+
+Represents an HTTP request.  
+
+
+
+
+{\ttfamily \#include $<$HTTPRequest.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a02fb8dc83ed547dfee43367be393d665}\label{classHTTPRequest_a02fb8dc83ed547dfee43367be393d665}} 
+{\bfseries HTTPRequest} (const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&other)
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a6b8982b510d232778cdab8011ba6785a}\label{classHTTPRequest_a6b8982b510d232778cdab8011ba6785a}} 
+\mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \& {\bfseries operator=} (const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&other)
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a16783e760598da11f01026a59b0884ca}\label{classHTTPRequest_a16783e760598da11f01026a59b0884ca}} 
+HTTPMethod {\bfseries get\+Method} () const
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a92d541a766c516cd9893e593ac674236}\label{classHTTPRequest_a92d541a766c516cd9893e593ac674236}} 
+std\+::string {\bfseries get\+Uri} () const
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a2fe8fef49312d38d6666ab2d79397b5a}\label{classHTTPRequest_a2fe8fef49312d38d6666ab2d79397b5a}} 
+std\+::string {\bfseries get\+Http\+Version} () const
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a4373701ca49d155f737352e51703df3f}\label{classHTTPRequest_a4373701ca49d155f737352e51703df3f}} 
+std\+::string {\bfseries get\+Body} () const
+\item 
+\mbox{\Hypertarget{classHTTPRequest_aa191b3e9dfe3e394b0ee34900cecabd0}\label{classHTTPRequest_aa191b3e9dfe3e394b0ee34900cecabd0}} 
+const std\+::map$<$ std\+::string, std\+::string $>$ \& {\bfseries get\+Headers} () const
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a90d312264d61ba07933d7864c128229f}\label{classHTTPRequest_a90d312264d61ba07933d7864c128229f}} 
+std\+::map$<$ std\+::string, std\+::string $>$ \& {\bfseries get\+Headers} ()
+\item 
+\mbox{\Hypertarget{classHTTPRequest_abc58e3a053b2ac95280669c384cefe1d}\label{classHTTPRequest_abc58e3a053b2ac95280669c384cefe1d}} 
+void {\bfseries set\+Method} (HTTPMethod method)
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a142ec9aa72bf5880e358e3eb5707a6ae}\label{classHTTPRequest_a142ec9aa72bf5880e358e3eb5707a6ae}} 
+void {\bfseries set\+Uri} (const std\+::string \&uri)
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a21b04f86144d3f2fce6c2466e580c696}\label{classHTTPRequest_a21b04f86144d3f2fce6c2466e580c696}} 
+void {\bfseries set\+Http\+Version} (const std\+::string \&http\+Version)
+\item 
+\mbox{\Hypertarget{classHTTPRequest_a95e076ffd446995a7202cdff8d3baeae}\label{classHTTPRequest_a95e076ffd446995a7202cdff8d3baeae}} 
+void {\bfseries set\+Body} (const std\+::string \&body)
+\item 
+void \mbox{\hyperlink{classHTTPRequest_a0cebbc1634daf277efe7321ff893caa6}{add\+Header}} (const std\+::string \&key, const std\+::string \&value)
+\begin{DoxyCompactList}\small\item\em Adds a header to the request. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classHTTPRequest_abe91df1d97574dc2d3112213823358a8}{get\+Header}} (const std\+::string \&key) const
+\begin{DoxyCompactList}\small\item\em Gets a header from the request. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPRequest_a492e033bc8c2e6022fdf2422269536aa}\label{classHTTPRequest_a492e033bc8c2e6022fdf2422269536aa}} 
+void \mbox{\hyperlink{classHTTPRequest_a492e033bc8c2e6022fdf2422269536aa}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the request content, resetting all fields to their default values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static HTTPMethod \mbox{\hyperlink{classHTTPRequest_a6b830a0a96f181ee5ad6e43cbdee7495}{get\+Method\+From\+String}} (const std\+::string \&method)
+\begin{DoxyCompactList}\small\item\em Converts an HTTP method string to an HTTPMethod enumeration value. \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{classHTTPRequest_a668b3e5090cac6d60db069115239f7b1}{get\+Method\+String}} (HTTPMethod method)
+\begin{DoxyCompactList}\small\item\em Converts an HTTPMethod enumeration value to an HTTP method string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an HTTP request. 
+
+This class encapsulates all components of an HTTP request, including the method, URI, HTTP version, body, and headers. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPRequest_a0cebbc1634daf277efe7321ff893caa6}\label{classHTTPRequest_a0cebbc1634daf277efe7321ff893caa6}} 
+\index{HTTPRequest@{HTTPRequest}!addHeader@{addHeader}}
+\index{addHeader@{addHeader}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{addHeader()}{addHeader()}}
+{\footnotesize\ttfamily void HTTPRequest\+::add\+Header (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key,  }\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Adds a header to the request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The header key. \\
+\hline
+{\em value} & The header value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classHTTPRequest_abe91df1d97574dc2d3112213823358a8}\label{classHTTPRequest_abe91df1d97574dc2d3112213823358a8}} 
+\index{HTTPRequest@{HTTPRequest}!getHeader@{getHeader}}
+\index{getHeader@{getHeader}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{getHeader()}{getHeader()}}
+{\footnotesize\ttfamily std\+::string HTTPRequest\+::get\+Header (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key }\end{DoxyParamCaption}) const}
+
+
+
+Gets a header from the request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The header key to retrieve. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The header value if found, otherwise an empty string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPRequest_a6b830a0a96f181ee5ad6e43cbdee7495}\label{classHTTPRequest_a6b830a0a96f181ee5ad6e43cbdee7495}} 
+\index{HTTPRequest@{HTTPRequest}!getMethodFromString@{getMethodFromString}}
+\index{getMethodFromString@{getMethodFromString}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{getMethodFromString()}{getMethodFromString()}}
+{\footnotesize\ttfamily HTTPMethod HTTPRequest\+::get\+Method\+From\+String (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{method }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Converts an HTTP method string to an HTTPMethod enumeration value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & The HTTP method string to convert. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The corresponding HTTPMethod value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPRequest_a668b3e5090cac6d60db069115239f7b1}\label{classHTTPRequest_a668b3e5090cac6d60db069115239f7b1}} 
+\index{HTTPRequest@{HTTPRequest}!getMethodString@{getMethodString}}
+\index{getMethodString@{getMethodString}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{getMethodString()}{getMethodString()}}
+{\footnotesize\ttfamily std\+::string HTTPRequest\+::get\+Method\+String (\begin{DoxyParamCaption}\item[{HTTPMethod}]{method }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Converts an HTTPMethod enumeration value to an HTTP method string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & The HTTPMethod value to convert. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPRequest.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPRequest.\+cpp\end{DoxyCompactItemize}

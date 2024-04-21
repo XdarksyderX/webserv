@@ -1,0 +1,132 @@
+\hypertarget{classServerConfig}{}\doxysection{Server\+Config Class Reference}
+\label{classServerConfig}\index{ServerConfig@{ServerConfig}}
+
+
+\mbox{\hyperlink{classServerConfig}{Server\+Config}} class holds the configuration for a single server.  
+
+
+
+
+{\ttfamily \#include $<$Server\+Config.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classServerConfig_a077986df18a3b183336e2a44f1d3e62b}\label{classServerConfig_a077986df18a3b183336e2a44f1d3e62b}} 
+{\bfseries Server\+Config} (const \mbox{\hyperlink{classServerConfig}{Server\+Config}} \&other)
+\item 
+\mbox{\Hypertarget{classServerConfig_ab52310788282292e3beef1a12520cff8}\label{classServerConfig_ab52310788282292e3beef1a12520cff8}} 
+\mbox{\hyperlink{classServerConfig}{Server\+Config}} \& {\bfseries operator=} (const \mbox{\hyperlink{classServerConfig}{Server\+Config}} \&other)
+\item 
+\mbox{\Hypertarget{classServerConfig_a360727df3e47c692fd274cf29b37660b}\label{classServerConfig_a360727df3e47c692fd274cf29b37660b}} 
+unsigned short {\bfseries get\+Port} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_a201a38f8e87a44fa93622d3bfae63d88}\label{classServerConfig_a201a38f8e87a44fa93622d3bfae63d88}} 
+std\+::string {\bfseries get\+Host} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_a2375b1692e9b3be6ab1150f45ecb3f5b}\label{classServerConfig_a2375b1692e9b3be6ab1150f45ecb3f5b}} 
+std\+::string {\bfseries get\+Server\+Name} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_aa4ffec6be2a66bdc0462c8da2df99f5a}\label{classServerConfig_aa4ffec6be2a66bdc0462c8da2df99f5a}} 
+std\+::string {\bfseries get\+Root} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_a02152e412ce856e677d4351527f8b34a}\label{classServerConfig_a02152e412ce856e677d4351527f8b34a}} 
+std\+::string {\bfseries get\+Index} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_abd582526c214bc5dde2695183169a351}\label{classServerConfig_abd582526c214bc5dde2695183169a351}} 
+std\+::map$<$ int, std\+::string $>$ {\bfseries get\+Error\+Pages} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_af33567972be72bda70a225128bee2535}\label{classServerConfig_af33567972be72bda70a225128bee2535}} 
+size\+\_\+t {\bfseries get\+Client\+Max\+Body\+Size} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_a849a323b40169764a7fef32494487c53}\label{classServerConfig_a849a323b40169764a7fef32494487c53}} 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{classLocationConfig}{Location\+Config}} $>$ {\bfseries get\+Locations} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_ab8c9eee68267eecf6ca519b47b02c3a7}\label{classServerConfig_ab8c9eee68267eecf6ca519b47b02c3a7}} 
+std\+::string {\bfseries get\+Uploads\+Directory} () const
+\item 
+\mbox{\Hypertarget{classServerConfig_a2748b19bba2bd0ae7be0e249484b8f41}\label{classServerConfig_a2748b19bba2bd0ae7be0e249484b8f41}} 
+void {\bfseries set\+Port} (unsigned short p)
+\item 
+\mbox{\Hypertarget{classServerConfig_abc231fe138f30fcfea4e1a405f08af01}\label{classServerConfig_abc231fe138f30fcfea4e1a405f08af01}} 
+void {\bfseries set\+Host} (const std\+::string \&h)
+\item 
+\mbox{\Hypertarget{classServerConfig_a4a9ca348837550e0115e5b69a70daa26}\label{classServerConfig_a4a9ca348837550e0115e5b69a70daa26}} 
+void {\bfseries set\+Server\+Name} (const std\+::string \&name)
+\item 
+\mbox{\Hypertarget{classServerConfig_a8257d978e07212ddc982548003d99084}\label{classServerConfig_a8257d978e07212ddc982548003d99084}} 
+void {\bfseries set\+Root} (const std\+::string \&r)
+\item 
+\mbox{\Hypertarget{classServerConfig_ac4e7188f2c513b35b6c966c7fccc54da}\label{classServerConfig_ac4e7188f2c513b35b6c966c7fccc54da}} 
+void {\bfseries set\+Index} (const std\+::string \&i)
+\item 
+\mbox{\Hypertarget{classServerConfig_ad3850a577562a65921739ab9b73b6563}\label{classServerConfig_ad3850a577562a65921739ab9b73b6563}} 
+void {\bfseries set\+Error\+Pages} (const std\+::map$<$ int, std\+::string $>$ \&pages)
+\item 
+\mbox{\Hypertarget{classServerConfig_ae91f20524d7a796d36d9717b7caccc4c}\label{classServerConfig_ae91f20524d7a796d36d9717b7caccc4c}} 
+void {\bfseries set\+Client\+Max\+Body\+Size} (size\+\_\+t size)
+\item 
+\mbox{\Hypertarget{classServerConfig_ad86fae8d1a3e1f6e0876ec676e8f94d6}\label{classServerConfig_ad86fae8d1a3e1f6e0876ec676e8f94d6}} 
+void {\bfseries set\+Locations} (const std\+::map$<$ std\+::string, \mbox{\hyperlink{classLocationConfig}{Location\+Config}} $>$ \&locs)
+\item 
+\mbox{\Hypertarget{classServerConfig_ab1c8b68d8867fcdd2df1decab76b4d2b}\label{classServerConfig_ab1c8b68d8867fcdd2df1decab76b4d2b}} 
+void {\bfseries set\+Uploads\+Directory} (const std\+::string \&dir)
+\item 
+void \mbox{\hyperlink{classServerConfig_a0b332fc9b3e94af5d85da38669fc902a}{add\+Error\+Page}} (int error\+Code, const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Add or update an error page path for a specific error code. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServerConfig_aa31b6cc647539cfca5ea6917cd1e4535}{add\+Location}} (const std\+::string \&path, const \mbox{\hyperlink{classLocationConfig}{Location\+Config}} \&config)
+\begin{DoxyCompactList}\small\item\em Add or update a location configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classServerConfig_a4cb4a08537bdcf1f67b5d36e7a556bcb}\label{classServerConfig_a4cb4a08537bdcf1f67b5d36e7a556bcb}} 
+std\+::ostream \& \mbox{\hyperlink{classServerConfig_a4cb4a08537bdcf1f67b5d36e7a556bcb}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{classServerConfig}{Server\+Config}} \&config)
+\begin{DoxyCompactList}\small\item\em Output stream operator overload to print the server configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classServerConfig}{Server\+Config}} class holds the configuration for a single server. 
+
+This class encapsulates all the server configuration details such as port, host, server name, root directory, and specific location configurations. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classServerConfig_a0b332fc9b3e94af5d85da38669fc902a}\label{classServerConfig_a0b332fc9b3e94af5d85da38669fc902a}} 
+\index{ServerConfig@{ServerConfig}!addErrorPage@{addErrorPage}}
+\index{addErrorPage@{addErrorPage}!ServerConfig@{ServerConfig}}
+\doxysubsubsection{\texorpdfstring{addErrorPage()}{addErrorPage()}}
+{\footnotesize\ttfamily void Server\+Config\+::add\+Error\+Page (\begin{DoxyParamCaption}\item[{int}]{error\+Code,  }\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Add or update an error page path for a specific error code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\+Code} & The HTTP error code. \\
+\hline
+{\em path} & The path to the error page. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServerConfig_aa31b6cc647539cfca5ea6917cd1e4535}\label{classServerConfig_aa31b6cc647539cfca5ea6917cd1e4535}} 
+\index{ServerConfig@{ServerConfig}!addLocation@{addLocation}}
+\index{addLocation@{addLocation}!ServerConfig@{ServerConfig}}
+\doxysubsubsection{\texorpdfstring{addLocation()}{addLocation()}}
+{\footnotesize\ttfamily void Server\+Config\+::add\+Location (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path,  }\item[{const \mbox{\hyperlink{classLocationConfig}{Location\+Config}} \&}]{config }\end{DoxyParamCaption})}
+
+
+
+Add or update a location configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The URI path for the location. \\
+\hline
+{\em config} & The configuration for this location. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/Server\+Config.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Server\+Config.\+cpp\end{DoxyCompactItemize}

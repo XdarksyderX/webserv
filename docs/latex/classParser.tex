@@ -1,0 +1,55 @@
+\hypertarget{classParser}{}\doxysection{Parser Class Reference}
+\label{classParser}\index{Parser@{Parser}}
+
+
+Class responsible for parsing configuration files to construct \mbox{\hyperlink{classServerConfig}{Server\+Config}} objects.  
+
+
+
+
+{\ttfamily \#include $<$Parser.\+hpp$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classParser_1_1ConfigFileNotFoundException}{Config\+File\+Not\+Found\+Exception}}
+\item 
+class \mbox{\hyperlink{classParser_1_1InvalidDirectiveException}{Invalid\+Directive\+Exception}}
+\item 
+class \mbox{\hyperlink{classParser_1_1MissingMandatoryException}{Missing\+Mandatory\+Exception}}
+\item 
+class \mbox{\hyperlink{classParser_1_1ResourceNotFoundException}{Resource\+Not\+Found\+Exception}}
+\item 
+class \mbox{\hyperlink{classParser_1_1SyntaxErrorException}{Syntax\+Error\+Exception}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classParser_aa18e64c2f9303781f180a2213a55cd68}\label{classParser_aa18e64c2f9303781f180a2213a55cd68}} 
+\mbox{\hyperlink{classParser_aa18e64c2f9303781f180a2213a55cd68}{Parser}} (const std\+::string \&config\+File\+Path)
+\begin{DoxyCompactList}\small\item\em Constructor that takes the path to the configuration file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classParser_abadeed4f6d2a0ae731dac754c004acc7}\label{classParser_abadeed4f6d2a0ae731dac754c004acc7}} 
+\mbox{\hyperlink{classParser_abadeed4f6d2a0ae731dac754c004acc7}{Parser}} (const \mbox{\hyperlink{classParser}{Parser}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classParser_a3e658b5917a93a3ef648050d060e3a93}\label{classParser_a3e658b5917a93a3ef648050d060e3a93}} 
+\mbox{\hyperlink{classParser_a3e658b5917a93a3ef648050d060e3a93}{$\sim$\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classParser_a52b4ac3ef9747d0cea514d51d73c5983}\label{classParser_a52b4ac3ef9747d0cea514d51d73c5983}} 
+\mbox{\hyperlink{classParser}{Parser}} \& \mbox{\hyperlink{classParser_a52b4ac3ef9747d0cea514d51d73c5983}{operator=}} (const \mbox{\hyperlink{classParser}{Parser}} \&other)
+\begin{DoxyCompactList}\small\item\em Assignment operator. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classParser_ab1b93a65cfd671d5b0c9d8f2c192aaee}\label{classParser_ab1b93a65cfd671d5b0c9d8f2c192aaee}} 
+std\+::vector$<$ \mbox{\hyperlink{classServerConfig}{Server\+Config}} $>$ \& \mbox{\hyperlink{classParser_ab1b93a65cfd671d5b0c9d8f2c192aaee}{parse}} ()
+\begin{DoxyCompactList}\small\item\em Parses the configuration file and returns a vector of \mbox{\hyperlink{classServerConfig}{Server\+Config}} objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class responsible for parsing configuration files to construct \mbox{\hyperlink{classServerConfig}{Server\+Config}} objects. 
+
+The \mbox{\hyperlink{classParser}{Parser}} opens and reads a configuration file, interpreting its content to construct and return instances of \mbox{\hyperlink{classServerConfig}{Server\+Config}} that represent the server configurations found within the file. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/Parser.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Parser.\+cpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Parser\+Location.\+cpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Parser\+Server.\+cpp\end{DoxyCompactItemize}

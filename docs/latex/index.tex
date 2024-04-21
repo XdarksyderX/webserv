@@ -1,0 +1,87 @@
+\label{index_md__home_xdarksyderx_Escritorio_42PROJECTS_webserv_README}%
+\Hypertarget{index_md__home_xdarksyderx_Escritorio_42PROJECTS_webserv_README}%
+ \hypertarget{index_autotoc_md1}{}\doxysection{About Webserv}\label{index_autotoc_md1}
+{\ttfamily Webserv} is a custom HTTP server written in C++, designed to simulate some basic functionalities of real-\/world web servers like Apache and Nginx. It handles HTTP requests, serves static resources, and executes server-\/side applications to generate dynamic content.
+
+This project is built as part of an educational program to understand the inner workings of web servers and network programming.\hypertarget{index_autotoc_md2}{}\doxysection{Features}\label{index_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\bfseries{HTTP 1.\+1 Compliance}}\+: Handles basic HTTP/1.\+1 requests and responses.
+\item {\bfseries{Static File Serving}}\+: Serves HTML, CSS, JS, and image files.
+\item {\bfseries{Dynamic Content}}\+: Support for handling scripts via CGI.
+\item {\bfseries{Custom Configuration}}\+: Uses a custom configuration file format similar to Nginx for server setup.
+\item {\bfseries{Error Handling}}\+: Custom error pages for different HTTP error statuses.
+\item {\bfseries{Logging}}\+: Basic request and error logging functionalities.
+\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{Getting Started}\label{index_autotoc_md3}
+\hypertarget{index_autotoc_md4}{}\doxysubsection{Prerequisites}\label{index_autotoc_md4}
+Before you start using {\ttfamily webserv}, make sure you have the following installed on your system\+:
+\begin{DoxyItemize}
+\item C++ Compiler (GCC or Clang)
+\item Make
+\item Git (for version control)
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysubsection{Installation}\label{index_autotoc_md5}
+Follow these steps to get {\ttfamily webserv} running on your machine\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Clone the Repository}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git clone https://github.com/yourusername/webserv.git}
+\DoxyCodeLine{cd webserv}
+
+\end{DoxyCode}
+
+\item {\bfseries{Compile the Project}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make}
+
+\end{DoxyCode}
+
+\item {\bfseries{Run the Server}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{./webserv config/sample\_config.conf}
+
+\end{DoxyCode}
+ Replace {\ttfamily config/sample\+\_\+config.\+conf} with the path to your server configuration file.
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md6}{}\doxysubsection{Configuration}\label{index_autotoc_md6}
+{\ttfamily Webserv} is configured using a custom format in a {\ttfamily .conf} file. Here’s a basic example of what the configuration file might look like\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{server \{}
+\DoxyCodeLine{    listen 8080;}
+\DoxyCodeLine{    server\_name localhost;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    location / \{}
+\DoxyCodeLine{        root /www/data;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    location /images/ \{}
+\DoxyCodeLine{        root /www/data/images;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    error\_page 404 /errors/404.html;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+This configuration sets up the server to listen on port 8080 and defines two locations with different document roots.\hypertarget{index_autotoc_md7}{}\doxysection{Usage}\label{index_autotoc_md7}
+Once the server is running, you can access it via a web browser\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{http://localhost:8080/}
+
+\end{DoxyCode}
+
+
+You can also use tools like {\ttfamily curl} to test your server\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{curl http://localhost:8080/}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md8}{}\doxysection{Contributing}\label{index_autotoc_md8}
+Contributions to {\ttfamily webserv} are welcome! Feel free to contribute by opening issues, providing updates to documentation, or submitting pull requests.\hypertarget{index_autotoc_md9}{}\doxysection{License}\label{index_autotoc_md9}
+This project is licensed under the MIT License -\/ see the LICENSE.md file for details.\hypertarget{index_autotoc_md10}{}\doxysection{Help}\label{index_autotoc_md10}
+If you encounter any problems, please don\textquotesingle{}t hesitate to open an issue on the project repository or contact the project maintainers directly. 

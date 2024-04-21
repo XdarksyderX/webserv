@@ -1,0 +1,99 @@
+\hypertarget{classHTTPResponseBuilder}{}\doxysection{HTTPResponse\+Builder Class Reference}
+\label{classHTTPResponseBuilder}\index{HTTPResponseBuilder@{HTTPResponseBuilder}}
+
+
+A builder class that constructs a raw HTTP response string from an \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} object.  
+
+
+
+
+{\ttfamily \#include $<$HTTPResponse\+Builder.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHTTPResponseBuilder_aba2bdf17129c7af88e8e0c901b7c701c}{HTTPResponse\+Builder}} (const \mbox{\hyperlink{classServerConfig}{Server\+Config}} \&sC, const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&r)
+\begin{DoxyCompactList}\small\item\em Constructor that initializes a new \mbox{\hyperlink{classHTTPResponseBuilder}{HTTPResponse\+Builder}} with a server configuration and request. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \mbox{\hyperlink{classHTTPResponseBuilder_a2358635a9f7aab8f5a827db27d59ef09}{build\+Response}} ()
+\begin{DoxyCompactList}\small\item\em Builds an HTTP response based on the server configuration and request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::string \mbox{\hyperlink{classHTTPResponseBuilder_a6bb63ba616566a2147cb8bc044f099ea}{assemble\+Response}} (const \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \&response)
+\begin{DoxyCompactList}\small\item\em Assembles a complete HTTP response string from an \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classHTTPResponseBuilder_a867454193673cb880bad3983c6bb4a3d}\label{classHTTPResponseBuilder_a867454193673cb880bad3983c6bb4a3d}} 
+static const std\+::map$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{classHTTPResponseBuilder_a867454193673cb880bad3983c6bb4a3d}{MIME\+\_\+\+TYPES}} = HTTPResponse\+Builder\+::create\+MIMEMap()
+\begin{DoxyCompactList}\small\item\em Map of file extensions to MIME types. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPResponseBuilder_a28e63681626e38f87002f897d329f370}\label{classHTTPResponseBuilder_a28e63681626e38f87002f897d329f370}} 
+static const std\+::map$<$ int, std\+::string $>$ \mbox{\hyperlink{classHTTPResponseBuilder_a28e63681626e38f87002f897d329f370}{STATUS\+\_\+\+CODES}} = HTTPResponse\+Builder\+::create\+Status\+Codes\+Map()
+\begin{DoxyCompactList}\small\item\em Map of status codes to status messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A builder class that constructs a raw HTTP response string from an \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} object. 
+
+This class provides static methods to convert an \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} object into a raw HTTP response string. It handles the creation of the status line, headers, and assembles them with the response body based on the server configuration and the specific HTTP request received. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classHTTPResponseBuilder_aba2bdf17129c7af88e8e0c901b7c701c}\label{classHTTPResponseBuilder_aba2bdf17129c7af88e8e0c901b7c701c}} 
+\index{HTTPResponseBuilder@{HTTPResponseBuilder}!HTTPResponseBuilder@{HTTPResponseBuilder}}
+\index{HTTPResponseBuilder@{HTTPResponseBuilder}!HTTPResponseBuilder@{HTTPResponseBuilder}}
+\doxysubsubsection{\texorpdfstring{HTTPResponseBuilder()}{HTTPResponseBuilder()}}
+{\footnotesize\ttfamily HTTPResponse\+Builder\+::\+HTTPResponse\+Builder (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classServerConfig}{Server\+Config}} \&}]{sC,  }\item[{const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&}]{r }\end{DoxyParamCaption})}
+
+
+
+Constructor that initializes a new \mbox{\hyperlink{classHTTPResponseBuilder}{HTTPResponse\+Builder}} with a server configuration and request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sC} & Reference to the \mbox{\hyperlink{classServerConfig}{Server\+Config}} object. \\
+\hline
+{\em r} & Reference to the \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPResponseBuilder_a6bb63ba616566a2147cb8bc044f099ea}\label{classHTTPResponseBuilder_a6bb63ba616566a2147cb8bc044f099ea}} 
+\index{HTTPResponseBuilder@{HTTPResponseBuilder}!assembleResponse@{assembleResponse}}
+\index{assembleResponse@{assembleResponse}!HTTPResponseBuilder@{HTTPResponseBuilder}}
+\doxysubsubsection{\texorpdfstring{assembleResponse()}{assembleResponse()}}
+{\footnotesize\ttfamily std\+::string HTTPResponse\+Builder\+::assemble\+Response (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \&}]{response }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Assembles a complete HTTP response string from an \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em response} & A constant reference to the \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} object to be converted. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string containing the raw HTTP response. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPResponseBuilder_a2358635a9f7aab8f5a827db27d59ef09}\label{classHTTPResponseBuilder_a2358635a9f7aab8f5a827db27d59ef09}} 
+\index{HTTPResponseBuilder@{HTTPResponseBuilder}!buildResponse@{buildResponse}}
+\index{buildResponse@{buildResponse}!HTTPResponseBuilder@{HTTPResponseBuilder}}
+\doxysubsubsection{\texorpdfstring{buildResponse()}{buildResponse()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} HTTPResponse\+Builder\+::build\+Response (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Builds an HTTP response based on the server configuration and request. 
+
+\begin{DoxyReturn}{Returns}
+An \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} object representing the response to the request. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPResponse\+Builder.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPResponse\+Builder.\+cpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/MIMETypes.\+cpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Status\+Codes.\+cpp\end{DoxyCompactItemize}

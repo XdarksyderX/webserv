@@ -1,0 +1,115 @@
+\hypertarget{classLocationConfig}{}\doxysection{Location\+Config Class Reference}
+\label{classLocationConfig}\index{LocationConfig@{LocationConfig}}
+
+
+\mbox{\hyperlink{classLocationConfig}{Location\+Config}} class holds the configuration specific to a location (URI path) within a server.  
+
+
+
+
+{\ttfamily \#include $<$Location\+Config.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLocationConfig_abcb4ff0acbe5c98b4ec08654953c1bc7}\label{classLocationConfig_abcb4ff0acbe5c98b4ec08654953c1bc7}} 
+{\bfseries Location\+Config} (const std\+::string \&root\+Path, const std\+::string \&name)
+\item 
+\mbox{\Hypertarget{classLocationConfig_afe971cc12c328764a56d019d869ffc18}\label{classLocationConfig_afe971cc12c328764a56d019d869ffc18}} 
+{\bfseries Location\+Config} (const \mbox{\hyperlink{classLocationConfig}{Location\+Config}} \&other)
+\item 
+\mbox{\Hypertarget{classLocationConfig_aafcc4c6ef7e7358742ebe22efc767d3c}\label{classLocationConfig_aafcc4c6ef7e7358742ebe22efc767d3c}} 
+\mbox{\hyperlink{classLocationConfig}{Location\+Config}} \& {\bfseries operator=} (const \mbox{\hyperlink{classLocationConfig}{Location\+Config}} \&other)
+\item 
+\mbox{\Hypertarget{classLocationConfig_a2e925f4d738a0d6915b5f835ca80817f}\label{classLocationConfig_a2e925f4d738a0d6915b5f835ca80817f}} 
+std\+::string {\bfseries get\+Name} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_ad92a069a81b3104ddde6bec30ed407b3}\label{classLocationConfig_ad92a069a81b3104ddde6bec30ed407b3}} 
+std\+::string {\bfseries get\+Root} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_a6019279cc6fdbb40ca6ea43fa81fd52c}\label{classLocationConfig_a6019279cc6fdbb40ca6ea43fa81fd52c}} 
+std\+::vector$<$ HTTPMethod $>$ {\bfseries get\+Allow\+Methods} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_a5c84236dd97844397435ebcf6cc1246b}\label{classLocationConfig_a5c84236dd97844397435ebcf6cc1246b}} 
+std\+::string {\bfseries get\+Index} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_a66498e8dd71d810593afd3c08c554f82}\label{classLocationConfig_a66498e8dd71d810593afd3c08c554f82}} 
+bool {\bfseries get\+Autoindex} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_a74df1989800c37e6659cb5446c4a8767}\label{classLocationConfig_a74df1989800c37e6659cb5446c4a8767}} 
+std\+::map$<$ std\+::string, std\+::string $>$ {\bfseries get\+Cgi\+Info} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_acd609dc90d3e610abd427b0f505f2447}\label{classLocationConfig_acd609dc90d3e610abd427b0f505f2447}} 
+std\+::string {\bfseries get\+Upload\+Path} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_a1a1ee1c551c77f48e336ae78ab9ba782}\label{classLocationConfig_a1a1ee1c551c77f48e336ae78ab9ba782}} 
+void {\bfseries set\+Name} (const std\+::string \&name)
+\item 
+\mbox{\Hypertarget{classLocationConfig_aaf3cb645a6dbf533e76abbbabe25fd8f}\label{classLocationConfig_aaf3cb645a6dbf533e76abbbabe25fd8f}} 
+void {\bfseries set\+Root} (const std\+::string \&root)
+\item 
+\mbox{\Hypertarget{classLocationConfig_afc507535fcb5fd1d267741d981d63527}\label{classLocationConfig_afc507535fcb5fd1d267741d981d63527}} 
+void {\bfseries set\+Allow\+Methods} (const std\+::vector$<$ HTTPMethod $>$ \&methods)
+\item 
+\mbox{\Hypertarget{classLocationConfig_ab7e98b7859c733108215b4c00001e3a7}\label{classLocationConfig_ab7e98b7859c733108215b4c00001e3a7}} 
+void {\bfseries set\+Index} (const std\+::string \&index)
+\item 
+\mbox{\Hypertarget{classLocationConfig_a34a5299fe5fc6eafc168b8aa3b76c6ee}\label{classLocationConfig_a34a5299fe5fc6eafc168b8aa3b76c6ee}} 
+void {\bfseries set\+Autoindex} (bool autoindex)
+\item 
+\mbox{\Hypertarget{classLocationConfig_a0c401caa50730263dbfa5a07e8c357f9}\label{classLocationConfig_a0c401caa50730263dbfa5a07e8c357f9}} 
+void {\bfseries set\+Upload\+Path} (const std\+::string \&upload\+Path)
+\item 
+\mbox{\Hypertarget{classLocationConfig_a907e88ee70aae7166cb36c594801c4d5}\label{classLocationConfig_a907e88ee70aae7166cb36c594801c4d5}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries get\+Cgi\+Paths} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_a52fd0d6ad6c1e96a880d6788018d796a}\label{classLocationConfig_a52fd0d6ad6c1e96a880d6788018d796a}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries get\+Cgi\+Extensions} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_ac07f6a79b02ee68553836a05b326ee35}\label{classLocationConfig_ac07f6a79b02ee68553836a05b326ee35}} 
+void {\bfseries add\+Allow\+Method} (HTTPMethod method)
+\item 
+\mbox{\Hypertarget{classLocationConfig_a2e78f6db053fe26a55c3ca9e04e123fe}\label{classLocationConfig_a2e78f6db053fe26a55c3ca9e04e123fe}} 
+void {\bfseries add\+Cgi\+Path} (const std\+::string \&interpreter\+Path)
+\item 
+\mbox{\Hypertarget{classLocationConfig_a455a9ac2d00a9bc5713677d67d89be10}\label{classLocationConfig_a455a9ac2d00a9bc5713677d67d89be10}} 
+void {\bfseries add\+Cgi\+Extension} (const std\+::string \&extension)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classLocationConfig}{Location\+Config}} \mbox{\hyperlink{classLocationConfig_a82b0c277f5d17f569b841ff3384608fd}{create\+Default\+Location}} (const \mbox{\hyperlink{classServerConfig}{Server\+Config}} \&server\+Config)
+\begin{DoxyCompactList}\small\item\em Creates a default \mbox{\hyperlink{classLocationConfig}{Location\+Config}} object with default values for /. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classLocationConfig_abf5dd0b2d7217d3cbcbadfcf5b91a51e}\label{classLocationConfig_abf5dd0b2d7217d3cbcbadfcf5b91a51e}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{classLocationConfig}{Location\+Config}} \&config)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classLocationConfig}{Location\+Config}} class holds the configuration specific to a location (URI path) within a server. 
+
+This class encapsulates details such as the root directory for the location, allowed methods, default index file, autoindex setting, and CGI configuration. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classLocationConfig_a82b0c277f5d17f569b841ff3384608fd}\label{classLocationConfig_a82b0c277f5d17f569b841ff3384608fd}} 
+\index{LocationConfig@{LocationConfig}!createDefaultLocation@{createDefaultLocation}}
+\index{createDefaultLocation@{createDefaultLocation}!LocationConfig@{LocationConfig}}
+\doxysubsubsection{\texorpdfstring{createDefaultLocation()}{createDefaultLocation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLocationConfig}{Location\+Config}} Location\+Config\+::create\+Default\+Location (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classServerConfig}{Server\+Config}} \&}]{server\+Config }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Creates a default \mbox{\hyperlink{classLocationConfig}{Location\+Config}} object with default values for /. 
+
+\begin{DoxyReturn}{Returns}
+A \mbox{\hyperlink{classLocationConfig}{Location\+Config}} object with default values. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/Location\+Config.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Location\+Config.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,346 @@
+\hypertarget{namespaceUtils}{}\doxysection{Utils Namespace Reference}
+\label{namespaceUtils}\index{Utils@{Utils}}
+
+
+Utility functions to assist with common file and network operations.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_a4c0163fa60350b0910334b77e216f619}{to\+\_\+string}} (int number)
+\begin{DoxyCompactList}\small\item\em Converts an integer to a string. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_a85ab1e60065924fe1ebaad282d234227}{get\+Extension\+From\+File}} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em Extracts the file extension from a filename. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_aed8daf2d521b9259c9e401643715f342}{get\+File\+Content}} (const std\+::string \&filename)
+\begin{DoxyCompactList}\small\item\em Reads the entire content of a file into a string. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_a3716f1460538417b14e3058200e5c1c3}{join\+Paths}} (const std\+::string \&path1, const std\+::string \&path2)
+\begin{DoxyCompactList}\small\item\em Concatenates two file path segments into a single path. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_a5ae26b46059a456310228f38c216c058}{create\+HTMLDirectory\+Listing}} (const std\+::string \&directory, const std\+::string \&path=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Generates an HTML formatted string listing all the files in a directory. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_add8decb0d8e7dc884ca5e0517cc1164b}{prevent\+File\+Traversal}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Prevents directory traversal by sanitizing the path. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_ae9e19b64e7ae67760c67f21bdee1ca01}{get\+Node\+Name}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Gets the node name from a path. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespaceUtils_a1eaa1b2880151c52d49a144c340431e2}{file\+Exists}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Checks if a file exists at the specified path. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespaceUtils_ad3da413f0e3a91f7579813b35cfec038}{directory\+Exists}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Checks if a directory exists at the specified path. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespaceUtils_a5ec76bc4011e455fdf1640168c7457b5}{create\+File}} (const std\+::string \&path, const std\+::string \&content)
+\begin{DoxyCompactList}\small\item\em Creates a file with the specified content. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespaceUtils_a757868db084026b21aae80475e4e2133}{delete\+File}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Deletes a file at the specified path. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespaceUtils_ac4e4a52a25828dd666d8d68578cb0b6f}{is\+Valid\+Socket}} (int socket\+FD)
+\begin{DoxyCompactList}\small\item\em Checks if a given socket file descriptor is valid. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_a638918a2ecd022512e25513a48780883}{convert\+To\+Base64}} (const std\+::string \&input)
+\begin{DoxyCompactList}\small\item\em Converts a string to base64 encoding. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_a1462ff6026a5dabf14c3a4e23c44aceb}{convert\+From\+Base64}} (const std\+::string \&input)
+\begin{DoxyCompactList}\small\item\em Converts a base64 encoded string to plain text. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_a709fc9d3286a8b90de822055fed9ca88}{trim}} (const std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em Trims leading and trailing whitespace from a string. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\bool \mbox{\hyperlink{namespaceUtils_a1e706287a757bb86aecc958dba23608c}{has\+Element}} (const std\+::vector$<$ T $>$ \&elements, const T \&element)
+\begin{DoxyCompactList}\small\item\em Checks if a vector contains a specific element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Utility functions to assist with common file and network operations. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceUtils_a1462ff6026a5dabf14c3a4e23c44aceb}\label{namespaceUtils_a1462ff6026a5dabf14c3a4e23c44aceb}} 
+\index{Utils@{Utils}!convertFromBase64@{convertFromBase64}}
+\index{convertFromBase64@{convertFromBase64}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{convertFromBase64()}{convertFromBase64()}}
+{\footnotesize\ttfamily std\+::string Utils\+::convert\+From\+Base64 (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{input }\end{DoxyParamCaption})}
+
+
+
+Converts a base64 encoded string to plain text. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & The base64 encoded string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The decoded plain text string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a638918a2ecd022512e25513a48780883}\label{namespaceUtils_a638918a2ecd022512e25513a48780883}} 
+\index{Utils@{Utils}!convertToBase64@{convertToBase64}}
+\index{convertToBase64@{convertToBase64}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{convertToBase64()}{convertToBase64()}}
+{\footnotesize\ttfamily std\+::string Utils\+::convert\+To\+Base64 (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{input }\end{DoxyParamCaption})}
+
+
+
+Converts a string to base64 encoding. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & The string to encode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The base64 encoded string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a5ec76bc4011e455fdf1640168c7457b5}\label{namespaceUtils_a5ec76bc4011e455fdf1640168c7457b5}} 
+\index{Utils@{Utils}!createFile@{createFile}}
+\index{createFile@{createFile}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{createFile()}{createFile()}}
+{\footnotesize\ttfamily bool Utils\+::create\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path,  }\item[{const std\+::string \&}]{content }\end{DoxyParamCaption})}
+
+
+
+Creates a file with the specified content. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path where the file will be created. \\
+\hline
+{\em content} & The content to write to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the file was successfully created, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a5ae26b46059a456310228f38c216c058}\label{namespaceUtils_a5ae26b46059a456310228f38c216c058}} 
+\index{Utils@{Utils}!createHTMLDirectoryListing@{createHTMLDirectoryListing}}
+\index{createHTMLDirectoryListing@{createHTMLDirectoryListing}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{createHTMLDirectoryListing()}{createHTMLDirectoryListing()}}
+{\footnotesize\ttfamily std\+::string Utils\+::create\+HTMLDirectory\+Listing (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{directory,  }\item[{const std\+::string \&}]{path = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+Generates an HTML formatted string listing all the files in a directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em directory} & The directory to list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string containing an HTML document listing all directory contents. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a757868db084026b21aae80475e4e2133}\label{namespaceUtils_a757868db084026b21aae80475e4e2133}} 
+\index{Utils@{Utils}!deleteFile@{deleteFile}}
+\index{deleteFile@{deleteFile}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{deleteFile()}{deleteFile()}}
+{\footnotesize\ttfamily bool Utils\+::delete\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Deletes a file at the specified path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the file was successfully deleted, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_ad3da413f0e3a91f7579813b35cfec038}\label{namespaceUtils_ad3da413f0e3a91f7579813b35cfec038}} 
+\index{Utils@{Utils}!directoryExists@{directoryExists}}
+\index{directoryExists@{directoryExists}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{directoryExists()}{directoryExists()}}
+{\footnotesize\ttfamily bool Utils\+::directory\+Exists (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Checks if a directory exists at the specified path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the directory. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the directory exists, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a1eaa1b2880151c52d49a144c340431e2}\label{namespaceUtils_a1eaa1b2880151c52d49a144c340431e2}} 
+\index{Utils@{Utils}!fileExists@{fileExists}}
+\index{fileExists@{fileExists}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{fileExists()}{fileExists()}}
+{\footnotesize\ttfamily bool Utils\+::file\+Exists (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Checks if a file exists at the specified path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the file exists, otherwise false. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If the path is a directory, even if it exists, returns false. 
+\end{DoxyNote}
+\mbox{\Hypertarget{namespaceUtils_a85ab1e60065924fe1ebaad282d234227}\label{namespaceUtils_a85ab1e60065924fe1ebaad282d234227}} 
+\index{Utils@{Utils}!getExtensionFromFile@{getExtensionFromFile}}
+\index{getExtensionFromFile@{getExtensionFromFile}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{getExtensionFromFile()}{getExtensionFromFile()}}
+{\footnotesize\ttfamily std\+::string Utils\+::get\+Extension\+From\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename }\end{DoxyParamCaption})}
+
+
+
+Extracts the file extension from a filename. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The full name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The extension of the file as a string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_aed8daf2d521b9259c9e401643715f342}\label{namespaceUtils_aed8daf2d521b9259c9e401643715f342}} 
+\index{Utils@{Utils}!getFileContent@{getFileContent}}
+\index{getFileContent@{getFileContent}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{getFileContent()}{getFileContent()}}
+{\footnotesize\ttfamily std\+::string Utils\+::get\+File\+Content (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename }\end{DoxyParamCaption})}
+
+
+
+Reads the entire content of a file into a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The path to the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string containing all the data in the file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_ae9e19b64e7ae67760c67f21bdee1ca01}\label{namespaceUtils_ae9e19b64e7ae67760c67f21bdee1ca01}} 
+\index{Utils@{Utils}!getNodeName@{getNodeName}}
+\index{getNodeName@{getNodeName}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{getNodeName()}{getNodeName()}}
+{\footnotesize\ttfamily std\+::string Utils\+::get\+Node\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Gets the node name from a path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The file path. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The node name as a string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a1e706287a757bb86aecc958dba23608c}\label{namespaceUtils_a1e706287a757bb86aecc958dba23608c}} 
+\index{Utils@{Utils}!hasElement@{hasElement}}
+\index{hasElement@{hasElement}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{hasElement()}{hasElement()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool Utils\+::has\+Element (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ T $>$ \&}]{elements,  }\item[{const T \&}]{element }\end{DoxyParamCaption})}
+
+
+
+Checks if a vector contains a specific element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em elements} & The vector of elements. \\
+\hline
+{\em element} & The element to search for in the vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the element is found in the vector, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_ac4e4a52a25828dd666d8d68578cb0b6f}\label{namespaceUtils_ac4e4a52a25828dd666d8d68578cb0b6f}} 
+\index{Utils@{Utils}!isValidSocket@{isValidSocket}}
+\index{isValidSocket@{isValidSocket}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{isValidSocket()}{isValidSocket()}}
+{\footnotesize\ttfamily bool Utils\+::is\+Valid\+Socket (\begin{DoxyParamCaption}\item[{int}]{socket\+FD }\end{DoxyParamCaption})}
+
+
+
+Checks if a given socket file descriptor is valid. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\+FD} & The file descriptor of the socket. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the socket is valid, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a3716f1460538417b14e3058200e5c1c3}\label{namespaceUtils_a3716f1460538417b14e3058200e5c1c3}} 
+\index{Utils@{Utils}!joinPaths@{joinPaths}}
+\index{joinPaths@{joinPaths}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{joinPaths()}{joinPaths()}}
+{\footnotesize\ttfamily std\+::string Utils\+::join\+Paths (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path1,  }\item[{const std\+::string \&}]{path2 }\end{DoxyParamCaption})}
+
+
+
+Concatenates two file path segments into a single path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path1} & The first path segment. \\
+\hline
+{\em path2} & The second path segment to be joined with the first. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The combined file path. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_add8decb0d8e7dc884ca5e0517cc1164b}\label{namespaceUtils_add8decb0d8e7dc884ca5e0517cc1164b}} 
+\index{Utils@{Utils}!preventFileTraversal@{preventFileTraversal}}
+\index{preventFileTraversal@{preventFileTraversal}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{preventFileTraversal()}{preventFileTraversal()}}
+{\footnotesize\ttfamily std\+::string Utils\+::prevent\+File\+Traversal (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Prevents directory traversal by sanitizing the path. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The potentially unsafe file path. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A sanitized version of the path. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a4c0163fa60350b0910334b77e216f619}\label{namespaceUtils_a4c0163fa60350b0910334b77e216f619}} 
+\index{Utils@{Utils}!to\_string@{to\_string}}
+\index{to\_string@{to\_string}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{to\_string()}{to\_string()}}
+{\footnotesize\ttfamily std\+::string Utils\+::to\+\_\+string (\begin{DoxyParamCaption}\item[{int}]{number }\end{DoxyParamCaption})}
+
+
+
+Converts an integer to a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em number} & Integer to convert. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::string The integer as a string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceUtils_a709fc9d3286a8b90de822055fed9ca88}\label{namespaceUtils_a709fc9d3286a8b90de822055fed9ca88}} 
+\index{Utils@{Utils}!trim@{trim}}
+\index{trim@{trim}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{trim()}{trim()}}
+{\footnotesize\ttfamily std\+::string Utils\+::trim (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str }\end{DoxyParamCaption})}
+
+
+
+Trims leading and trailing whitespace from a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The string to trim. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The trimmed string. 
+\end{DoxyReturn}

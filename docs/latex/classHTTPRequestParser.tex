@@ -1,0 +1,55 @@
+\hypertarget{classHTTPRequestParser}{}\doxysection{HTTPRequest\+Parser Class Reference}
+\label{classHTTPRequestParser}\index{HTTPRequestParser@{HTTPRequestParser}}
+
+
+A parser class that interprets raw HTTP requests.  
+
+
+
+
+{\ttfamily \#include $<$HTTPRequest\+Parser.\+hpp$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classHTTPRequestParser_1_1InvalidRequestHeader}{Invalid\+Request\+Header}}
+\begin{DoxyCompactList}\small\item\em An exception indicating an invalid request header. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classHTTPRequestParser_1_1InvalidRequestLine}{Invalid\+Request\+Line}}
+\begin{DoxyCompactList}\small\item\em An exception indicating an invalid request line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \mbox{\hyperlink{classHTTPRequestParser_a0f360442bb2a9d904b5abce505b3e3b8}{parse\+Request}} (const std\+::string \&raw\+Request)
+\begin{DoxyCompactList}\small\item\em Parses a raw HTTP request string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A parser class that interprets raw HTTP requests. 
+
+This class provides static methods to parse raw HTTP request strings into an \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object. It processes the request line and headers and populates the \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object with parsed data. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPRequestParser_a0f360442bb2a9d904b5abce505b3e3b8}\label{classHTTPRequestParser_a0f360442bb2a9d904b5abce505b3e3b8}} 
+\index{HTTPRequestParser@{HTTPRequestParser}!parseRequest@{parseRequest}}
+\index{parseRequest@{parseRequest}!HTTPRequestParser@{HTTPRequestParser}}
+\doxysubsubsection{\texorpdfstring{parseRequest()}{parseRequest()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} HTTPRequest\+Parser\+::parse\+Request (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{raw\+Request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Parses a raw HTTP request string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em raw\+Request} & A string containing the raw HTTP request. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object populated with the parsed data. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPRequest\+Parser.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPRequest\+Parser.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,137 @@
+\hypertarget{classHTTPFormFile}{}\doxysection{HTTPForm\+File Class Reference}
+\label{classHTTPFormFile}\index{HTTPFormFile@{HTTPFormFile}}
+
+
+Represents a single file uploaded via HTTP form.  
+
+
+
+
+{\ttfamily \#include $<$HTTPMultiform\+Data.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHTTPFormFile_af7e252890b578ba44f1b2a57d736662f}{HTTPForm\+File}} (const std\+::string \&filename, const std\+::string \&content\+Type, const std\+::string \&content)
+\begin{DoxyCompactList}\small\item\em Construct a new HTTP Form File object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classHTTPFormFile_a3d620f77a4bb4fe2355987d3db410e14}{HTTPForm\+File}} (const \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPFormFile_ab9823364035754a1faa28651add897e8}\label{classHTTPFormFile_ab9823364035754a1faa28651add897e8}} 
+\mbox{\hyperlink{classHTTPFormFile_ab9823364035754a1faa28651add897e8}{$\sim$\+HTTPForm\+File}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} \& \mbox{\hyperlink{classHTTPFormFile_a94ca55f7bca2283427818b8846d6715c}{operator=}} (const \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{classHTTPFormFile_a5f5e066993586f62acb32e76d8fde778}{get\+Filename}} () const
+\begin{DoxyCompactList}\small\item\em Get the filename. \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{classHTTPFormFile_ac3ca870df1e7cba9f5eab9df49fe96e9}{get\+Content\+Type}} () const
+\begin{DoxyCompactList}\small\item\em Get the content type. \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{classHTTPFormFile_a367f1e8afab13aae982beb4dd2e7f57a}{get\+Content}} () const
+\begin{DoxyCompactList}\small\item\em Get the content of the file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a single file uploaded via HTTP form. 
+
+This class provides an abstraction for a file uploaded through an HTTP form, including details like the filename, content type, and content of the file. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classHTTPFormFile_af7e252890b578ba44f1b2a57d736662f}\label{classHTTPFormFile_af7e252890b578ba44f1b2a57d736662f}} 
+\index{HTTPFormFile@{HTTPFormFile}!HTTPFormFile@{HTTPFormFile}}
+\index{HTTPFormFile@{HTTPFormFile}!HTTPFormFile@{HTTPFormFile}}
+\doxysubsubsection{\texorpdfstring{HTTPFormFile()}{HTTPFormFile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily HTTPForm\+File\+::\+HTTPForm\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename,  }\item[{const std\+::string \&}]{content\+Type,  }\item[{const std\+::string \&}]{content }\end{DoxyParamCaption})}
+
+
+
+Construct a new HTTP Form File object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file. \\
+\hline
+{\em content\+Type} & MIME type of the file. \\
+\hline
+{\em content} & Content of the file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classHTTPFormFile_a3d620f77a4bb4fe2355987d3db410e14}\label{classHTTPFormFile_a3d620f77a4bb4fe2355987d3db410e14}} 
+\index{HTTPFormFile@{HTTPFormFile}!HTTPFormFile@{HTTPFormFile}}
+\index{HTTPFormFile@{HTTPFormFile}!HTTPFormFile@{HTTPFormFile}}
+\doxysubsubsection{\texorpdfstring{HTTPFormFile()}{HTTPFormFile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily HTTPForm\+File\+::\+HTTPForm\+File (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Reference to another \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} object to copy data from. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPFormFile_a367f1e8afab13aae982beb4dd2e7f57a}\label{classHTTPFormFile_a367f1e8afab13aae982beb4dd2e7f57a}} 
+\index{HTTPFormFile@{HTTPFormFile}!getContent@{getContent}}
+\index{getContent@{getContent}!HTTPFormFile@{HTTPFormFile}}
+\doxysubsubsection{\texorpdfstring{getContent()}{getContent()}}
+{\footnotesize\ttfamily const std\+::string \& HTTPForm\+File\+::get\+Content (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the content of the file. 
+
+\begin{DoxyReturn}{Returns}
+const reference to a std\+::string containing the content of the file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPFormFile_ac3ca870df1e7cba9f5eab9df49fe96e9}\label{classHTTPFormFile_ac3ca870df1e7cba9f5eab9df49fe96e9}} 
+\index{HTTPFormFile@{HTTPFormFile}!getContentType@{getContentType}}
+\index{getContentType@{getContentType}!HTTPFormFile@{HTTPFormFile}}
+\doxysubsubsection{\texorpdfstring{getContentType()}{getContentType()}}
+{\footnotesize\ttfamily const std\+::string \& HTTPForm\+File\+::get\+Content\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the content type. 
+
+\begin{DoxyReturn}{Returns}
+const reference to a std\+::string containing the MIME type of the file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPFormFile_a5f5e066993586f62acb32e76d8fde778}\label{classHTTPFormFile_a5f5e066993586f62acb32e76d8fde778}} 
+\index{HTTPFormFile@{HTTPFormFile}!getFilename@{getFilename}}
+\index{getFilename@{getFilename}!HTTPFormFile@{HTTPFormFile}}
+\doxysubsubsection{\texorpdfstring{getFilename()}{getFilename()}}
+{\footnotesize\ttfamily const std\+::string \& HTTPForm\+File\+::get\+Filename (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the filename. 
+
+\begin{DoxyReturn}{Returns}
+const reference to a std\+::string containing the filename. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPFormFile_a94ca55f7bca2283427818b8846d6715c}\label{classHTTPFormFile_a94ca55f7bca2283427818b8846d6715c}} 
+\index{HTTPFormFile@{HTTPFormFile}!operator=@{operator=}}
+\index{operator=@{operator=}!HTTPFormFile@{HTTPFormFile}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} \& HTTPForm\+File\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Reference to another \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} object to assign from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} instance. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPMultiform\+Data.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPMulti\+Form\+Data.\+cpp\end{DoxyCompactItemize}

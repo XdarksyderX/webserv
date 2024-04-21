@@ -1,0 +1,118 @@
+\hypertarget{classHTTPMultiFormData}{}\doxysection{HTTPMulti\+Form\+Data Class Reference}
+\label{classHTTPMultiFormData}\index{HTTPMultiFormData@{HTTPMultiFormData}}
+
+
+Represents the multipart/form-\/data of an HTTP request.  
+
+
+
+
+{\ttfamily \#include $<$HTTPMultiform\+Data.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHTTPMultiFormData_a257c85e46f697de16df4ab86fbc871ff}{HTTPMulti\+Form\+Data}} (const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&request)
+\begin{DoxyCompactList}\small\item\em Construct a new HTTP Multi Form Data object from an \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classHTTPMultiFormData_a53d2bb22c192a8cb1a4b239bfa26a8b6}{HTTPMulti\+Form\+Data}} (const \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPMultiFormData_a4b37bbfe2ed6718eeac1cf83b13d5b1a}\label{classHTTPMultiFormData_a4b37bbfe2ed6718eeac1cf83b13d5b1a}} 
+\mbox{\hyperlink{classHTTPMultiFormData_a4b37bbfe2ed6718eeac1cf83b13d5b1a}{$\sim$\+HTTPMulti\+Form\+Data}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} \& \mbox{\hyperlink{classHTTPMultiFormData_a096c3334dd6f62cad64fd97dcd728bf0}{operator=}} (const \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \& \mbox{\hyperlink{classHTTPMultiFormData_a1e6dc7e4238ed7c7305f4a121a5439da}{get\+Request}} () const
+\begin{DoxyCompactList}\small\item\em Get the original HTTP Request. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} $>$ \& \mbox{\hyperlink{classHTTPMultiFormData_af920f3fb53527df13938e516d00167fe}{get\+Files}} () const
+\begin{DoxyCompactList}\small\item\em Get the uploaded files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents the multipart/form-\/data of an HTTP request. 
+
+This class encapsulates the multipart/form-\/data of an HTTP request, including any files uploaded as part of that request. It provides functionality to parse the multipart content and retrieve the files. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classHTTPMultiFormData_a257c85e46f697de16df4ab86fbc871ff}\label{classHTTPMultiFormData_a257c85e46f697de16df4ab86fbc871ff}} 
+\index{HTTPMultiFormData@{HTTPMultiFormData}!HTTPMultiFormData@{HTTPMultiFormData}}
+\index{HTTPMultiFormData@{HTTPMultiFormData}!HTTPMultiFormData@{HTTPMultiFormData}}
+\doxysubsubsection{\texorpdfstring{HTTPMultiFormData()}{HTTPMultiFormData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily HTTPMulti\+Form\+Data\+::\+HTTPMulti\+Form\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&}]{request }\end{DoxyParamCaption})}
+
+
+
+Construct a new HTTP Multi Form Data object from an \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object containing multipart/form-\/data. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classHTTPMultiFormData_a53d2bb22c192a8cb1a4b239bfa26a8b6}\label{classHTTPMultiFormData_a53d2bb22c192a8cb1a4b239bfa26a8b6}} 
+\index{HTTPMultiFormData@{HTTPMultiFormData}!HTTPMultiFormData@{HTTPMultiFormData}}
+\index{HTTPMultiFormData@{HTTPMultiFormData}!HTTPMultiFormData@{HTTPMultiFormData}}
+\doxysubsubsection{\texorpdfstring{HTTPMultiFormData()}{HTTPMultiFormData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily HTTPMulti\+Form\+Data\+::\+HTTPMulti\+Form\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Reference to another \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} object to copy data from. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPMultiFormData_af920f3fb53527df13938e516d00167fe}\label{classHTTPMultiFormData_af920f3fb53527df13938e516d00167fe}} 
+\index{HTTPMultiFormData@{HTTPMultiFormData}!getFiles@{getFiles}}
+\index{getFiles@{getFiles}!HTTPMultiFormData@{HTTPMultiFormData}}
+\doxysubsubsection{\texorpdfstring{getFiles()}{getFiles()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} $>$ \& HTTPMulti\+Form\+Data\+::get\+Files (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the uploaded files. 
+
+\begin{DoxyReturn}{Returns}
+const reference to a vector of \mbox{\hyperlink{classHTTPFormFile}{HTTPForm\+File}} objects. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPMultiFormData_a1e6dc7e4238ed7c7305f4a121a5439da}\label{classHTTPMultiFormData_a1e6dc7e4238ed7c7305f4a121a5439da}} 
+\index{HTTPMultiFormData@{HTTPMultiFormData}!getRequest@{getRequest}}
+\index{getRequest@{getRequest}!HTTPMultiFormData@{HTTPMultiFormData}}
+\doxysubsubsection{\texorpdfstring{getRequest()}{getRequest()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \& HTTPMulti\+Form\+Data\+::get\+Request (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the original HTTP Request. 
+
+\begin{DoxyReturn}{Returns}
+const reference to the \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPMultiFormData_a096c3334dd6f62cad64fd97dcd728bf0}\label{classHTTPMultiFormData_a096c3334dd6f62cad64fd97dcd728bf0}} 
+\index{HTTPMultiFormData@{HTTPMultiFormData}!operator=@{operator=}}
+\index{operator=@{operator=}!HTTPMultiFormData@{HTTPMultiFormData}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} \& HTTPMulti\+Form\+Data\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Reference to another \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} object to assign from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this \mbox{\hyperlink{classHTTPMultiFormData}{HTTPMulti\+Form\+Data}} instance. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPMultiform\+Data.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPMulti\+Form\+Data.\+cpp\end{DoxyCompactItemize}

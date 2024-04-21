@@ -1,0 +1,147 @@
+\hypertarget{classHTTPCookie}{}\doxysection{HTTPCookie Class Reference}
+\label{classHTTPCookie}\index{HTTPCookie@{HTTPCookie}}
+
+
+Represents an HTTP Cookie with an integer key and a timestamp.  
+
+
+
+
+{\ttfamily \#include $<$HTTPCookie.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classHTTPCookie_acffeb81ee14eae864c2327bbfa2ee97e}\label{classHTTPCookie_acffeb81ee14eae864c2327bbfa2ee97e}} 
+\mbox{\hyperlink{classHTTPCookie_acffeb81ee14eae864c2327bbfa2ee97e}{HTTPCookie}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor that initializes a new \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classHTTPCookie_aac3b15e8a9ecda6cff530f07f4f1bd8a}{HTTPCookie}} (const \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPCookie_aa07d684586dc8dba4e2eebff7747cee9}\label{classHTTPCookie_aa07d684586dc8dba4e2eebff7747cee9}} 
+\mbox{\hyperlink{classHTTPCookie_aa07d684586dc8dba4e2eebff7747cee9}{$\sim$\+HTTPCookie}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \& \mbox{\hyperlink{classHTTPCookie_a99e52bb055050465c8ba92c03aaa7d1e}{operator=}} (const \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classHTTPCookie_ad6f78ffd6891cee321ec6a8ea8ff786f}{get\+Key}} () const
+\begin{DoxyCompactList}\small\item\em Gets the key of the cookie. \end{DoxyCompactList}\item 
+time\+\_\+t \mbox{\hyperlink{classHTTPCookie_ab7f849c39978e8db69e42b8dd47ba505}{get\+Time}} () const
+\begin{DoxyCompactList}\small\item\em Gets the timestamp of the cookie. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::string \mbox{\hyperlink{classHTTPCookie_a76ff7bc951457148b01943ce96471178}{serialize\+Cookie}} (const \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \&cookie)
+\begin{DoxyCompactList}\small\item\em Serializes the cookie into a string. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \mbox{\hyperlink{classHTTPCookie_a2a243db119c9fa732182d15014d6205d}{deserialize\+Cookie}} (const std\+::string \&cookie)
+\begin{DoxyCompactList}\small\item\em Deserializes a string into an \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an HTTP Cookie with an integer key and a timestamp. 
+
+This class provides a way to handle HTTP cookies with an identifier and a timestamp indicating when the cookie was created or last modified. It includes functionalities to serialize and deserialize cookie objects to and from strings. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classHTTPCookie_aac3b15e8a9ecda6cff530f07f4f1bd8a}\label{classHTTPCookie_aac3b15e8a9ecda6cff530f07f4f1bd8a}} 
+\index{HTTPCookie@{HTTPCookie}!HTTPCookie@{HTTPCookie}}
+\index{HTTPCookie@{HTTPCookie}!HTTPCookie@{HTTPCookie}}
+\doxysubsubsection{\texorpdfstring{HTTPCookie()}{HTTPCookie()}}
+{\footnotesize\ttfamily HTTPCookie\+::\+HTTPCookie (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Another \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} object to be used as source to initialize the data members of the new object. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPCookie_a2a243db119c9fa732182d15014d6205d}\label{classHTTPCookie_a2a243db119c9fa732182d15014d6205d}} 
+\index{HTTPCookie@{HTTPCookie}!deserializeCookie@{deserializeCookie}}
+\index{deserializeCookie@{deserializeCookie}!HTTPCookie@{HTTPCookie}}
+\doxysubsubsection{\texorpdfstring{deserializeCookie()}{deserializeCookie()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} HTTPCookie\+::deserialize\+Cookie (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{cookie }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Deserializes a string into an \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cookie} & A string representing the serialized cookie. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} object deserialized from the string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPCookie_ad6f78ffd6891cee321ec6a8ea8ff786f}\label{classHTTPCookie_ad6f78ffd6891cee321ec6a8ea8ff786f}} 
+\index{HTTPCookie@{HTTPCookie}!getKey@{getKey}}
+\index{getKey@{getKey}!HTTPCookie@{HTTPCookie}}
+\doxysubsubsection{\texorpdfstring{getKey()}{getKey()}}
+{\footnotesize\ttfamily int HTTPCookie\+::get\+Key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Gets the key of the cookie. 
+
+\begin{DoxyReturn}{Returns}
+The key of the cookie as an integer. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPCookie_ab7f849c39978e8db69e42b8dd47ba505}\label{classHTTPCookie_ab7f849c39978e8db69e42b8dd47ba505}} 
+\index{HTTPCookie@{HTTPCookie}!getTime@{getTime}}
+\index{getTime@{getTime}!HTTPCookie@{HTTPCookie}}
+\doxysubsubsection{\texorpdfstring{getTime()}{getTime()}}
+{\footnotesize\ttfamily time\+\_\+t HTTPCookie\+::get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Gets the timestamp of the cookie. 
+
+\begin{DoxyReturn}{Returns}
+The time\+\_\+t value representing the time the cookie was set. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPCookie_a99e52bb055050465c8ba92c03aaa7d1e}\label{classHTTPCookie_a99e52bb055050465c8ba92c03aaa7d1e}} 
+\index{HTTPCookie@{HTTPCookie}!operator=@{operator=}}
+\index{operator=@{operator=}!HTTPCookie@{HTTPCookie}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \& HTTPCookie\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Another \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} object to be assigned to the current object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to the current object ($\ast$this). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPCookie_a76ff7bc951457148b01943ce96471178}\label{classHTTPCookie_a76ff7bc951457148b01943ce96471178}} 
+\index{HTTPCookie@{HTTPCookie}!serializeCookie@{serializeCookie}}
+\index{serializeCookie@{serializeCookie}!HTTPCookie@{HTTPCookie}}
+\doxysubsubsection{\texorpdfstring{serializeCookie()}{serializeCookie()}}
+{\footnotesize\ttfamily std\+::string HTTPCookie\+::serialize\+Cookie (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} \&}]{cookie }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Serializes the cookie into a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cookie} & A reference to the \mbox{\hyperlink{classHTTPCookie}{HTTPCookie}} object to serialize. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A std\+::string representing the serialized cookie. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPCookie.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPCookie.\+cpp\end{DoxyCompactItemize}

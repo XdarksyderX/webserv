@@ -1,0 +1,103 @@
+\hypertarget{classHTTPResponse}{}\doxysection{HTTPResponse Class Reference}
+\label{classHTTPResponse}\index{HTTPResponse@{HTTPResponse}}
+
+
+Represents an HTTP response.  
+
+
+
+
+{\ttfamily \#include $<$HTTPResponse.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classHTTPResponse_a7b210a684393520e0bc51ccfc6807181}\label{classHTTPResponse_a7b210a684393520e0bc51ccfc6807181}} 
+{\bfseries HTTPResponse} (const \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \&other)
+\item 
+\mbox{\Hypertarget{classHTTPResponse_aa82d12f97b60796474a5002d7ce25a57}\label{classHTTPResponse_aa82d12f97b60796474a5002d7ce25a57}} 
+\mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \& {\bfseries operator=} (const \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \&other)
+\item 
+\mbox{\Hypertarget{classHTTPResponse_afc838b6b12033c6d98aca8002600dfe2}\label{classHTTPResponse_afc838b6b12033c6d98aca8002600dfe2}} 
+std\+::string {\bfseries get\+Http\+Version} () const
+\item 
+\mbox{\Hypertarget{classHTTPResponse_a8e6446caa9678e8c0791bc731abb83c8}\label{classHTTPResponse_a8e6446caa9678e8c0791bc731abb83c8}} 
+int {\bfseries get\+Status\+Code} () const
+\item 
+\mbox{\Hypertarget{classHTTPResponse_a36e13a690531916f37d08c6e30d63640}\label{classHTTPResponse_a36e13a690531916f37d08c6e30d63640}} 
+std\+::string {\bfseries get\+Status\+Message} () const
+\item 
+\mbox{\Hypertarget{classHTTPResponse_a67c05de26641fea70a14d1e8a95c0138}\label{classHTTPResponse_a67c05de26641fea70a14d1e8a95c0138}} 
+std\+::string {\bfseries get\+Body} () const
+\item 
+\mbox{\Hypertarget{classHTTPResponse_afa623c8f19057e989f88fa6a718e4a58}\label{classHTTPResponse_afa623c8f19057e989f88fa6a718e4a58}} 
+std\+::map$<$ std\+::string, std\+::string $>$ {\bfseries get\+Headers} () const
+\item 
+\mbox{\Hypertarget{classHTTPResponse_a4be39b2fcfb461119e7ccd87926e86d5}\label{classHTTPResponse_a4be39b2fcfb461119e7ccd87926e86d5}} 
+void {\bfseries set\+Http\+Version} (const std\+::string \&http\+Version)
+\item 
+\mbox{\Hypertarget{classHTTPResponse_adac88894e19424b65287e38dc0fe6a28}\label{classHTTPResponse_adac88894e19424b65287e38dc0fe6a28}} 
+void {\bfseries set\+Status\+Code} (int status\+Code)
+\item 
+\mbox{\Hypertarget{classHTTPResponse_ab0e422debd8bfe540a03f5f3a0eefa52}\label{classHTTPResponse_ab0e422debd8bfe540a03f5f3a0eefa52}} 
+void {\bfseries set\+Status\+Message} (const std\+::string \&status\+Message)
+\item 
+\mbox{\Hypertarget{classHTTPResponse_ab00d7b9ce9510683d9f74995ecf3c81c}\label{classHTTPResponse_ab00d7b9ce9510683d9f74995ecf3c81c}} 
+void {\bfseries set\+Body} (const std\+::string \&body)
+\item 
+void \mbox{\hyperlink{classHTTPResponse_a36e41f1cf34429fb70100810bffc5159}{add\+Header}} (const std\+::string \&key, const std\+::string \&value)
+\begin{DoxyCompactList}\small\item\em Adds a header to the response. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classHTTPResponse_a2b8eb3f2e5c8418a8e9226077a2d21a4}{get\+Header}} (const std\+::string \&key) const
+\begin{DoxyCompactList}\small\item\em Retrieves a header from the response. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPResponse_a78037b67a06bf140559afbf613c3767e}\label{classHTTPResponse_a78037b67a06bf140559afbf613c3767e}} 
+void \mbox{\hyperlink{classHTTPResponse_a78037b67a06bf140559afbf613c3767e}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the response content, resetting all fields to their default values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an HTTP response. 
+
+This class encapsulates all components of an HTTP response, including the protocol version, status code, status message, response body, and headers. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPResponse_a36e41f1cf34429fb70100810bffc5159}\label{classHTTPResponse_a36e41f1cf34429fb70100810bffc5159}} 
+\index{HTTPResponse@{HTTPResponse}!addHeader@{addHeader}}
+\index{addHeader@{addHeader}!HTTPResponse@{HTTPResponse}}
+\doxysubsubsection{\texorpdfstring{addHeader()}{addHeader()}}
+{\footnotesize\ttfamily void HTTPResponse\+::add\+Header (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key,  }\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Adds a header to the response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The header key. \\
+\hline
+{\em value} & The header value. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classHTTPResponse_a2b8eb3f2e5c8418a8e9226077a2d21a4}\label{classHTTPResponse_a2b8eb3f2e5c8418a8e9226077a2d21a4}} 
+\index{HTTPResponse@{HTTPResponse}!getHeader@{getHeader}}
+\index{getHeader@{getHeader}!HTTPResponse@{HTTPResponse}}
+\doxysubsubsection{\texorpdfstring{getHeader()}{getHeader()}}
+{\footnotesize\ttfamily std\+::string HTTPResponse\+::get\+Header (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key }\end{DoxyParamCaption}) const}
+
+
+
+Retrieves a header from the response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The header key to retrieve. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The header value if found, otherwise an empty string. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPResponse.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPResponse.\+cpp\end{DoxyCompactItemize}

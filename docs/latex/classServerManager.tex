@@ -1,0 +1,89 @@
+\hypertarget{classServerManager}{}\doxysection{Server\+Manager Class Reference}
+\label{classServerManager}\index{ServerManager@{ServerManager}}
+
+
+Class that manages multiple HTTP servers.  
+
+
+
+
+{\ttfamily \#include $<$Server\+Manager.\+hpp$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classServerManager_1_1PollError}{Poll\+Error}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when an error occurs during polling. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classServerManager_1_1ServerNotFound}{Server\+Not\+Found}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when a server is not found. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classServerManager_1_1SocketNotFound}{Socket\+Not\+Found}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when a socket file descriptor is not found. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classServerManager_aa33fdefbe87471eb32bfee003b4e8b73}\label{classServerManager_aa33fdefbe87471eb32bfee003b4e8b73}} 
+{\bfseries Server\+Manager} (const std\+::vector$<$ \mbox{\hyperlink{classHTTPServer}{HTTPServer}} $\ast$ $>$ \&servers)
+\item 
+\mbox{\Hypertarget{classServerManager_a561e36ddeb19a64e198cbdbc10c4019e}\label{classServerManager_a561e36ddeb19a64e198cbdbc10c4019e}} 
+{\bfseries Server\+Manager} (const \mbox{\hyperlink{classServerManager}{Server\+Manager}} \&other)
+\item 
+\mbox{\Hypertarget{classServerManager_a250e3da61bbcf71030884488948f4d0b}\label{classServerManager_a250e3da61bbcf71030884488948f4d0b}} 
+\mbox{\hyperlink{classServerManager}{Server\+Manager}} \& {\bfseries operator=} (const \mbox{\hyperlink{classServerManager}{Server\+Manager}} \&other)
+\item 
+void \mbox{\hyperlink{classServerManager_aca964c2d957890be921663dc22aca37e}{add\+Server}} (\mbox{\hyperlink{classHTTPServer}{HTTPServer}} $\ast$server)
+\begin{DoxyCompactList}\small\item\em Adds an HTTP server to the manager. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServerManager_a4d83d20ca1f57a6a5ddea67cb303bd5a}{add\+Client}} (int socket\+FD)
+\begin{DoxyCompactList}\small\item\em Adds a client socket file descriptor to the server manager. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classServerManager_a8a6dc6c2f65cc7bcfc91b660ed341daf}\label{classServerManager_a8a6dc6c2f65cc7bcfc91b660ed341daf}} 
+void \mbox{\hyperlink{classServerManager_a8a6dc6c2f65cc7bcfc91b660ed341daf}{start\+Servers}} ()
+\begin{DoxyCompactList}\small\item\em Starts all HTTP servers managed by the manager. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classServerManager_a42155b10a422cd3d637ed9dd551443ae}\label{classServerManager_a42155b10a422cd3d637ed9dd551443ae}} 
+std\+::vector$<$ \mbox{\hyperlink{classHTTPServer}{HTTPServer}} $\ast$ $>$ {\bfseries get\+Servers} () const
+\item 
+\mbox{\Hypertarget{classServerManager_a074583ed0093ad091eaf757987949609}\label{classServerManager_a074583ed0093ad091eaf757987949609}} 
+void \mbox{\hyperlink{classServerManager_a074583ed0093ad091eaf757987949609}{stop\+Servers}} ()
+\begin{DoxyCompactList}\small\item\em Stops all HTTP servers managed by the manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that manages multiple HTTP servers. 
+
+This class is designed to manage multiple HTTP servers, allowing to start and stop them all at once. It also provides functionalities to add and remove client socket file descriptors to the servers. The class uses the poll system call to handle multiple servers and clients I/O operations simultaneously. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classServerManager_a4d83d20ca1f57a6a5ddea67cb303bd5a}\label{classServerManager_a4d83d20ca1f57a6a5ddea67cb303bd5a}} 
+\index{ServerManager@{ServerManager}!addClient@{addClient}}
+\index{addClient@{addClient}!ServerManager@{ServerManager}}
+\doxysubsubsection{\texorpdfstring{addClient()}{addClient()}}
+{\footnotesize\ttfamily void Server\+Manager\+::add\+Client (\begin{DoxyParamCaption}\item[{int}]{socket\+FD }\end{DoxyParamCaption})}
+
+
+
+Adds a client socket file descriptor to the server manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\+FD} & The client socket file descriptor to add. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServerManager_aca964c2d957890be921663dc22aca37e}\label{classServerManager_aca964c2d957890be921663dc22aca37e}} 
+\index{ServerManager@{ServerManager}!addServer@{addServer}}
+\index{addServer@{addServer}!ServerManager@{ServerManager}}
+\doxysubsubsection{\texorpdfstring{addServer()}{addServer()}}
+{\footnotesize\ttfamily void Server\+Manager\+::add\+Server (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classHTTPServer}{HTTPServer}} $\ast$}]{server }\end{DoxyParamCaption})}
+
+
+
+Adds an HTTP server to the manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em server} & The HTTP server pointer to add. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/Server\+Manager.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Server\+Manager.\+cpp\end{DoxyCompactItemize}

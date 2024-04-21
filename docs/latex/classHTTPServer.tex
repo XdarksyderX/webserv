@@ -1,0 +1,134 @@
+\hypertarget{classHTTPServer}{}\doxysection{HTTPServer Class Reference}
+\label{classHTTPServer}\index{HTTPServer@{HTTPServer}}
+
+
+Manages the operations of an HTTP server, handling client connections, requests, and responses.  
+
+
+
+
+{\ttfamily \#include $<$HTTPServer.\+hpp$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classHTTPServer_1_1AcceptError}{Accept\+Error}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when the server fails to accept a new connection. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classHTTPServer_1_1BindError}{Bind\+Error}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when the server fails to bind to a port. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classHTTPServer_1_1ListenError}{Listen\+Error}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when the server fails to listen on a port. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classHTTPServer_1_1SocketError}{Socket\+Error}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when a socket operation fails. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classHTTPServer_1_1SocketOptionError}{Socket\+Option\+Error}}
+\begin{DoxyCompactList}\small\item\em Exception thrown when setting socket options fails. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHTTPServer_a13fc55a31339acd160caed8310c5ea1a}{HTTPServer}} (\mbox{\hyperlink{classServerConfig}{Server\+Config}} \&server\+Config)
+\begin{DoxyCompactList}\small\item\em Constructs an \mbox{\hyperlink{classHTTPServer}{HTTPServer}} with a given server configuration. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPServer_af09066b05417f9a9ce9f1cd8e5ad9e18}\label{classHTTPServer_af09066b05417f9a9ce9f1cd8e5ad9e18}} 
+\mbox{\hyperlink{classHTTPServer_af09066b05417f9a9ce9f1cd8e5ad9e18}{$\sim$\+HTTPServer}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \mbox{\hyperlink{classHTTPServer}{HTTPServer}}, cleans up the server\textquotesingle{}s resources. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classHTTPServer_a280645e990daa676b3f441bfe2fe31cf}{get\+Socket\+FD}} () const
+\begin{DoxyCompactList}\small\item\em Gets the file descriptor for the server\textquotesingle{}s listening socket. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classHTTPServer_ad1da4988c412779a4bff6102784f775f}{accept\+Connection}} ()
+\begin{DoxyCompactList}\small\item\em Accepts a new connection from a client. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHTTPServer_af0e2415c81fc27297af16e932ac6989d}{send\+First\+Pending\+Response}} (int client\+Socket\+FD)
+\begin{DoxyCompactList}\small\item\em Sends the first pending response to a client. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classHTTPServer_af4aa033385f578fac6610e3a518630c4}{is\+Client}} (int client\+Socket\+FD) const
+\begin{DoxyCompactList}\small\item\em Says if a client is in the connections map. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classHTTPServer_a071e5331d7607181630323849d5a06f1}\label{classHTTPServer_a071e5331d7607181630323849d5a06f1}} 
+void \mbox{\hyperlink{classHTTPServer_a071e5331d7607181630323849d5a06f1}{check\+And\+Close\+Inactive\+Connections}} ()
+\begin{DoxyCompactList}\small\item\em Checks and closes inactive connections that have exceeded the timeout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages the operations of an HTTP server, handling client connections, requests, and responses. 
+
+\mbox{\hyperlink{classHTTPServer}{HTTPServer}} encapsulates the functionality required for setting up a server socket, listening for incoming connections, processing HTTP requests, and sending responses. It uses a non-\/blocking approach to handle multiple connections simultaneously. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classHTTPServer_a13fc55a31339acd160caed8310c5ea1a}\label{classHTTPServer_a13fc55a31339acd160caed8310c5ea1a}} 
+\index{HTTPServer@{HTTPServer}!HTTPServer@{HTTPServer}}
+\index{HTTPServer@{HTTPServer}!HTTPServer@{HTTPServer}}
+\doxysubsubsection{\texorpdfstring{HTTPServer()}{HTTPServer()}}
+{\footnotesize\ttfamily HTTPServer\+::\+HTTPServer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classServerConfig}{Server\+Config}} \&}]{server\+Config }\end{DoxyParamCaption})}
+
+
+
+Constructs an \mbox{\hyperlink{classHTTPServer}{HTTPServer}} with a given server configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em server\+Config} & A reference to a \mbox{\hyperlink{classServerConfig}{Server\+Config}} object. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPServer_ad1da4988c412779a4bff6102784f775f}\label{classHTTPServer_ad1da4988c412779a4bff6102784f775f}} 
+\index{HTTPServer@{HTTPServer}!acceptConnection@{acceptConnection}}
+\index{acceptConnection@{acceptConnection}!HTTPServer@{HTTPServer}}
+\doxysubsubsection{\texorpdfstring{acceptConnection()}{acceptConnection()}}
+{\footnotesize\ttfamily int HTTPServer\+::accept\+Connection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accepts a new connection from a client. 
+
+\begin{DoxyReturn}{Returns}
+The file descriptor for the client\textquotesingle{}s socket. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPServer_a280645e990daa676b3f441bfe2fe31cf}\label{classHTTPServer_a280645e990daa676b3f441bfe2fe31cf}} 
+\index{HTTPServer@{HTTPServer}!getSocketFD@{getSocketFD}}
+\index{getSocketFD@{getSocketFD}!HTTPServer@{HTTPServer}}
+\doxysubsubsection{\texorpdfstring{getSocketFD()}{getSocketFD()}}
+{\footnotesize\ttfamily int HTTPServer\+::get\+Socket\+FD (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Gets the file descriptor for the server\textquotesingle{}s listening socket. 
+
+\begin{DoxyReturn}{Returns}
+The file descriptor for the server\textquotesingle{}s socket. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPServer_af4aa033385f578fac6610e3a518630c4}\label{classHTTPServer_af4aa033385f578fac6610e3a518630c4}} 
+\index{HTTPServer@{HTTPServer}!isClient@{isClient}}
+\index{isClient@{isClient}!HTTPServer@{HTTPServer}}
+\doxysubsubsection{\texorpdfstring{isClient()}{isClient()}}
+{\footnotesize\ttfamily bool HTTPServer\+::is\+Client (\begin{DoxyParamCaption}\item[{int}]{client\+Socket\+FD }\end{DoxyParamCaption}) const}
+
+
+
+Says if a client is in the connections map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+Socket\+FD} & The file descriptor for the client\textquotesingle{}s socket. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the client is in the connections map, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classHTTPServer_af0e2415c81fc27297af16e932ac6989d}\label{classHTTPServer_af0e2415c81fc27297af16e932ac6989d}} 
+\index{HTTPServer@{HTTPServer}!sendFirstPendingResponse@{sendFirstPendingResponse}}
+\index{sendFirstPendingResponse@{sendFirstPendingResponse}!HTTPServer@{HTTPServer}}
+\doxysubsubsection{\texorpdfstring{sendFirstPendingResponse()}{sendFirstPendingResponse()}}
+{\footnotesize\ttfamily void HTTPServer\+::send\+First\+Pending\+Response (\begin{DoxyParamCaption}\item[{int}]{client\+Socket\+FD }\end{DoxyParamCaption})}
+
+
+
+Sends the first pending response to a client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+Socket\+FD} & The file descriptor for the client\textquotesingle{}s socket. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/HTTPServer.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/HTTPServer.\+cpp\end{DoxyCompactItemize}

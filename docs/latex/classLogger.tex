@@ -1,0 +1,128 @@
+\hypertarget{classLogger}{}\doxysection{Logger Class Reference}
+\label{classLogger}\index{Logger@{Logger}}
+
+
+Class for logging messages with different severity levels.  
+
+
+
+
+{\ttfamily \#include $<$Logger.\+hpp$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8f}{Level}} \{ \mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa3ce1bbeb15a3d8e29e4c5e75492a781b}{ERROR}}
+, \mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8fafb1bf96f41b282521d9438106ea11bca}{WARNING}}
+, \mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa61a9b6fc1e9babc448984b8a34ca2ed2}{INFO}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum for different severity levels. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classLogger_add38326dd40873b5873a9654adedb428}{log}} (const std\+::string \&message, \mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8f}{Level}} level=\mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa61a9b6fc1e9babc448984b8a34ca2ed2}{INFO}}, bool print\+Time=false, bool print\+Endline=true)
+\begin{DoxyCompactList}\small\item\em Logs a message with a specified severity level. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classLogger_a93d1ea81fe8dcf38d4b22f2773aae5fd}\label{classLogger_a93d1ea81fe8dcf38d4b22f2773aae5fd}} 
+static void \mbox{\hyperlink{classLogger_a93d1ea81fe8dcf38d4b22f2773aae5fd}{log\+Header}} ()
+\begin{DoxyCompactList}\small\item\em Prints webserv header. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classLogger_ad73b79e41d57134a90f4a9e55cf20baa}{log\+Request}} (const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&request, const \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \&response, int client\+Socket\+FD, const std\+::string \&server, bool print\+Time)
+\begin{DoxyCompactList}\small\item\em Logs an HTTP request. \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{classLogger_a505a8c58d86230025e3d471346b5f188}{get\+Client\+Socket\+IP}} (int client\+Socket\+FD)
+\begin{DoxyCompactList}\small\item\em Gets the IP address of a client socket. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classLogger_a687d78f64be934bc55f8f6c71f38d0b4}\label{classLogger_a687d78f64be934bc55f8f6c71f38d0b4}} 
+static void \mbox{\hyperlink{classLogger_a687d78f64be934bc55f8f6c71f38d0b4}{switch\+Print}} ()
+\begin{DoxyCompactList}\small\item\em Switch verbose mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for logging messages with different severity levels. 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classLogger_ad766a24576ea8b27ad9d5649cef46d8f}\label{classLogger_ad766a24576ea8b27ad9d5649cef46d8f}} 
+\index{Logger@{Logger}!Level@{Level}}
+\index{Level@{Level}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{Level}{Level}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8f}{Logger\+::\+Level}}}
+
+
+
+Enum for different severity levels. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!Logger@{Logger}}\index{Logger@{Logger}!ERROR@{ERROR}}}\mbox{\Hypertarget{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa3ce1bbeb15a3d8e29e4c5e75492a781b}\label{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa3ce1bbeb15a3d8e29e4c5e75492a781b}} 
+ERROR&Error level. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WARNING@{WARNING}!Logger@{Logger}}\index{Logger@{Logger}!WARNING@{WARNING}}}\mbox{\Hypertarget{classLogger_ad766a24576ea8b27ad9d5649cef46d8fafb1bf96f41b282521d9438106ea11bca}\label{classLogger_ad766a24576ea8b27ad9d5649cef46d8fafb1bf96f41b282521d9438106ea11bca}} 
+WARNING&Warning level. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFO@{INFO}!Logger@{Logger}}\index{Logger@{Logger}!INFO@{INFO}}}\mbox{\Hypertarget{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa61a9b6fc1e9babc448984b8a34ca2ed2}\label{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa61a9b6fc1e9babc448984b8a34ca2ed2}} 
+INFO&Information level. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classLogger_a505a8c58d86230025e3d471346b5f188}\label{classLogger_a505a8c58d86230025e3d471346b5f188}} 
+\index{Logger@{Logger}!getClientSocketIP@{getClientSocketIP}}
+\index{getClientSocketIP@{getClientSocketIP}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{getClientSocketIP()}{getClientSocketIP()}}
+{\footnotesize\ttfamily std\+::string Logger\+::get\+Client\+Socket\+IP (\begin{DoxyParamCaption}\item[{int}]{client\+Socket\+FD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the IP address of a client socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em client\+Socket\+FD} & The file descriptor of the client socket. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLogger_add38326dd40873b5873a9654adedb428}\label{classLogger_add38326dd40873b5873a9654adedb428}} 
+\index{Logger@{Logger}!log@{log}}
+\index{log@{log}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily void Logger\+::log (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message,  }\item[{\mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8f}{Level}}}]{level = {\ttfamily \mbox{\hyperlink{classLogger_ad766a24576ea8b27ad9d5649cef46d8fa61a9b6fc1e9babc448984b8a34ca2ed2}{INFO}}},  }\item[{bool}]{print\+Time = {\ttfamily false},  }\item[{bool}]{print\+Endline = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Logs a message with a specified severity level. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Message to log. \\
+\hline
+{\em level} & Severity level of the message (default is INFO). \\
+\hline
+{\em print\+Time} & Whether to print the current time before the message (default is false). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classLogger_ad73b79e41d57134a90f4a9e55cf20baa}\label{classLogger_ad73b79e41d57134a90f4a9e55cf20baa}} 
+\index{Logger@{Logger}!logRequest@{logRequest}}
+\index{logRequest@{logRequest}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{logRequest()}{logRequest()}}
+{\footnotesize\ttfamily void Logger\+::log\+Request (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&}]{request,  }\item[{const \mbox{\hyperlink{classHTTPResponse}{HTTPResponse}} \&}]{response,  }\item[{int}]{client\+Socket\+FD,  }\item[{const std\+::string \&}]{server,  }\item[{bool}]{print\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Logs an HTTP request. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The HTTP request to log. \\
+\hline
+{\em client\+Socket\+FD} & The file descriptor of the client socket. \\
+\hline
+{\em port} & The port number of server \\
+\hline
+{\em print\+Time} & Whether to print the current time before the message (default is false). \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/Logger.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/Logger.\+cpp\end{DoxyCompactItemize}
