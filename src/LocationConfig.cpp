@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationConfig.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 17:55:54 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:10:57 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,4 +156,14 @@ std::ostream& operator<<(std::ostream& os, const LocationConfig& config)
     os << "\tRoot: " << config.root << std::endl;
     os << "\tIndex: " << config.index << std::endl;
     return os;
+}
+
+std::map<std::string, std::string> LocationConfig::getCgiInfo() const
+{
+    std::map<std::string, std::string> cgiInfo;
+    for (size_t i = 0; i < cgiPaths.size() && i < cgiExtensions.size(); ++i)
+    {
+        cgiInfo[cgiPaths[i]] = cgiExtensions[i];
+    }
+    return cgiInfo;
 }
