@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPRequestParser.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:45:31 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 16:21:11 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:31:22 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,18 @@ void	HTTPRequestParser::parseRequestLine(HTTPRequest &request, const std::string
 	if (end == std::string::npos)
 		throw InvalidRequestHeader();
 	request.setUri(requestLine.substr(start, end - start));
+	request.setQuery(parseQueryString(request.getUri()));
 	start = end + 1;
 	request.setHttpVersion(requestLine.substr(start));
+}
+
+std::string HTTPRequestParser::parseQueryString(const std::string &uri)
+{
+    std::string::size_type start = uri.find('?');
+    if (start != std::string::npos)
+        return (uri.substr(start + 1));
+    else
+        return ("");
 }
 
 void	HTTPRequestParser::parseRequestHeaders(HTTPRequest &request, const std::string &headerLine)

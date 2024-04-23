@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/04/23 13:17:05 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:26:53 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ std::string CGIHandler::getPath(void) {
 	throw(std::runtime_error("Non supported Extension")); //this is provisional
 }
 
-void	initEnv(HTTPRequest &request) {
+
+
+void	initEnv(/* HTTPRequest &request */) {
 
 	/* this should init some env variables like: 
 	CONTENT_LENGTH, CONTENT_TYPE, REQUEST_METHOD, REMOTE_ADDR,
