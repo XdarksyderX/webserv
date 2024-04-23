@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPRequest.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:15:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 21:11:44 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:32:49 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HTTPRequest.hpp"
 
-HTTPRequest::HTTPRequest() : method(NONE), uri(""), httpVersion("1.1"), body("") {}
+HTTPRequest::HTTPRequest() : method(NONE), uri(""), query(""), httpVersion("1.1"), body("") {}
 
 HTTPRequest::HTTPRequest(const HTTPRequest &other)
     : method(other.method), uri(other.uri), httpVersion(other.httpVersion), body(other.body), headers(other.headers) {}
@@ -70,6 +70,11 @@ void HTTPRequest::setMethod(HTTPMethod m)
 void HTTPRequest::setUri(const std::string &u)
 {
     uri = u;
+}
+
+void HTTPRequest::setQuery(const std::string &q)
+{
+    query = q;
 }
 
 void HTTPRequest::setHttpVersion(const std::string &version)

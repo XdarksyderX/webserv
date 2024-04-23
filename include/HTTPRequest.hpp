@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPRequest.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:36:18 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 21:11:40 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:25:15 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ class HTTPRequest
 	private:
 		HTTPMethod method; ///< HTTP method (GET, POST, PUT, DELETE, NONE).
         std::string uri; ///< URI of the request.
+        std::string query;
         std::string httpVersion; ///< HTTP version.
         std::string body; ///< Request body.
         std::map<std::string, std::string> headers; ///< HTTP request headers.
@@ -64,6 +65,7 @@ class HTTPRequest
 		void setUri(const std::string &uri);
 		void setHttpVersion(const std::string &httpVersion);
 		void setBody(const std::string &body);
+        void setQuery(const std::string &query);
 
 		/**
          * @brief Adds a header to the request.

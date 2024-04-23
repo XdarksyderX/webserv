@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPRequestParser.hpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:36:49 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/07 13:42:06 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:29:23 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ class HTTPRequestParser
 		 * @param requestLine A string representing the request line.
 		 */
 		static void	parseRequestLine(HTTPRequest &request, const std::string &requestLine);
+		/**
+		 * @brief Parse the query string if it exist.
+		 * @param request A string representing the request line.
+		 * @param requestLine The query string.
+		 */
+		static std::string	parseQueryString(const std::string &uri);
 
 	public:
 		/**
