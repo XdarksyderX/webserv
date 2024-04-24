@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:36:18 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/23 15:25:15 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:54:47 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ class HTTPRequest
 		HTTPRequest &operator=(const HTTPRequest &other);
 		HTTPMethod getMethod() const;
 		std::string getUri() const;
+		std::string getQuery() const;
 		std::string getHttpVersion() const;
 		std::string getBody() const;
 		const std::map<std::string, std::string> &getHeaders() const;

@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:15:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/23 15:32:49 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:55:07 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ HTTPMethod HTTPRequest::getMethod() const
 std::string HTTPRequest::getUri() const
 {
     return uri;
+}
+std::string HTTPRequest::getQuery() const
+{
+    return query;
 }
 
 std::string HTTPRequest::getHttpVersion() const
