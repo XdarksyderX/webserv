@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/04/25 15:50:54 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:36:16 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ CGIHandler::CGIHandler(LocationConfig &conf, HTTPRequest &req) {
 	this->cgi = true;
 	this->request = req;
 	prepareCGI();
+	std::cout << "Por dios Elisa no te olvides de gestionar los errores" << std::endl;
 }
 
 CGIHandler::~CGIHandler() {
@@ -116,5 +117,43 @@ void	CGIHandler::prepareCGI(void) {
 		return ;
 	this->cgi_path = getPath(ext);
 	this->file_path = getFilePath(uri);
+	if (!Utils::fileExists(file_path))
+		throw(std::runtime_error("Requested File doesn't exist")); //this is provisional
 	this->args = setArgs();
 }
+
+std::string readPipe(int pipe_fd[2]) {
+
+	char buffer[BUFSIZ];
+	std::string output;
+	ssize_t bytesRead;
+
+	while ((bytesRead = read(pipe_fd[0], buffer, BUFSIZ)) > 0) {
+		output.append(buffer, bytesRead);
+	}
+	if (bytesRead < 0) {
+		throw (std::runtime_error("Error reading from pipe"));
+	}
+	close(pipe_fd[0]);
+	return (output);
+}
+
+std::string	CGIHandler::execCGI(void) {
+
+	int status;
+	 //if (pipe(pipe_fd) < 0) i'll have to handle if pipe fails
+	 //if (pid < 0) and if fork fails
+	int pid = fork();
+	if (!pid)
+	{
+		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+			throw(std::runtime_error("Redirection error idk"));
+		status = execve(args[0], args, NULL);
+		exit(status); //in case execve fails
+	}
+	waitpid(pid, &status, 0); //I may add a counter like waitpid or 15 secs
+	close(pipe_fd[1]);
+	return (readPipe(pipe_fd));
+}
+
+

@@ -6,15 +6,17 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:38:22 by erivero-          #+#    #+#             */
-/*   Updated: 2024/04/25 15:47:45 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:37:55 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "HTTPRequest.hpp"
 #include "LocationConfig.hpp"
+#include "utils.hpp"
 #include <map>
 #include <string>
+#include <unistd.h>
 
 class CGIHandler {
 	private:
@@ -26,6 +28,7 @@ class CGIHandler {
 		std::string	file_path;
 		HTTPRequest	request;
 		char **args;
+		int		pipe_fd[2];
 	public:
 		CGIHandler(LocationConfig &config, HTTPRequest &req);
 		~CGIHandler(void);
@@ -40,5 +43,8 @@ class CGIHandler {
 		char **setArgs(void);
 		/* Sets cgi_path, file_path, args so everything is ready to execute*/
 		void prepareCGI(void);
+		/* Creates a fork to execute the file, saving the content in a pipe. Returns
+		the pipe content in a string */
+		std::string	 execCGI(void);
 
 } ;
