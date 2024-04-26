@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:38:22 by erivero-          #+#    #+#             */
-/*   Updated: 2024/04/26 15:37:55 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:30:36 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include "utils.hpp"
 #include <map>
 #include <string>
-#include <unistd.h>
+#include <unistd.h> //for pipe
+#include <signal.h> //for kill
 
 class CGIHandler {
 	private:
@@ -30,7 +31,7 @@ class CGIHandler {
 		char **args;
 		int		pipe_fd[2];
 	public:
-		CGIHandler(LocationConfig &config, HTTPRequest &req);
+		CGIHandler(LocationConfig &config, const HTTPRequest &req);
 		~CGIHandler(void);
 		/* @brief Takes an uri and returns a sting with the file extension if any*/
 		std::string getExtension(std::string uri);
@@ -46,5 +47,6 @@ class CGIHandler {
 		/* Creates a fork to execute the file, saving the content in a pipe. Returns
 		the pipe content in a string */
 		std::string	 execCGI(void);
+		std::vector<std::string> getArgs(void);
 
 } ;
