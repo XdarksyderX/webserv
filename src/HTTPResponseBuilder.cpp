@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPResponseBuilder.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 22:12:46 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:10:30 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
     std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
     std::string uriToCheck = request.getUri();
     std::string contentType = request.getHeader("Content-Type");
-
+    //request.setQuery(request.getBody()); no lo puedo hacer por ahora pq es const
     if (contentType.find("multipart/form-data") != std::string::npos)
     {
         HTTPMultiFormData formData(request);
@@ -368,7 +368,7 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 
 	if (!Utils::hasElement(location.getAllowMethods(), request.getMethod()))
 		return handleErrorPage(405);
-
+//	CGIHandler  cgi_handler(location, request);
 	if (request.getMethod() == GET)
 		return handleGetRequest(&location);
 	else if ((request.getMethod() == POST || request.getMethod() == PUT) &&
@@ -378,3 +378,9 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 		return handleDeleteRequest(&location);
 	return handleErrorPage(405);
 }
+
+/* Sería conveniente que cada función de Handle_METHOD_Request
+recibieran el objeto cgi, de forma que sólo creásemos uno
+Dentro de cada función, se comprobaría si el booleano del cgi
+es true y en ese caso, llamarían a execCGI() 
+En handlePostRequest, la query se sustituiría por el request.body*/
