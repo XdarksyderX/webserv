@@ -6,11 +6,12 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/04/26 17:33:47 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:57:55 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CGIHandler.hpp"
+// #include <fcntl.h>
 
 CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req) {
 	this->config = conf;
@@ -27,7 +28,7 @@ CGIHandler::~CGIHandler() {
 }
 
 std::string CGIHandler::getExtension(std::string uri) {
- // parsing: whatever.py?arg1=potato
+// parsing: whatever.py?arg1=potato
 //	std::string uri = request.getUri();
 	size_t dotPos = uri.find_last_of('.');
 	size_t size = uri.find_last_of('?') - dotPos;
@@ -48,13 +49,21 @@ std::string CGIHandler::getPath(std::string ext) {
 	it = supportedExtensions.find(ext);
 	if (it != supportedExtensions.end())
 		return (it->second);
+	std::cout << "on getPath, ext: \'" << ext << "\'\n";
+
+/* 	it = supportedExtensions.begin();
+	while (it != supportedExtensions.end())
+	{
+		std::cout << it->second << std::endl;
+		it++;
+	} */
 	throw(std::runtime_error("Non supported Extension")); //this is provisional
 }
 
 std::string CGIHandler::getFilePath(std::string uri) {
 //  what I have:    /cgi-bin/myscript.py?a=42
 //  what I want:    ./cgi-bin/myscript.py
-	std::string file_path = "." + uri;
+	std::string file_path = "/Users/erivero-/Desktop/webserv" + uri;
 	size_t size = uri.find('?');
 	if (size != std::string::npos)
 		return (file_path.substr(0, size));
@@ -85,7 +94,11 @@ std::string CGIHandler::getFilePath(std::string uri) {
 /* If it is POST method, query string must be setted with request body */
 char **CGIHandler::setArgs(void) {
 
-	std::string query = request.getQuery();
+	std::string query;
+	if (request.getMethod() == POST)
+		query = request.getBody();
+	else
+		query = request.getQuery();
 	//if there are 2 '&' there will be 3 args, + 1 for the path
 	int n = std::count(query.begin(), query.end(), '&') + 2;
 	std::vector<std::string> args(n);
@@ -106,7 +119,7 @@ char **CGIHandler::setArgs(void) {
 		argv[i] = new char[args[i].size() + 1];
 		std::strcpy(argv[i], args[i].c_str());
 	}
-	argv[n + 1] = NULL;
+	argv[n] = NULL;
 	return (argv);
 }
 
@@ -114,6 +127,7 @@ void	CGIHandler::prepareCGI(void) {
 
 	std::string uri = request.getUri();
 	std::string ext = getExtension(uri);
+	std::cout << "on prepareCGI, ext: \'" << ext << "\'\n";
 	if (ext.empty())
 		return ;
 	this->cgi_path = getPath(ext);
@@ -128,7 +142,8 @@ std::string readPipe(int pipe_fd[2]) {
 	char buffer[BUFSIZ];
 	std::string output;
 	ssize_t bytesRead;
-
+/* 	bytesRead = read(pipe_fd[0], buffer, BUFSIZ);
+	std::cout << "bytesRead: " << bytesRead << std::endl; */
 	while ((bytesRead = read(pipe_fd[0], buffer, BUFSIZ)) > 0) {
 		output.append(buffer, bytesRead);
 	}
@@ -136,6 +151,8 @@ std::string readPipe(int pipe_fd[2]) {
 		throw (std::runtime_error("Error reading from pipe"));
 	}
 	close(pipe_fd[0]);
+	std::cout << output << std::endl;
+	//at this point, output is empty and idk why TT__TT
 	return (output);
 }
 
@@ -150,19 +167,30 @@ void	waitTimeOut(int pid, int status)
 	if (current - start > 14)
 		kill(pid, SIGKILL);
 }
+
 std::string	CGIHandler::execCGI(void) {
 
-	int status;
+	int status = 0;
 	 //if (pipe(pipe_fd) < 0) i'll have to handle if pipe fails
 	 //if (pid < 0) and if fork fails
+	pipe(pipe_fd);
 	pid_t pid = fork();
 	if (!pid)
 	{
+		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 			throw(std::runtime_error("Redirection error idk"));
+		if (dup2(pipe_fd[1], STDERR_FILENO) == -1)
+			throw(std::runtime_error("Redirection error idk"));
+        std::cout << "args[0]: " << args[0] << std::endl;  // print the file path
+        std::cout << "args: " << args << std::endl;  // print the address of the array
 		status = execve(args[0], args, NULL);
+		if (status == -1) {
+			perror(args[1]);  // print error
+		}
 		exit(status); //in case execve fails
 	}
+	std::cout << "status: " << status << std::endl;
 	waitTimeOut(pid, status);
 //	waitpid(pid, &status, 0); //I may add a counter like waitpid or 15 secs
 	close(pipe_fd[1]);

@@ -6,11 +6,12 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/26 17:10:30 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:52:44 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HTTPResponseBuilder.hpp"
+#include "CGIHandler.hpp"
 
 const std::map<std::string, std::string> HTTPResponseBuilder::MIME_TYPES = HTTPResponseBuilder::createMIMEMap();
 const std::map<int, std::string> HTTPResponseBuilder::STATUS_CODES = HTTPResponseBuilder::createStatusCodesMap();
@@ -233,7 +234,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
     std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
     std::string uriToCheck = request.getUri();
     std::string contentType = request.getHeader("Content-Type");
-    //request.setQuery(request.getBody()); no lo puedo hacer por ahora pq es const
+
     if (contentType.find("multipart/form-data") != std::string::npos)
     {
         HTTPMultiFormData formData(request);
@@ -368,7 +369,15 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 
 	if (!Utils::hasElement(location.getAllowMethods(), request.getMethod()))
 		return handleErrorPage(405);
-//	CGIHandler  cgi_handler(location, request);
+/*     std::vector<std::string> debug = location.getCgiExtensions();
+    std::cout << "location ext size is: " << debug.size(); 
+    well at this point location config vector for extensions is empty but I guess parsing is correct
+    Im harcoding it provisionally*/
+    location.addCgiExtension(".py");
+    location.addCgiPath("/usr/local/bin/python3");
+	CGIHandler  cgi_handler(location, request);
+    std::string out = cgi_handler.execCGI();
+    std::cout << out << std::endl;
 	if (request.getMethod() == GET)
 		return handleGetRequest(&location);
 	else if ((request.getMethod() == POST || request.getMethod() == PUT) &&
