@@ -6,12 +6,13 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/01 17:57:55 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:08:42 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CGIHandler.hpp"
-// #include <fcntl.h>
+#include "HTTPRequestParser.hpp" //just to hardcode
+
 
 CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req) {
 	this->config = conf;
@@ -31,9 +32,11 @@ std::string CGIHandler::getExtension(std::string uri) {
 // parsing: whatever.py?arg1=potato
 //	std::string uri = request.getUri();
 	size_t dotPos = uri.find_last_of('.');
-	size_t size = uri.find_last_of('?') - dotPos;
-	if (dotPos != std::string::npos)
-		return (uri.substr(dotPos, size));
+	size_t queryPos = uri.find_last_of('?');
+	if (dotPos != std::string::npos && queryPos != std::string::npos)
+		return (uri.substr(dotPos, queryPos - dotPos));
+	else if (dotPos != std::string::npos)
+		return (uri.substr(dotPos));
 	this->cgi = false;
 	return ("");
 }
@@ -63,10 +66,10 @@ std::string CGIHandler::getPath(std::string ext) {
 std::string CGIHandler::getFilePath(std::string uri) {
 //  what I have:    /cgi-bin/myscript.py?a=42
 //  what I want:    ./cgi-bin/myscript.py
-	std::string file_path = "/Users/erivero-/Desktop/webserv" + uri;
+	std::string file_path = "." + uri;
 	size_t size = uri.find('?');
 	if (size != std::string::npos)
-		return (file_path.substr(0, size));
+		return (file_path.substr(0, size + 1));
 	return (file_path);
 	/* I was gonna take the current dir to make a join 
 	and get the absolute path, but we're not allowed to use getcwd()
@@ -90,34 +93,46 @@ std::string CGIHandler::getFilePath(std::string uri) {
 	// hacen falta realmente las variables de entorno, se le puede mandar NULL
 	// execve recibirá: el path, un doble puntero al path y los argumentos, y NULL
 } */
-
+void ft_debuggin(char **args)
+{
+	int i = 0;
+	std::cout << "\033[35m[ Debugging and kinda wanting to jump in front of a train jiji ]\033[0m\n";
+	while (args[i]) {
+		std::cout << i << ": " << args[i] << std::endl;
+		i++;
+	}
+}
 /* If it is POST method, query string must be setted with request body */
+
+std::vector<std::string> split(const std::string &s, char delimiter) {
+	std::vector<std::string> args;
+	std::string arg;
+	std::istringstream argStream(s);
+	while (std::getline(argStream, arg, delimiter)) {
+		args.push_back(arg);
+	}
+	return (args);
+}
+
 char **CGIHandler::setArgs(void) {
 
 	std::string query;
 	if (request.getMethod() == POST)
 		query = request.getBody();
-	else
-		query = request.getQuery();
-	//if there are 2 '&' there will be 3 args, + 1 for the path
-	int n = std::count(query.begin(), query.end(), '&') + 2;
-	std::vector<std::string> args(n);
-	args[0] = this->cgi_path;
-	args[1] = this->file_path;
-	size_t start = 0;
-	for (int i = 2; i < n; ++i) {
-		size_t end = query.find('&', start);
-		if (end == std::string::npos) {
-			args[i] = query.substr(start);
-		} else {
-			args[i] = query.substr(start, end - start);
-		}
-		start = end + 1; // +1 to skip the &
+	else {
+		query = HTTPRequestParser::parseQueryString(request.getUri());
+	//	query = request.getQuery();
+		std::cout << "friendly reminder de que query está hardcoded" << std::endl;
 	}
-	char **argv = new char*[n + 1]; // + 1 for the NULL
+	std::vector<std::string> v_args = split(query, '&');
+ 	v_args.insert(v_args.begin(), this->file_path);
+	v_args.insert(v_args.begin(), this->cgi_path);
+
+	int n = v_args.size();
+	char **argv = new char*[n + 1];
 	for (int i = 0; i < n; ++i) {
-		argv[i] = new char[args[i].size() + 1];
-		std::strcpy(argv[i], args[i].c_str());
+		argv[i] = new char[v_args[i].size() + 1];
+		std::strcpy(argv[i], v_args[i].c_str());
 	}
 	argv[n] = NULL;
 	return (argv);
@@ -132,9 +147,11 @@ void	CGIHandler::prepareCGI(void) {
 		return ;
 	this->cgi_path = getPath(ext);
 	this->file_path = getFilePath(uri);
+	std::cout << "file path: \'" << file_path << "\'\n";
 	if (!Utils::fileExists(file_path))
 		throw(std::runtime_error("Requested File doesn't exist")); //this is provisional
 	this->args = setArgs();
+	ft_debuggin(args);
 }
 
 std::string readPipe(int pipe_fd[2]) {
@@ -151,8 +168,6 @@ std::string readPipe(int pipe_fd[2]) {
 		throw (std::runtime_error("Error reading from pipe"));
 	}
 	close(pipe_fd[0]);
-	std::cout << output << std::endl;
-	//at this point, output is empty and idk why TT__TT
 	return (output);
 }
 
@@ -162,10 +177,13 @@ void	waitTimeOut(int pid, int status)
 	it will stop the loop */
 	std::time_t start = std::time(nullptr);
 	std::time_t current = start;
-	while (!waitpid(pid, &status, 0) && current - start < 15)
+	while (!waitpid(pid, &status, WNOHANG) && current - start < 10)
 		current = std::time(nullptr);
-	if (current - start > 14)
+	if (current - start > 9)
+	{
 		kill(pid, SIGKILL);
+		throw (std::runtime_error("[TIMEOUT] Infinite loop ocurred during execution"));
+	}
 }
 
 std::string	CGIHandler::execCGI(void) {
@@ -182,8 +200,6 @@ std::string	CGIHandler::execCGI(void) {
 			throw(std::runtime_error("Redirection error idk"));
 		if (dup2(pipe_fd[1], STDERR_FILENO) == -1)
 			throw(std::runtime_error("Redirection error idk"));
-        std::cout << "args[0]: " << args[0] << std::endl;  // print the file path
-        std::cout << "args: " << args << std::endl;  // print the address of the array
 		status = execve(args[0], args, NULL);
 		if (status == -1) {
 			perror(args[1]);  // print error
@@ -192,9 +208,13 @@ std::string	CGIHandler::execCGI(void) {
 	}
 	std::cout << "status: " << status << std::endl;
 	waitTimeOut(pid, status);
-//	waitpid(pid, &status, 0); //I may add a counter like waitpid or 15 secs
 	close(pipe_fd[1]);
 	return (readPipe(pipe_fd));
 }
 
-
+/* 
+void ft_hardcode_request(LocationConfig &conf, HTTPRequest &req) {
+	conf.addCgiExtension(".py");
+	conf.addCgiPath("/usr/local/bin/python3");
+	req.setQuery(HTTPRequestParser::parseQueryString(req.getUri()));
+} */

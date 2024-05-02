@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/01 17:52:44 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:25:42 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
 		response.addHeader("Content-Type", "text/html");
 	}
 	addCommonHeaders(request, response);
-	return response;
+	return (response);
 }
 
 HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *location)
@@ -369,10 +369,12 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 
 	if (!Utils::hasElement(location.getAllowMethods(), request.getMethod()))
 		return handleErrorPage(405);
-/*     std::vector<std::string> debug = location.getCgiExtensions();
+/*  std::vector<std::string> debug = location.getCgiExtensions();
     std::cout << "location ext size is: " << debug.size(); 
+    std::cout << "on respone builder, request.query: " << request.getQuery() << std::endl;
     well at this point location config vector for extensions is empty but I guess parsing is correct
-    Im harcoding it provisionally*/
+    query is also empty Im harcoding it provisionally
+    */
     location.addCgiExtension(".py");
     location.addCgiPath("/usr/local/bin/python3");
 	CGIHandler  cgi_handler(location, request);

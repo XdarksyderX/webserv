@@ -5,7 +5,7 @@ def sumar_numeros(a, b):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Uso: test.py <numero1> <numero2>")
+        print("Uso: calculator.py <numero1> <numero2>")
         sys.exit(1)
 
     numero1 = int(sys.argv[1])
