@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/02 17:08:42 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:37:42 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void ft_debuggin(char **args)
 	}
 }
 /* If it is POST method, query string must be setted with request body */
-
 std::vector<std::string> split(const std::string &s, char delimiter) {
 	std::vector<std::string> args;
 	std::string arg;
@@ -211,10 +210,3 @@ std::string	CGIHandler::execCGI(void) {
 	close(pipe_fd[1]);
 	return (readPipe(pipe_fd));
 }
-
-/* 
-void ft_hardcode_request(LocationConfig &conf, HTTPRequest &req) {
-	conf.addCgiExtension(".py");
-	conf.addCgiPath("/usr/local/bin/python3");
-	req.setQuery(HTTPRequestParser::parseQueryString(req.getUri()));
-} */
