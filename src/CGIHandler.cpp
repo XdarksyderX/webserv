@@ -6,18 +6,18 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/03 12:01:58 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:27:28 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CGIHandler.hpp"
 #include "HTTPRequestParser.hpp" //just to hardcode
 
-
-CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req) {
+CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req, std::string server_root) {
 	this->config = conf;
 	this->cgi = true;
 	this->request = req;
+	this->root = server_root;
 	prepareCGI();
 	std::cout << "Por dios Elisa no te olvides de gestionar los errores" << std::endl;
 }
@@ -66,10 +66,10 @@ std::string CGIHandler::getPath(std::string ext) {
 std::string CGIHandler::getFilePath(std::string uri) {
 //  what I have:    /cgi-bin/myscript.py?a=42
 //  what I want:    ./cgi-bin/myscript.py
-	std::string file_path = "." + uri;
+	std::string file_path = "./" + Utils::joinPaths(root, uri);
 	size_t size = uri.find('?');
 	if (size != std::string::npos)
-		return (file_path.substr(0, size + 1));
+		return (file_path.substr(0, size + 2));
 	return (file_path);
 	/* I was gonna take the current dir to make a join 
 	and get the absolute path, but we're not allowed to use getcwd()
@@ -136,10 +136,11 @@ char **CGIHandler::setArgs(void) {
 void	CGIHandler::prepareCGI(void) {
 
 	std::string uri = request.getUri();
-	std::string ext = getExtension(uri);
-	std::cout << "on prepareCGI, ext: \'" << ext << "\'\n";
-	if (ext.empty())
+	std::string ext = Utils::getExtensionFromFile(uri);
+	if (ext.empty()) {
+		this->cgi = false;
 		return ;
+	}
 	this->cgi_path = getPath(ext);
 	this->file_path = getFilePath(uri);
 	std::cout << "file path: \'" << file_path << "\'\n";
@@ -154,8 +155,6 @@ std::string readPipe(int pipe_fd[2]) {
 	char buffer[BUFSIZ];
 	std::string output;
 	ssize_t bytesRead;
-/* 	bytesRead = read(pipe_fd[0], buffer, BUFSIZ);
-	std::cout << "bytesRead: " << bytesRead << std::endl; */
 	while ((bytesRead = read(pipe_fd[0], buffer, BUFSIZ)) > 0) {
 		output.append(buffer, bytesRead);
 	}
