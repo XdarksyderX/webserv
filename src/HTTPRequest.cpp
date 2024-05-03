@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:15:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/24 14:55:07 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:58:35 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 HTTPRequest::HTTPRequest() : method(NONE), uri(""), query(""), httpVersion("1.1"), body("") {}
 
 HTTPRequest::HTTPRequest(const HTTPRequest &other)
-    : method(other.method), uri(other.uri), httpVersion(other.httpVersion), body(other.body), headers(other.headers) {}
+    : method(other.method), uri(other.uri), query(other.query), httpVersion(other.httpVersion), body(other.body), headers(other.headers) {}
 
 HTTPRequest::~HTTPRequest() {}
 
@@ -25,6 +25,7 @@ HTTPRequest &HTTPRequest::operator=(const HTTPRequest &other)
     {
         method = other.method;
         uri = other.uri;
+        query = other.query;
         httpVersion = other.httpVersion;
         body = other.body;
         headers = other.headers;
