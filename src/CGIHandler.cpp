@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/03 11:37:42 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 12:01:58 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,11 @@ char **CGIHandler::setArgs(void) {
 	std::string query;
 	if (request.getMethod() == POST)
 		query = request.getBody();
-	else {
-		query = HTTPRequestParser::parseQueryString(request.getUri());
-	//	query = request.getQuery();
-		std::cout << "friendly reminder de que query está hardcoded" << std::endl;
-	}
+	else
+		query = request.getQuery();
 	std::vector<std::string> v_args = split(query, '&');
  	v_args.insert(v_args.begin(), this->file_path);
 	v_args.insert(v_args.begin(), this->cgi_path);
-
 	int n = v_args.size();
 	char **argv = new char*[n + 1];
 	for (int i = 0; i < n; ++i) {
