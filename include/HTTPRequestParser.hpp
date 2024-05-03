@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:36:49 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/23 15:29:23 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:29:57 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ class HTTPRequestParser
 		 * @param requestLine A string representing the request line.
 		 */
 		static void	parseRequestLine(HTTPRequest &request, const std::string &requestLine);
+
+	public:
 		/**
 		 * @brief Parse the query string if it exist.
 		 * @param request A string representing the request line.
 		 * @param requestLine The query string.
 		 */
-		static std::string	parseQueryString(const std::string &uri);
-
-	public:
+		static const std::string	parseQueryString(const std::string &uri);
 		/**
 		 * @brief Parses a raw HTTP request string.
 		 * @param rawRequest A string containing the raw HTTP request.

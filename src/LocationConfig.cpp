@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/22 17:10:57 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:03:49 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,10 @@ std::ostream& operator<<(std::ostream& os, const LocationConfig& config)
 std::map<std::string, std::string> LocationConfig::getCgiInfo() const
 {
     std::map<std::string, std::string> cgiInfo;
+
     for (size_t i = 0; i < cgiPaths.size() && i < cgiExtensions.size(); ++i)
     {
-        cgiInfo[cgiPaths[i]] = cgiExtensions[i];
+        cgiInfo[cgiExtensions[i]] = cgiPaths[i];
     }
-    return cgiInfo;
+    return (cgiInfo);
 }
