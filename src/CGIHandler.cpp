@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/03 17:27:28 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:22:54 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,13 @@ std::string CGIHandler::getPath(std::string ext) {
 	throw(std::runtime_error("Non supported Extension")); //this is provisional
 }
 
-std::string CGIHandler::getFilePath(std::string uri) {
+std::string CGIHandler::prepareFilePath(std::string uri) {
 //  what I have:    /cgi-bin/myscript.py?a=42
 //  what I want:    ./cgi-bin/myscript.py
-	std::string file_path = "./" + Utils::joinPaths(root, uri);
-	size_t size = uri.find('?');
-	if (size != std::string::npos)
-		return (file_path.substr(0, size + 2));
-	return (file_path);
-	/* I was gonna take the current dir to make a join 
-	and get the absolute path, but we're not allowed to use getcwd()
-	anyways, execve should work with this path, if it didn't, I can
-	use stat() with the file*/
+	std::string clean_uri = Utils::getPathFromUri(uri);
+	std::string path = "./" + Utils::joinPaths(root, clean_uri);
+
+	return (path);
 }
 
 /* void	initEnv(HTTPRequest &request) {
@@ -96,7 +91,7 @@ std::string CGIHandler::getFilePath(std::string uri) {
 void ft_debuggin(char **args)
 {
 	int i = 0;
-	std::cout << "\033[35m[ Debugging and kinda wanting to jump in front of a train jiji ]\033[0m\n";
+	std::cout << "\033[35m[ Debugging ]\033[0m\n";
 	while (args[i]) {
 		std::cout << i << ": " << args[i] << std::endl;
 		i++;
@@ -142,7 +137,7 @@ void	CGIHandler::prepareCGI(void) {
 		return ;
 	}
 	this->cgi_path = getPath(ext);
-	this->file_path = getFilePath(uri);
+	this->file_path = prepareFilePath(uri);
 	std::cout << "file path: \'" << file_path << "\'\n";
 	if (!Utils::fileExists(file_path))
 		throw(std::runtime_error("Requested File doesn't exist")); //this is provisional
@@ -162,6 +157,7 @@ std::string readPipe(int pipe_fd[2]) {
 		throw (std::runtime_error("Error reading from pipe"));
 	}
 	close(pipe_fd[0]);
+	std::cout << "on readPipe output: " << output << std::endl;
 	return (output);
 }
 

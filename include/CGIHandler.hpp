@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:38:22 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/03 17:11:08 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:08:03 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ class CGIHandler {
 			param A string with the file extension*/
 		std::string getPath(std::string extension);
 		/* @brief Takes an uri and return the file path*/
-		std::string getFilePath(std::string uri);
+		std::string prepareFilePath(std::string uri);
 		/* Sets the **char that execve will need to execute the requested file */
 		char **setArgs(void);
 		/* Sets cgi_path, file_path, args so everything is ready to execute*/
