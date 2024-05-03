@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/02 16:25:42 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:36:18 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,18 +138,24 @@ HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
 	return (response);
 }
 
-HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *location)
+HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *location, CGIHandler &cgiHandler)
 {
     HTTPResponse response;
     std::string root = serverConfig.getRoot();
     std::string resource = Utils::joinPaths(root, request.getUri());
     std::string indexedResource;
     std::string directory;
-
     resource = Utils::preventFileTraversal(resource);
     if (Utils::fileExists(resource))
     {
-        response.setBody(Utils::getFileContent(resource));
+        if (cgiHandler.cgi)
+        {
+            response.setBody(cgiHandler.execCGI());
+            std::cout << "response body: " << response.getBody() << std::endl;
+            response.addHeader("Content-Type", "text/html");
+        }
+        else
+            response.setBody(Utils::getFileContent(resource));
         try
         {
             response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
@@ -373,15 +379,14 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
     std::cout << "location ext size is: " << debug.size(); 
     std::cout << "on respone builder, request.query: " << request.getQuery() << std::endl;
     well at this point location config vector for extensions is empty but I guess parsing is correct
-    query is also empty Im harcoding it provisionally
     */
     location.addCgiExtension(".py");
     location.addCgiPath("/usr/local/bin/python3");
-	CGIHandler  cgi_handler(location, request);
-    std::string out = cgi_handler.execCGI();
-    std::cout << out << std::endl;
+	CGIHandler  cgi_handler(location, request, serverConfig.getRoot());
+/*     std::string out = cgi_handler.execCGI();
+    std::cout << out << std::endl; */
 	if (request.getMethod() == GET)
-		return handleGetRequest(&location);
+		return handleGetRequest(&location, cgi_handler);
 	else if ((request.getMethod() == POST || request.getMethod() == PUT) &&
 		location.getUploadPath() != "" && serverConfig.getUploadsDirectory() != "")
 		return handlePostRequest(&location);

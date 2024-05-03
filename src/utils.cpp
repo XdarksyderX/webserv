@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 16:43:16 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:30:11 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,23 @@ std::string Utils::to_string(int number)
 	return ss.str();
 }
 
-std::string Utils::getExtensionFromFile(const std::string &filename)
+std::string Utils::getExtensionFromFile(const std::string &uri)
 {
-	size_t dotPos = filename.find_last_of('.');
-	if (dotPos == std::string::npos)
-		return "";
-	return filename.substr(dotPos + 1);
+	size_t dotPos = uri.find_last_of('.');
+	size_t queryPos = uri.find_last_of('?');
+	if (dotPos != std::string::npos && queryPos != std::string::npos)
+		return (uri.substr(dotPos, queryPos - dotPos));
+	else if (dotPos != std::string::npos)
+		return (uri.substr(dotPos));
+	return ("");
+}
+std::string Utils::getPathFromUri(std::string &uri) {
+
+	size_t size = uri.find('?');
+	if (size != std::string::npos)
+		return (uri.substr(0, size));
+	else
+		return (uri);
 }
 
 std::string Utils::getFileContent(const std::string &filename)

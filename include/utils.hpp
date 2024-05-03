@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 16:43:40 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:31:46 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,17 @@ namespace Utils
     
     /**
      * @brief Extracts the file extension from a filename.
-     * @param filename The full name of the file.
+     * @param filename The full name of the file or the full uri.
      * @return The extension of the file as a string.
      */
     std::string getExtensionFromFile(const std::string &filename);
+    /**
+     * @brief Extracts the file path from a uri, substracting the query.
+     * @param filename The full uri.
+     * @return the clean path.
+     */
+    std::string getPathFromUri(std::string &uri);
+
 
     /**
      * @brief Reads the entire content of a file into a string.

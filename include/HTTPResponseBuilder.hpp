@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:35:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/26 16:22:44 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:30:47 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ class HTTPResponseBuilder
 		 * @param location Pointer to the LocationConfig object.
 		 * @return An HTTPResponse object tailored to the GET request.
 		 */
-		HTTPResponse handleGetRequest(const LocationConfig *location);
+		HTTPResponse handleGetRequest (const LocationConfig *location, CGIHandler &cgiHandler);
 
 		/**
 		 * @brief Handles a POST request based on the location configuration.
