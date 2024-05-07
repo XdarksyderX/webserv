@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/03 17:31:46 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:20:35 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ namespace Utils
      * @param filename The full uri.
      * @return the clean path.
      */
-    std::string getPathFromUri(std::string &uri);
+    std::string cleanQueryFromPath(const std::string &uri);
 
 
     /**
