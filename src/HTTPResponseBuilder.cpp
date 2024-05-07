@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/03 21:36:18 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:30:08 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,12 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
     std::string indexedResource;
     std::string directory;
     resource = Utils::preventFileTraversal(resource);
+
     if (Utils::fileExists(resource))
     {
         if (cgiHandler.cgi)
         {
             response.setBody(cgiHandler.execCGI());
-            std::cout << "response body: " << response.getBody() << std::endl;
             response.addHeader("Content-Type", "text/html");
         }
         else
@@ -167,6 +167,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
     }
     else
     {
+
         indexedResource = Utils::joinPaths(resource, location->getIndex());
         if (Utils::fileExists(indexedResource))
         {

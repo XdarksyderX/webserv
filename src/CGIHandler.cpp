@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/03 21:22:54 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:17:31 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req, std::string
 	this->root = server_root;
 	prepareCGI();
 	std::cout << "Por dios Elisa no te olvides de gestionar los errores" << std::endl;
+	//std::cout << "\n\nthey see me rolling...\n\n";
 }
 
 CGIHandler::~CGIHandler() {
@@ -63,10 +64,11 @@ std::string CGIHandler::getPath(std::string ext) {
 	throw(std::runtime_error("Non supported Extension")); //this is provisional
 }
 
-std::string CGIHandler::prepareFilePath(std::string uri) {
+std::string CGIHandler::prepareFilePath(std::string uri) 
+{
 //  what I have:    /cgi-bin/myscript.py?a=42
 //  what I want:    ./cgi-bin/myscript.py
-	std::string clean_uri = Utils::getPathFromUri(uri);
+	std::string clean_uri = Utils::cleanQueryFromPath(uri);
 	std::string path = "./" + Utils::joinPaths(root, clean_uri);
 
 	return (path);
@@ -178,6 +180,7 @@ void	waitTimeOut(int pid, int status)
 
 std::string	CGIHandler::execCGI(void) {
 
+//   std::cout << "\n\nthey hatin'..\n\n";
 	int status = 0;
 	 //if (pipe(pipe_fd) < 0) i'll have to handle if pipe fails
 	 //if (pid < 0) and if fork fails

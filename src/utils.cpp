@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/03 17:30:11 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:25:02 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ std::string Utils::getExtensionFromFile(const std::string &uri)
 		return (uri.substr(dotPos));
 	return ("");
 }
-std::string Utils::getPathFromUri(std::string &uri) {
+std::string Utils::cleanQueryFromPath(const std::string &uri) {
 
 	size_t size = uri.find('?');
 	if (size != std::string::npos)
@@ -62,14 +62,14 @@ std::string Utils::joinPaths(const std::string &path1, const std::string &path2)
 		return path1 + path2.substr(1);
 	if (lastCharPath1 != '/' && firstCharPath2 != '/')
 		return path1 + '/' + path2;
-
 	return path1 + path2;
 }
 
 bool Utils::fileExists(const std::string &path)
 {
-	std::ifstream file(path.c_str());
-	return file.is_open() && !directoryExists(path);
+	std::string clean_path = Utils::cleanQueryFromPath(path);
+	std::ifstream file(clean_path.c_str());
+	return file.is_open() && !directoryExists(clean_path);
 }
 
 bool Utils::directoryExists(const std::string &path)
