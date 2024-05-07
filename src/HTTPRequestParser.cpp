@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:45:31 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/02 16:19:32 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:43:34 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	HTTPRequestParser::parseRequestLine(HTTPRequest &request, const std::string
 	request.setUri(requestLine.substr(start, end - start));
 //    std::cout << request.getUri() << std::endl;
 	request.setQuery(parseQueryString(request.getUri()));
-    std::cout << "*** after setQuery *** " << request.getQuery() << std::endl;
 	start = end + 1;
 	request.setHttpVersion(requestLine.substr(start));
 }

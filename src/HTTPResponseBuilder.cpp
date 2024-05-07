@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 15:20:34 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:40:01 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,9 +396,7 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 	else if ((request.getMethod() == POST || request.getMethod() == PUT) &&
 		location.getUploadPath() != "" && serverConfig.getUploadsDirectory() != "")
 		return handlePostRequest(&location/* , cgi_handler */);
-    
 	else if (request.getMethod() == DELETE)
 		return handleDeleteRequest(&location);
-    std::cout << "method: " << request.getMethod() << std::endl;
 	return handleErrorPage(405);
 }

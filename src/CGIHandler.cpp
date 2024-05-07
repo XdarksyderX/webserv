@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/07 15:43:56 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:55:25 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,11 @@ std::string CGIHandler::getPath(std::string ext) {
 	it = supportedExtensions.find(ext);
 	if (it != supportedExtensions.end())
 		return (it->second);
-	std::cout << "on getPath, ext: \'" << ext << "\'\n";
-
-/* 	it = supportedExtensions.begin();
-	while (it != supportedExtensions.end())
-	{
-		std::cout << it->second << std::endl;
-		it++;
-	} */
 	throw(std::runtime_error("Non supported Extension")); //this is provisional
 }
 
 std::string CGIHandler::prepareFilePath(std::string uri) 
 {
-//  what I have:    /cgi-bin/myscript.py?a=42
-//  what I want:    ./cgi-bin/myscript.py
 	std::string clean_uri = Utils::cleanQueryFromPath(uri);
 	std::string path = "./" + Utils::joinPaths(root, clean_uri);
 
@@ -87,7 +77,7 @@ std::string CGIHandler::prepareFilePath(std::string uri)
 	// hacen falta realmente las variables de entorno, se le puede mandar NULL
 	// execve recibirá: el path, un doble puntero al path y los argumentos, y NULL
 } */
-void ft_debuggin(char **args)
+void ft_print_args(char **args)
 {
 	int i = 0;
 	std::cout << "\033[35m[ Debugging ]\033[0m\n";
@@ -130,18 +120,18 @@ char **CGIHandler::setArgs(void) {
 void	CGIHandler::prepareCGI(void) {
 
 	std::string uri = request.getUri();
-	std::string ext = Utils::getExtensionFromFile(uri);
+//	std::string ext = Utils::getExtensionFromFile(uri);
+	std::string ext = getExtension(uri);
 	if (ext.empty() || ext == "html") {
 		this->cgi = false;
 		return ;
 	}
-	this->cgi_path = getPath("." + ext);
+	this->cgi_path = getPath(ext);
 	this->file_path = prepareFilePath(uri);
-	std::cout << "file path: \'" << file_path << "\'\n";
 	if (!Utils::fileExists(file_path))
 		throw(std::runtime_error("Requested File doesn't exist")); //this is provisional
 	this->args = setArgs();
-	ft_debuggin(args);
+//	ft_print_args(args);
 }
 
 std::string readPipe(int pipe_fd[2]) {
@@ -156,7 +146,6 @@ std::string readPipe(int pipe_fd[2]) {
 		throw (std::runtime_error("Error reading from pipe"));
 	}
 	close(pipe_fd[0]);
-	std::cout << "on readPipe output: " << output << std::endl;
 	return (output);
 }
 
@@ -197,7 +186,6 @@ std::string	CGIHandler::execCGI(void) {
 		}
 		exit(status); //in case execve fails
 	}
-	std::cout << "status: " << status << std::endl;
 	waitTimeOut(pid, status);
 	close(pipe_fd[1]);
 	return (readPipe(pipe_fd));
