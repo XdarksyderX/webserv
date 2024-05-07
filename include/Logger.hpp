@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 18:33:17 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 22:47:02 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:28:06 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include "utils.hpp"
 
 /**
+ * @class Logger
  * @brief Class for logging messages with different severity levels.
  */
 class Logger

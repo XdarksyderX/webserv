@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:20:30 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 17:55:48 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:36:31 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ class LocationConfig
 		std::string getRoot() const;
 		std::vector<HTTPMethod> getAllowMethods() const;
 		std::string getIndex() const;
+		std::vector<std::string> getCgiPaths() const;
+		std::vector<std::string> getCgiExtensions() const;
 		bool getAutoindex() const;
 		std::map<std::string, std::string> getCgiInfo() const;
 		std::string getUploadPath() const;
@@ -67,13 +69,11 @@ class LocationConfig
 		void setIndex(const std::string& index);
 		void setAutoindex(bool autoindex);
 		void setUploadPath(const std::string &uploadPath);
-		std::vector<std::string> getCgiPaths() const;
-		std::vector<std::string> getCgiExtensions() const;
+		void setCgiPaths(const std::vector<std::string> &cgiPaths);
+		void setCgiExtensions(const std::vector<std::string> &cgiExtensions);
 
 		// Additional methods
 		void addAllowMethod(HTTPMethod method);
-		void addCgiPath(const std::string& interpreterPath);
-		void addCgiExtension(const std::string& extension);
 
 		/**
 		 * @brief Creates a default LocationConfig object with default values for /.

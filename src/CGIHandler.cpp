@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   CGIHandler.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/07 18:55:25 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:46:53 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CGIHandler.hpp"
 
-CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req, std::string server_root) {
+CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req, std::string server_root)
+{
 	this->config = conf;
 	this->cgi = true;
 	this->request = req;
@@ -20,29 +21,15 @@ CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req, std::string
 	prepareCGI();
 }
 
-CGIHandler::~CGIHandler() {
+CGIHandler::~CGIHandler()
+{
 
 	if (this->cgi)
 		delete [] args;
 }
 
-std::string CGIHandler::getExtension(std::string uri) {
-// parsing: whatever.py?arg1=potato
-//	std::string uri = request.getUri();
-	size_t dotPos = uri.find_last_of('.');
-	size_t queryPos = uri.find_last_of('?');
-	if (dotPos != std::string::npos && queryPos != std::string::npos)
-		return (uri.substr(dotPos, queryPos - dotPos));
-	else if (dotPos != std::string::npos)
-		return (uri.substr(dotPos));
-	this->cgi = false;
-	return ("");
-}
-
-std::string CGIHandler::getPath(std::string ext) {
-
-//	std::string ext = getExtension();
-
+std::string CGIHandler::getPath(std::string ext)
+{
 	if (ext.empty())
 		return ("");
 	std::map<std::string, std::string> supportedExtensions = config.getCgiInfo();
@@ -50,7 +37,8 @@ std::string CGIHandler::getPath(std::string ext) {
 	it = supportedExtensions.find(ext);
 	if (it != supportedExtensions.end())
 		return (it->second);
-	throw(std::runtime_error("Non supported Extension")); //this is provisional
+	this->cgi = false;
+	return ("");
 }
 
 std::string CGIHandler::prepareFilePath(std::string uri) 
@@ -61,33 +49,8 @@ std::string CGIHandler::prepareFilePath(std::string uri)
 	return (path);
 }
 
-/* void	initEnv(HTTPRequest &request) {
-
-	// execve(*argv, argv, env);
-
-	// this should init some env variables like: 
-	// CONTENT_LENGTH, CONTENT_TYPE, REQUEST_METHOD, REMOTE_ADDR,
-	// SERVER_NAME, SERVER_PORT, SCRIPT_NAME, SCRIPT_FILENAME
-
-	// some of them should be only seted in some of the methods, for example:
-	// if we are in GET method, it will be moment to parse the query strings
-	// to store it in a QUERY_STRING variable
-
-	// Me dicen por el pinganillo (Yolanthe) que a execve en este caso no le 
-	// hacen falta realmente las variables de entorno, se le puede mandar NULL
-	// execve recibirá: el path, un doble puntero al path y los argumentos, y NULL
-} */
-void ft_print_args(char **args)
+std::vector<std::string> split(const std::string &s, char delimiter)
 {
-	int i = 0;
-	std::cout << "\033[35m[ Debugging ]\033[0m\n";
-	while (args[i]) {
-		std::cout << i << ": " << args[i] << std::endl;
-		i++;
-	}
-}
-/* If it is POST method, query string must be setted with request body */
-std::vector<std::string> split(const std::string &s, char delimiter) {
 	std::vector<std::string> args;
 	std::string arg;
 	std::istringstream argStream(s);
@@ -97,7 +60,8 @@ std::vector<std::string> split(const std::string &s, char delimiter) {
 	return (args);
 }
 
-char **CGIHandler::setArgs(void) {
+char **CGIHandler::setArgs(void)
+{
 
 	std::string query;
 	if (request.getMethod() == POST)
@@ -105,7 +69,7 @@ char **CGIHandler::setArgs(void) {
 	else
 		query = request.getQuery();
 	std::vector<std::string> v_args = split(query, '&');
- 	v_args.insert(v_args.begin(), this->file_path);
+	v_args.insert(v_args.begin(), this->file_path);
 	v_args.insert(v_args.begin(), this->cgi_path);
 	int n = v_args.size();
 	char **argv = new char*[n + 1];
@@ -117,24 +81,29 @@ char **CGIHandler::setArgs(void) {
 	return (argv);
 }
 
-void	CGIHandler::prepareCGI(void) {
-
+void	CGIHandler::prepareCGI(void)
+{
 	std::string uri = request.getUri();
-//	std::string ext = Utils::getExtensionFromFile(uri);
-	std::string ext = getExtension(uri);
-	if (ext.empty() || ext == "html") {
+	std::string ext = Utils::getExtensionFromFile(uri);
+	if (ext.empty() || ext == "html")
+	{
 		this->cgi = false;
 		return ;
 	}
 	this->cgi_path = getPath(ext);
 	this->file_path = prepareFilePath(uri);
+	if (this->cgi_path.empty() || this->file_path.empty())
+	{
+		this->cgi = false;
+		return ;
+	}
 	if (!Utils::fileExists(file_path))
-		throw(std::runtime_error("Requested File doesn't exist")); //this is provisional
+		this->cgi = false;
 	this->args = setArgs();
-//	ft_print_args(args);
 }
 
-std::string readPipe(int pipe_fd[2]) {
+std::string readPipe(int pipe_fd[2])
+{
 
 	char buffer[BUFSIZ];
 	std::string output;
@@ -142,21 +111,18 @@ std::string readPipe(int pipe_fd[2]) {
 	while ((bytesRead = read(pipe_fd[0], buffer, BUFSIZ)) > 0) {
 		output.append(buffer, bytesRead);
 	}
-	if (bytesRead < 0) {
+	if (bytesRead < 0)
 		throw (std::runtime_error("Error reading from pipe"));
-	}
 	close(pipe_fd[0]);
 	return (output);
 }
 
 void	waitTimeOut(int pid, int status)
 {
-/* 	if an infinite loop occurs during the execution of the file,
-	it will stop the loop */
-	std::time_t start = std::time(0);
-	std::time_t current = start;
+	time_t start = time(NULL);
+	time_t current = start;
 	while (!waitpid(pid, &status, WNOHANG) && current - start < 10)
-		current = std::time(0);
+		current = time(NULL);
 	if (current - start > 9)
 	{
 		kill(pid, SIGKILL);
@@ -164,10 +130,11 @@ void	waitTimeOut(int pid, int status)
 	}
 }
 
-std::string	CGIHandler::execCGI(void) {
+std::string	CGIHandler::execCGI(void)
+{
 
 	int status = 0;
-	 if (pipe(pipe_fd) < 0)
+	if (pipe(pipe_fd) < 0)
 		throw (std::runtime_error("Error while creating a pipe"));
 	pipe(pipe_fd);
 	pid_t pid = fork();
@@ -181,12 +148,16 @@ std::string	CGIHandler::execCGI(void) {
 		if (dup2(pipe_fd[1], STDERR_FILENO) == -1)
 			throw(std::runtime_error("Error while redirecting output"));
 		status = execve(args[0], args, NULL);
-		if (status == -1) {
-			perror(args[1]);  // print error
-		}
-		exit(status); //in case execve fails
+		if (status == -1)
+			perror(args[1]);
+		exit(status);
 	}
 	waitTimeOut(pid, status);
 	close(pipe_fd[1]);
 	return (readPipe(pipe_fd));
+}
+
+bool	CGIHandler::isCGI(void)
+{
+	return (this->cgi);
 }

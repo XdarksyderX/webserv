@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 18:55:29 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:18:10 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ std::string Utils::to_string(int number)
 	return ss.str();
 }
 
-std::string Utils::getExtensionFromFile(const std::string &uri)
+std::string Utils::getExtensionFromFile(const std::string &uri, bool withPoint)
 {
-	size_t dotPos = uri.find_last_of('.');
-	size_t queryPos = uri.find_last_of('?');
-	if (dotPos != std::string::npos && queryPos != std::string::npos)
-		return (uri.substr(dotPos, queryPos - dotPos));
-	else if (dotPos != std::string::npos)
-		return (uri.substr(dotPos));
-	return ("");
+    size_t dotPos = uri.find_last_of('.');
+    size_t queryPos = uri.find_last_of('?');
+    if (dotPos != std::string::npos && queryPos != std::string::npos)
+        return uri.substr(dotPos + 1, queryPos - dotPos - 1);
+    else if (dotPos != std::string::npos)
+        return uri.substr(dotPos + (withPoint ? 0 : 1));
+    return "";
 }
+
 std::string Utils::cleanQueryFromPath(const std::string &uri) {
 
 	size_t size = uri.find('?');

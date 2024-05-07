@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationConfig.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:32:54 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/03 13:00:12 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:36:40 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,17 +128,6 @@ void LocationConfig::setUploadPath(const std::string &uP)
     uploadPath = uP;
 }
 
-void LocationConfig::addCgiPath(const std::string& interpreterPath)
-{
-    cgiPaths.push_back(interpreterPath);
-}
-
-void LocationConfig::addCgiExtension(const std::string& extension)
-{
-    cgiExtensions.push_back(extension);
-
-}
-
 LocationConfig	LocationConfig::createDefaultLocation(const ServerConfig &serverConfig)
 {
     LocationConfig location(serverConfig.getRoot(), "");
@@ -150,11 +139,30 @@ LocationConfig	LocationConfig::createDefaultLocation(const ServerConfig &serverC
     return location;
 }
 
+void    LocationConfig::setCgiPaths(const std::vector<std::string> &paths)
+{
+    cgiPaths = paths;
+}
+
+void    LocationConfig::setCgiExtensions(const std::vector<std::string> &extensions)
+{
+    cgiExtensions = extensions;
+}
+
 std::ostream& operator<<(std::ostream& os, const LocationConfig& config)
 {
     os << "\tLocation Configuration:" << std::endl;
+    os << "\tName: " << config.name << std::endl;
     os << "\tRoot: " << config.root << std::endl;
     os << "\tIndex: " << config.index << std::endl;
+    os << "\tAutoindex: " << (config.autoindex ? "On" : "Off") << std::endl;
+    os << "\tUpload Path: " << config.uploadPath << std::endl;
+    os << "\tCGI Paths: ";
+    for (size_t i = 0; i < config.cgiPaths.size(); ++i)
+    {
+        os << config.cgiPaths[i] << " ";
+    }
+    os << std::endl;
     return os;
 }
 

@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 22:37:23 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/21 22:26:20 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:27:57 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ class HTTPCookie
 		 * @return An HTTPCookie object deserialized from the string.
 		 */
 		static HTTPCookie deserializeCookie(const std::string &cookie);
-	};
+};
 
 #endif

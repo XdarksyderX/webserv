@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPResponseBuilder.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 17:40:01 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:51:01 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
 		std::string filePath = Utils::joinPaths(serverConfig.getRoot(),
 								serverConfig.getErrorPages().at(errorCode));
 		response.setBody(Utils::getFileContent(filePath));
-		response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(filePath)));
+		response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(filePath, false)));
 	}
 	else
 	{
@@ -149,16 +149,23 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
 
     if (Utils::fileExists(resource))
     {
-        if (cgiHandler.cgi)
+        if (cgiHandler.isCGI() && Utils::fileExists(resource))
         {
-            response.setBody(cgiHandler.execCGI());
-            response.addHeader("Content-Type", "text/html");
+            try
+            {
+                response.setBody(cgiHandler.execCGI());
+                response.addHeader("Content-Type", "text/html");
+            }
+            catch (const std::exception &e)
+            {
+                return handleErrorPage(500);
+            }
         }
         else
-         response.setBody(Utils::getFileContent(resource));
+            response.setBody(Utils::getFileContent(resource));
         try
         {
-            response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
+            response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource, false)));
         }
         catch (const std::exception &e)
         {
@@ -174,7 +181,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
             response.setBody(Utils::getFileContent(indexedResource));
             try
             {
-                response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(indexedResource)));
+                response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(indexedResource, false)));
             }
             catch (const std::exception &e)
             {
@@ -194,7 +201,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
                     response.setBody(Utils::getFileContent(resource));
                     try
                     {
-                        response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
+                        response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource, false)));
                     }
                     catch (const std::exception &e)
                     {
@@ -226,7 +233,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
     return response;
 }
 
-HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *location/* , CGIHandler &cgiHandler */)
+HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *location)
 {
     HTTPResponse response;
     std::string root = serverConfig.getUploadsDirectory();
@@ -240,11 +247,6 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
     std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
     std::string uriToCheck = request.getUri();
     std::string contentType = request.getHeader("Content-Type");
-/*     if (cgiHandler.cgi)
-    {
-        response.setBody(cgiHandler.execCGI());
-        response.addHeader("Content-Type", "text/html");
-    } */
     if (contentType.find("multipart/form-data") != std::string::npos)
     {
         HTTPMultiFormData formData(request);
@@ -373,29 +375,17 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 			location = it->second;
     }
 	else
-	{
 		location = serverConfig.getLocations().at(locationName);
-	}
 	if (!Utils::hasElement(location.getAllowMethods(), request.getMethod()))
 		return handleErrorPage(405);
-/*  std::vector<std::string> debug = location.getCgiExtensions();
-    std::cout << "location ext size is: " << debug.size(); 
-    std::cout << "on respone builder, request.query: " << request.getQuery() << std::endl;
-    well at this point location config vector for extensions is empty but I guess parsing is correct
-    */
-    location.addCgiExtension(".py");
-    location.addCgiPath("/usr/local/bin/python3");
 	CGIHandler  cgi_handler(location, request, serverConfig.getRoot());
-/*     std::string out = cgi_handler.execCGI();
-    std::cout << out << std::endl; */
 	if (request.getMethod() == GET)
 		return handleGetRequest(&location, cgi_handler);
-    else if (request.getMethod() == POST && cgi_handler.cgi) {
+    else if (request.getMethod() == POST && cgi_handler.isCGI())
 		return handleGetRequest(&location, cgi_handler);
-    }
 	else if ((request.getMethod() == POST || request.getMethod() == PUT) &&
 		location.getUploadPath() != "" && serverConfig.getUploadsDirectory() != "")
-		return handlePostRequest(&location/* , cgi_handler */);
+		return handlePostRequest(&location);
 	else if (request.getMethod() == DELETE)
 		return handleDeleteRequest(&location);
 	return handleErrorPage(405);

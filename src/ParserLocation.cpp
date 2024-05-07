@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ParserLocation.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:28:14 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/01 14:50:41 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:37:59 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,17 @@ void Parser::processAutoindexDirective(std::istringstream &iss, LocationConfig &
 
 void Parser::processCgiPathDirective(std::istringstream &iss, LocationConfig &locationConfig)
 {
+    std::vector<std::string> cgiPaths;
     std::string cgiPath;
-    if (!(iss >> cgiPath))
+    while (iss >> cgiPath)
+    {
+        if (!Utils::fileExists(cgiPath))
+            throw Parser::ResourceNotFoundException();
+        cgiPaths.push_back(cgiPath);
+    }
+    locationConfig.setCgiPaths(cgiPaths);
+    if (locationConfig.getCgiPaths().empty())
         throw Parser::InvalidDirectiveException();
-    if (!Utils::fileExists(cgiPath))
-        throw Parser::ResourceNotFoundException();
-    locationConfig.addCgiPath(cgiPath);
 }
 
 void Parser::processCgiExtDirective(std::istringstream &iss, LocationConfig &locationConfig)
@@ -124,7 +129,8 @@ void Parser::processCgiExtDirective(std::istringstream &iss, LocationConfig &loc
     std::string extension;
     std::vector<std::string> extensions;
     while (iss >> extension)
-        locationConfig.addCgiExtension(extension);
+        extensions.push_back(extension);
+    locationConfig.setCgiExtensions(extensions);
     if (locationConfig.getCgiExtensions().empty())
         throw Parser::InvalidDirectiveException();
 }

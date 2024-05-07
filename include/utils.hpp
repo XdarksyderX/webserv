@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 12:20:35 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:18:58 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ namespace Utils
     /**
      * @brief Extracts the file extension from a filename.
      * @param filename The full name of the file or the full uri.
+     * @param withPoint If true, the point is included in the extension.
      * @return The extension of the file as a string.
      */
-    std::string getExtensionFromFile(const std::string &filename);
+    std::string getExtensionFromFile(const std::string &filename, bool withPoint = true);
     /**
      * @brief Extracts the file path from a uri, substracting the query.
      * @param filename The full uri.
