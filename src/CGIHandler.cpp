@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/07 17:39:35 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:55:25 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,13 @@ char **CGIHandler::setArgs(void) {
 void	CGIHandler::prepareCGI(void) {
 
 	std::string uri = request.getUri();
-	std::string ext = Utils::getExtensionFromFile(uri);
+//	std::string ext = Utils::getExtensionFromFile(uri);
+	std::string ext = getExtension(uri);
 	if (ext.empty() || ext == "html") {
 		this->cgi = false;
 		return ;
 	}
-	this->cgi_path = getPath("." + ext);
+	this->cgi_path = getPath(ext);
 	this->file_path = prepareFilePath(uri);
 	if (!Utils::fileExists(file_path))
 		throw(std::runtime_error("Requested File doesn't exist")); //this is provisional
