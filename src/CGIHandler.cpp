@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/07 15:35:02 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:43:56 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,10 @@ void	waitTimeOut(int pid, int status)
 {
 /* 	if an infinite loop occurs during the execution of the file,
 	it will stop the loop */
-	std::time_t start = std::time(nullptr);
+	std::time_t start = std::time(0);
 	std::time_t current = start;
 	while (!waitpid(pid, &status, WNOHANG) && current - start < 10)
-		current = std::time(nullptr);
+		current = std::time(0);
 	if (current - start > 9)
 	{
 		kill(pid, SIGKILL);
