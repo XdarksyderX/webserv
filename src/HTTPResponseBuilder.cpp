@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 12:30:08 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:20:34 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
             response.addHeader("Content-Type", "text/html");
         }
         else
-            response.setBody(Utils::getFileContent(resource));
+         response.setBody(Utils::getFileContent(resource));
         try
         {
             response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource)));
@@ -221,13 +221,12 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
             }
         }
     }
-
     response.setStatusCode(200);
     addCommonHeaders(request, response);
     return response;
 }
 
-HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *location)
+HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *location/* , CGIHandler &cgiHandler */)
 {
     HTTPResponse response;
     std::string root = serverConfig.getUploadsDirectory();
@@ -241,7 +240,11 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
     std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
     std::string uriToCheck = request.getUri();
     std::string contentType = request.getHeader("Content-Type");
-
+/*     if (cgiHandler.cgi)
+    {
+        response.setBody(cgiHandler.execCGI());
+        response.addHeader("Content-Type", "text/html");
+    } */
     if (contentType.find("multipart/form-data") != std::string::npos)
     {
         HTTPMultiFormData formData(request);
@@ -373,7 +376,6 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
 	{
 		location = serverConfig.getLocations().at(locationName);
 	}
-
 	if (!Utils::hasElement(location.getAllowMethods(), request.getMethod()))
 		return handleErrorPage(405);
 /*  std::vector<std::string> debug = location.getCgiExtensions();
@@ -388,16 +390,15 @@ HTTPResponse	HTTPResponseBuilder::buildResponse()
     std::cout << out << std::endl; */
 	if (request.getMethod() == GET)
 		return handleGetRequest(&location, cgi_handler);
+    else if (request.getMethod() == POST && cgi_handler.cgi) {
+		return handleGetRequest(&location, cgi_handler);
+    }
 	else if ((request.getMethod() == POST || request.getMethod() == PUT) &&
 		location.getUploadPath() != "" && serverConfig.getUploadsDirectory() != "")
-		return handlePostRequest(&location);
+		return handlePostRequest(&location/* , cgi_handler */);
+    
 	else if (request.getMethod() == DELETE)
 		return handleDeleteRequest(&location);
+    std::cout << "method: " << request.getMethod() << std::endl;
 	return handleErrorPage(405);
 }
-
-/* Sería conveniente que cada función de Handle_METHOD_Request
-recibieran el objeto cgi, de forma que sólo creásemos uno
-Dentro de cada función, se comprobaría si el booleano del cgi
-es true y en ese caso, llamarían a execCGI() 
-En handlePostRequest, la query se sustituiría por el request.body*/

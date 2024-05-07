@@ -6,12 +6,11 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/07 12:17:31 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:35:02 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "CGIHandler.hpp"
-#include "HTTPRequestParser.hpp" //just to hardcode
 
 CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req, std::string server_root) {
 	this->config = conf;
@@ -19,8 +18,6 @@ CGIHandler::CGIHandler(LocationConfig &conf, const HTTPRequest &req, std::string
 	this->request = req;
 	this->root = server_root;
 	prepareCGI();
-	std::cout << "Por dios Elisa no te olvides de gestionar los errores" << std::endl;
-	//std::cout << "\n\nthey see me rolling...\n\n";
 }
 
 CGIHandler::~CGIHandler() {
@@ -134,11 +131,11 @@ void	CGIHandler::prepareCGI(void) {
 
 	std::string uri = request.getUri();
 	std::string ext = Utils::getExtensionFromFile(uri);
-	if (ext.empty()) {
+	if (ext.empty() || ext == "html") {
 		this->cgi = false;
 		return ;
 	}
-	this->cgi_path = getPath(ext);
+	this->cgi_path = getPath("." + ext);
 	this->file_path = prepareFilePath(uri);
 	std::cout << "file path: \'" << file_path << "\'\n";
 	if (!Utils::fileExists(file_path))
@@ -180,19 +177,20 @@ void	waitTimeOut(int pid, int status)
 
 std::string	CGIHandler::execCGI(void) {
 
-//   std::cout << "\n\nthey hatin'..\n\n";
 	int status = 0;
-	 //if (pipe(pipe_fd) < 0) i'll have to handle if pipe fails
-	 //if (pid < 0) and if fork fails
+	 if (pipe(pipe_fd) < 0)
+		throw (std::runtime_error("Error while creating a pipe"));
 	pipe(pipe_fd);
 	pid_t pid = fork();
+	if (pid < 0)
+		throw (std::runtime_error("Error while creating a fork"));
 	if (!pid)
 	{
 		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-			throw(std::runtime_error("Redirection error idk"));
+			throw(std::runtime_error("Error while redirecting output"));
 		if (dup2(pipe_fd[1], STDERR_FILENO) == -1)
-			throw(std::runtime_error("Redirection error idk"));
+			throw(std::runtime_error("Error while redirecting output"));
 		status = execve(args[0], args, NULL);
 		if (status == -1) {
 			perror(args[1]);  // print error
