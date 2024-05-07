@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 12:25:02 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:35:58 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ std::string Utils::to_string(int number)
 std::string Utils::getExtensionFromFile(const std::string &uri)
 {
 	size_t dotPos = uri.find_last_of('.');
+	dotPos++;
 	size_t queryPos = uri.find_last_of('?');
 	if (dotPos != std::string::npos && queryPos != std::string::npos)
 		return (uri.substr(dotPos, queryPos - dotPos));

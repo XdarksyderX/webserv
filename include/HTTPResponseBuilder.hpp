@@ -6,7 +6,7 @@
 /*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:35:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/03 14:30:47 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:20:26 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ class HTTPResponseBuilder
 		/**
 		 * @brief Handles a GET request based on the location configuration.
 		 * @param location Pointer to the LocationConfig object.
+		 * @param CGIHandler Pointer to the CGIHandler object.
 		 * @return An HTTPResponse object tailored to the GET request.
 		 */
 		HTTPResponse handleGetRequest (const LocationConfig *location, CGIHandler &cgiHandler);
@@ -92,9 +93,10 @@ class HTTPResponseBuilder
 		/**
 		 * @brief Handles a POST request based on the location configuration.
 		 * @param location Pointer to the LocationConfig object.
+		 * @param CGIHandler Pointer to the CGIHandler object.
 		 * @return An HTTPResponse object tailored to the POST request.
 		 */
-		HTTPResponse handlePostRequest(const LocationConfig *location);
+		HTTPResponse handlePostRequest(const LocationConfig *location/* , CGIHandler &cgiHandler */);
 
 		/**
 		 * @brief Handles a DELETE request based on the location configuration.
