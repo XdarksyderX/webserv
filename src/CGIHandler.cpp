@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/07 20:46:53 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:42:00 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ char **CGIHandler::setArgs(void)
 	v_args.insert(v_args.begin(), this->cgi_path);
 	int n = v_args.size();
 	char **argv = new char*[n + 1];
-	for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < n; ++i)
+	{
 		argv[i] = new char[v_args[i].size() + 1];
 		std::strcpy(argv[i], v_args[i].c_str());
 	}
@@ -108,11 +109,10 @@ std::string readPipe(int pipe_fd[2])
 	char buffer[BUFSIZ];
 	std::string output;
 	ssize_t bytesRead;
-	while ((bytesRead = read(pipe_fd[0], buffer, BUFSIZ)) > 0) {
+	while ((bytesRead = read(pipe_fd[0], buffer, BUFSIZ)) > 0)
 		output.append(buffer, bytesRead);
-	}
 	if (bytesRead < 0)
-		throw (std::runtime_error("Error reading from pipe"));
+		throw CGIHandler::PipeReadError();
 	close(pipe_fd[0]);
 	return (output);
 }
@@ -126,7 +126,7 @@ void	waitTimeOut(int pid, int status)
 	if (current - start > 9)
 	{
 		kill(pid, SIGKILL);
-		throw (std::runtime_error("[TIMEOUT] Infinite loop ocurred during execution"));
+		throw CGIHandler::TimeoutError();
 	}
 }
 
@@ -135,18 +135,18 @@ std::string	CGIHandler::execCGI(void)
 
 	int status = 0;
 	if (pipe(pipe_fd) < 0)
-		throw (std::runtime_error("Error while creating a pipe"));
+		throw PipeError();
 	pipe(pipe_fd);
 	pid_t pid = fork();
 	if (pid < 0)
-		throw (std::runtime_error("Error while creating a fork"));
+		throw ForkError();
 	if (!pid)
 	{
 		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-			throw(std::runtime_error("Error while redirecting output"));
+			throw RedirectionError();
 		if (dup2(pipe_fd[1], STDERR_FILENO) == -1)
-			throw(std::runtime_error("Error while redirecting output"));
+			throw RedirectionError();
 		status = execve(args[0], args, NULL);
 		if (status == -1)
 			perror(args[1]);
@@ -160,4 +160,29 @@ std::string	CGIHandler::execCGI(void)
 bool	CGIHandler::isCGI(void)
 {
 	return (this->cgi);
+}
+
+const char *CGIHandler::PipeError::what() const throw()
+{
+	return ("Error while creating a pipe");
+}
+
+const char *CGIHandler::PipeReadError::what() const throw()
+{
+	return ("Error reading from pipe");
+}
+
+const char *CGIHandler::ForkError::what() const throw()
+{
+	return ("Error while creating a fork");
+}
+
+const char *CGIHandler::RedirectionError::what() const throw()
+{
+	return ("Error while redirecting output");
+}
+
+const char *CGIHandler::TimeoutError::what() const throw()
+{
+	return ("Infinite loop ocurred during execution");
 }

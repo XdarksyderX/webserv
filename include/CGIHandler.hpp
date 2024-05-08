@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:38:22 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/07 20:29:08 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:38:59 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <csignal>
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <exception>
 
 # include "HTTPRequest.hpp"
 # include "LocationConfig.hpp"
@@ -94,6 +95,36 @@ class CGIHandler
          * @return True if the request is a CGI request, false otherwise.
          */
         bool isCGI(void);
+
+        class PipeError : std::exception
+        {
+            public:
+                virtual const char *what() const throw();
+        };
+
+        class ForkError : std::exception
+        {
+            public:
+                virtual const char *what() const throw();
+        };
+
+        class RedirectionError : std::exception
+        {
+            public:
+                virtual const char *what() const throw();
+        };
+
+        class TimeoutError : std::exception
+        {
+            public:
+                virtual const char *what() const throw();
+        };
+        
+        class PipeReadError : std::exception
+        {
+            public:
+                virtual const char *what() const throw();
+        };
 };
 
 #endif
