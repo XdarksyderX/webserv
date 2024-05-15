@@ -2,6 +2,8 @@ import random
 import sys
 min = 1
 
+print(sys.argv)
+
 if (len(sys.argv) == 2 and sys.argv[1].isdigit()):
 	dices = int(sys.argv[1])
 	max = 6

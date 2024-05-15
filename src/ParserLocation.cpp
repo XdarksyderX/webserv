@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:28:14 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 20:37:59 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:30:59 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ LocationConfig Parser::parseLocationBlock(ServerConfig &serverConfig, const std:
     }
     if (!bracesStack.empty())
         throw Parser::SyntaxErrorException();
+    if (locationConfig.getCgiExtensions().size() != locationConfig.getCgiPaths().size())
+        throw Parser::InvalidDirectiveException();
     return locationConfig;
 }
 

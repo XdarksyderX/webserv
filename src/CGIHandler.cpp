@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/08 17:42:00 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:48:58 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ std::vector<std::string> split(const std::string &s, char delimiter)
 
 char **CGIHandler::setArgs(void)
 {
-
 	std::string query;
 	if (request.getMethod() == POST)
 		query = request.getBody();
@@ -80,6 +79,36 @@ char **CGIHandler::setArgs(void)
 	}
 	argv[n] = NULL;
 	return (argv);
+}
+
+void CGIHandler::setEnv()
+{
+	std::vector<std::string> env;
+	std::string cookie = request.getHeader("Cookie");
+	if (cookie.find("=") != std::string::npos)
+		env.push_back("HTTP_COOKIE=" + cookie.substr(cookie.find("=") + 1));
+	else
+		env.push_back("HTTP_COOKIE=" + cookie);
+	env.push_back("REQUEST_METHOD=" + request.getMethodString(request.getMethod()));
+    env.push_back("QUERY_STRING=" + request.getQuery());
+    env.push_back("CONTENT_LENGTH=" + Utils::to_string(request.getBody().size()));
+    env.push_back("CONTENT_TYPE=" + request.getHeader("Content-Type"));
+    env.push_back("SCRIPT_NAME=" + this->file_path);
+    env.push_back("SERVER_PROTOCOL=HTTP/1.1");
+    env.push_back("SERVER_SOFTWARE=webserv");
+    env.push_back("SERVER_NAME=" + request.getHeader("Host"));
+    env.push_back("GATEWAY_INTERFACE=CGI/1.1");
+
+	char **envp = new char*[env.size() + 1];
+
+	for (size_t i = 0; i < env.size(); ++i)
+	{
+		envp[i] = new char[env[i].size() + 1];
+		std::strcpy(envp[i], env[i].c_str());
+	}
+	envp[env.size()] = NULL;
+
+	this->env = envp;
 }
 
 void	CGIHandler::prepareCGI(void)
@@ -101,6 +130,7 @@ void	CGIHandler::prepareCGI(void)
 	if (!Utils::fileExists(file_path))
 		this->cgi = false;
 	this->args = setArgs();
+	setEnv();
 }
 
 std::string readPipe(int pipe_fd[2])
@@ -147,13 +177,14 @@ std::string	CGIHandler::execCGI(void)
 			throw RedirectionError();
 		if (dup2(pipe_fd[1], STDERR_FILENO) == -1)
 			throw RedirectionError();
-		status = execve(args[0], args, NULL);
+		status = execve(args[0], args, env);
 		if (status == -1)
 			perror(args[1]);
 		exit(status);
 	}
 	waitTimeOut(pid, status);
 	close(pipe_fd[1]);
+	free(env);
 	return (readPipe(pipe_fd));
 }
 

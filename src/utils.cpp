@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 20:18:10 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:23:35 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ std::string Utils::to_string(int number)
 	return ss.str();
 }
 
-std::string Utils::getExtensionFromFile(const std::string &uri, bool withPoint)
-{
+std::string Utils::getExtensionFromFile(const std::string &uri, bool withPoint) {
     size_t dotPos = uri.find_last_of('.');
-    size_t queryPos = uri.find_last_of('?');
-    if (dotPos != std::string::npos && queryPos != std::string::npos)
-        return uri.substr(dotPos + 1, queryPos - dotPos - 1);
-    else if (dotPos != std::string::npos)
-        return uri.substr(dotPos + (withPoint ? 0 : 1));
+    size_t queryPos = uri.find('?');
+    if (dotPos != std::string::npos && (queryPos == std::string::npos || dotPos < queryPos))
+	{
+        if (queryPos != std::string::npos)
+            return uri.substr(dotPos + (withPoint ? 0 : 1), queryPos - dotPos - (withPoint ? 0 : 1));
+        else
+            return uri.substr(dotPos + (withPoint ? 0 : 1));
+    }
     return "";
 }
 

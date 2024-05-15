@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 20:51:01 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:32:00 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,8 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
             response.setBody(Utils::getFileContent(resource));
         try
         {
-            response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource, false)));
+            if (response.getHeader("Content-Type") == "")
+                response.addHeader("Content-Type", MIME_TYPES.at(Utils::getExtensionFromFile(resource, false)));
         }
         catch (const std::exception &e)
         {

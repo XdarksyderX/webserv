@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:38:22 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/08 17:38:59 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:37:31 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class CGIHandler
         std::string     file_path;   ///< Path to the file being processed.
         HTTPRequest     request;     ///< HTTP request being handled.
         char            **args;      ///< Arguments for the CGI script.
+        char            **env;       ///< Environment variables for the CGI script.
         int             pipe_fd[2];  ///< File descriptors for the pipe used in CGI script execution.
         bool            cgi;         ///< Flag to check if the current request should be handled as CGI.
 
@@ -78,6 +79,12 @@ class CGIHandler
          * @return An array of char pointers representing the arguments for execve.
          */
         char **setArgs(void);
+
+
+        /**
+         * @brief Sets up the environment variables for the CGI script execution.
+         */
+        void setEnv(void);
 
         /**
          * @brief Prepares the CGI environment, including paths and arguments for execution.
@@ -119,7 +126,7 @@ class CGIHandler
             public:
                 virtual const char *what() const throw();
         };
-        
+
         class PipeReadError : std::exception
         {
             public:
