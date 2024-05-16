@@ -2,7 +2,7 @@ import random
 import sys
 min = 1
 
-print(sys.argv)
+""" print(sys.argv) """
 
 if (len(sys.argv) == 2 and sys.argv[1].isdigit()):
 	dices = int(sys.argv[1])
@@ -14,6 +14,6 @@ else:
 	dices = 1
 	max = 6
 
-print ("Rolling the dices...\n")
+print ("They see me rolling...\n")
 for i in range(dices):
 	print (random.randint(min, max))
