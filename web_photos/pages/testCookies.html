@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../style.css">
+	<title>Travel</title>
+</head>
+
+<body>
+	<section class="contenedor">
+		<header>
+			<h1>Photos</h1>
+			<nav>
+				<ul>
+					<li><a href="../home.html">Inicio</a></li>
+					<li><a href="./trip.html">Trip CGI</a></li>
+					<li><a href="./testCookies.html">Test cookies</a></li>
+					<li><a href="./register.html">Register</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<div class="contenido">
+			<div class="linea-decorativa">
+				<div class="circulo"></div>
+				<div class="circulo"></div>
+				<div class="circulo"></div>
+			</div>
+
+			<div class="left">
+				<h3>Set Cookie</h3>
+				<form action="../cgi-bin/setCookie.py" method="get" id="setCookie">
+					<input type="text" name="name" placeholder="Name" id="key">
+					<input type="text" name="value" placeholder="Value" id="value">
+					<input type="submit" value="set cookie" id="submit">
+				</form>
+			</div>
+
+			<div class="right">
+				<h3>Get Cookie</h3>
+				<form action="../cgi-bin/getCookie.py" method="get" id="getCookie">
+					<input type="text" name="name" placeholder="Name" id="name">
+					<input type="submit" value="get cookie" id="submit">
+				</form>
+			</div>
+		</div>
+		</div>
+	</section>
+
+	<script src="../js/testCookie.js"></script>
+</body>
+
+</html>
