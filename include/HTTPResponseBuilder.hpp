@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPResponseBuilder.hpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:35:19 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 15:20:26 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:14:16 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "HTTPMultiformData.hpp"
 # include "HTTPCookie.hpp"
 # include "CGIHandler.hpp"
+# include "URLEncoder.hpp"
 
 /**
  * @class HTTPResponseBuilder

@@ -6,7 +6,7 @@
 #    By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 16:30:49 by migarci2          #+#    #+#              #
-#    Updated: 2024/05/08 17:46:12 by migarci2         ###   ########.fr        #
+#    Updated: 2024/06/10 15:17:24 by migarci2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC =	$(SRC_DIR)/CGIHandler.cpp $(SRC_DIR)/HTTPCookie.cpp $(SRC_DIR)/HTTPMultiFo
 		$(SRC_DIR)/MIMETypes.cpp $(SRC_DIR)/Parser.cpp \
 		$(SRC_DIR)/ParserLocation.cpp $(SRC_DIR)/ParserServer.cpp \
 		$(SRC_DIR)/ServerConfig.cpp $(SRC_DIR)/ServerManager.cpp $(SRC_DIR)/StatusCodes.cpp \
-		$(SRC_DIR)/Time.cpp $(SRC_DIR)/utils.cpp
+		$(SRC_DIR)/Time.cpp $(SRC_DIR)/utils.cpp \
+		$(SRC_DIR)/URLEncoder.cpp 
 
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 

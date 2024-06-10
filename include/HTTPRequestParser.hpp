@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPRequestParser.hpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:36:49 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/02 16:29:57 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:04:27 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define HTTP_REQUEST_PARSER_HPP
 
 # include <exception>
+# include "URLEncoder.hpp"
 # include "HTTPRequest.hpp"
 
 /**

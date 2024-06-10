@@ -6,17 +6,16 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/15 20:32:00 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:14:37 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HTTPResponseBuilder.hpp"
-#include "CGIHandler.hpp"
 
 const std::map<std::string, std::string> HTTPResponseBuilder::MIME_TYPES = HTTPResponseBuilder::createMIMEMap();
 const std::map<int, std::string> HTTPResponseBuilder::STATUS_CODES = HTTPResponseBuilder::createStatusCodesMap();
 
-void	HTTPResponseBuilder::assembleStatusLine(std::string &assembleResponse, const HTTPResponse &response)
+void HTTPResponseBuilder::assembleStatusLine(std::string &assembleResponse, const HTTPResponse &response)
 {
 	assembleResponse += "HTTP/";
 	assembleResponse += response.getHttpVersion();
@@ -76,7 +75,7 @@ std::string HTTPResponseBuilder::findMatchingLocation()
     return bestMatchKey;
 }
 
-void	HTTPResponseBuilder::addCommonHeaders(const HTTPRequest &request, HTTPResponse &response)
+void HTTPResponseBuilder::addCommonHeaders(const HTTPRequest &request, HTTPResponse &response)
 {
 	if (request.getHeader("Cookie") == "")
     {
@@ -90,7 +89,7 @@ void	HTTPResponseBuilder::addCommonHeaders(const HTTPRequest &request, HTTPRespo
 	response.addHeader("Server", "webserv");
 }
 
-std::string		HTTPResponseBuilder::simpleErrorPage(int errorCode)
+std::string HTTPResponseBuilder::simpleErrorPage(int errorCode)
 {
 	std::string response = "<!DOCTYPE html>\n<html>\n<head>\n<title>";
 	response += Utils::to_string(errorCode);
@@ -104,7 +103,7 @@ std::string		HTTPResponseBuilder::simpleErrorPage(int errorCode)
 	return response;
 }
 
-std::string		HTTPResponseBuilder::getLocationUploadPath(const LocationConfig *location)
+std::string HTTPResponseBuilder::getLocationUploadPath(const LocationConfig *location)
 {
 	std::string root = serverConfig.getUploadsDirectory();
 	std::string uploadPath = location->getUploadPath();
@@ -114,7 +113,7 @@ std::string		HTTPResponseBuilder::getLocationUploadPath(const LocationConfig *lo
 	return Utils::joinPaths(root, uploadPath);
 }
 
-HTTPResponse	HTTPResponseBuilder::handleErrorPage(int errorCode)
+HTTPResponse HTTPResponseBuilder::handleErrorPage(int errorCode)
 {
 	HTTPResponse response;
 	response.setStatusCode(errorCode);
@@ -191,7 +190,7 @@ HTTPResponse HTTPResponseBuilder::handleGetRequest(const LocationConfig *locatio
         }
         else
         {
-			std::string allowedUploadURI = Utils::joinPaths("","/" + location->getName() + "/" + location->getUploadPath());
+			std::string allowedUploadURI = Utils::joinPaths("", "/" + location->getName() + "/" + location->getUploadPath());
             if (request.getUri().find(allowedUploadURI) != std::string::npos
                 && location->getUploadPath() != "" && serverConfig.getUploadsDirectory() != "")
             {
@@ -290,9 +289,9 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
     if (Utils::createFile(fullPath, request.getBody()))
     {
         response.setStatusCode(201);
-        response.setBody("File created successfully at " + fullPath);
+        response.setBody("File created successfully at " + URLEncoder::encode(fullPath));
         response.addHeader("Content-Type", "text/plain");
-        response.addHeader("Location", fullPath);
+        response.addHeader("Location", URLEncoder::encode(fullPath));
         addCommonHeaders(request, response);
         return response;
     }
@@ -306,7 +305,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
     }
 }
 
-HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *location)
+HTTPResponse HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *location)
 {
 	HTTPResponse response;
     std::string root = serverConfig.getUploadsDirectory();
@@ -338,9 +337,9 @@ HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *loca
     if (Utils::deleteFile(fullPath))
     {
         response.setStatusCode(200);
-        response.setBody("File deleted successfully from " + fullPath);
+        response.setBody("File deleted successfully from " + URLEncoder::encode(fullPath));
         response.addHeader("Content-Type", "text/plain");
-        response.addHeader("Location", fullPath);
+        response.addHeader("Location", URLEncoder::encode(fullPath));
     }
     else
     {
@@ -352,7 +351,7 @@ HTTPResponse	HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *loca
     return response;
 }
 
-HTTPResponse	HTTPResponseBuilder::buildResponse()
+HTTPResponse HTTPResponseBuilder::buildResponse()
 {
 	if (request.getHeader("Content-Length") != "")
 	{

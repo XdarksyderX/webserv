@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   HTTPRequestParser.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 14:45:31 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 17:43:34 by erivero-         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:04:17 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HTTPRequestParser.hpp"
-#include <iostream>
 
-void	HTTPRequestParser::parseRequestLine(HTTPRequest &request, const std::string &requestLine)
+void HTTPRequestParser::parseRequestLine(HTTPRequest &request, const std::string &requestLine)
 {
 	std::string::size_type start = 0;
 	std::string::size_type end = requestLine.find(' ');
@@ -26,8 +25,11 @@ void	HTTPRequestParser::parseRequestLine(HTTPRequest &request, const std::string
 	end = requestLine.find(' ', start);
 	if (end == std::string::npos)
 		throw InvalidRequestHeader();
-	request.setUri(requestLine.substr(start, end - start));
-//    std::cout << request.getUri() << std::endl;
+	
+	std::string uri = requestLine.substr(start, end - start);
+	uri = URLEncoder::decode(uri);
+	request.setUri(uri);
+
 	request.setQuery(parseQueryString(request.getUri()));
 	start = end + 1;
 	request.setHttpVersion(requestLine.substr(start));
@@ -37,12 +39,12 @@ const std::string HTTPRequestParser::parseQueryString(const std::string &uri)
 {
     std::string::size_type start = uri.find('?');
     if (start != std::string::npos)
-        return (uri.substr(start + 1));
+        return URLEncoder::decode(uri.substr(start + 1));
     else
-        return ("");
+        return "";
 }
 
-void	HTTPRequestParser::parseRequestHeaders(HTTPRequest &request, const std::string &headerLine)
+void HTTPRequestParser::parseRequestHeaders(HTTPRequest &request, const std::string &headerLine)
 {
 	std::string::size_type end = headerLine.find(':');
 	if (end == std::string::npos)
