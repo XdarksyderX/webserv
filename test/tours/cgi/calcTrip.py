@@ -10,17 +10,17 @@ priceLocation = 0
 continente = form.getvalue('continente')
 n_dias = form.getvalue('n_dias')
 
-if continente == 'America'
+if continente == 'America':
 	priceLocation = 4
-elif continente == 'Europa'
+elif continente == 'Europa':
 	priceLocation = 1
-elif continente == 'Asia'
+elif continente == 'Asia':
 	priceLocation = 3
-elif continente == 'Africa'
+elif continente == 'Africa':
 	priceLocation = 2
-elif continente == 'Oceania'
+elif continente == 'Oceania':
 	priceLocation = 5
 
 total = n_dias * priceLocation
 
-print("total = %s\n" str(total))
+print(f"total = {total}")
