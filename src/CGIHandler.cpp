@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/07/16 15:59:34 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:12:44 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,18 @@ char **CGIHandler::setArgs(void)
 void CGIHandler::setEnv()
 {
 	std::vector<std::string> env;
+	std::string queryString;
+	if (request.getMethod() == POST)
+		queryString = request.getBody();
+	else
+		queryString = request.getQuery();
 	std::string cookie = request.getHeader("Cookie");
 	if (cookie.find("=") != std::string::npos)
 		env.push_back("HTTP_COOKIE=" + cookie.substr(cookie.find("=") + 1));
 	else
 		env.push_back("HTTP_COOKIE=session=" + cookie);
 	env.push_back("REQUEST_METHOD=" + request.getMethodString(request.getMethod()));
-    env.push_back("QUERY_STRING=" + request.getQuery());
+    env.push_back("QUERY_STRING=" + queryString);
     env.push_back("CONTENT_LENGTH=" + Utils::to_string(request.getBody().size()));
     env.push_back("CONTENT_TYPE=" + request.getHeader("Content-Type"));
     env.push_back("SCRIPT_NAME=" + this->file_path);
