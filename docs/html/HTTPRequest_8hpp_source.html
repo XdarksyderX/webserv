@@ -76,10 +76,10 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">/*                                                        :::      ::::::::   */</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/*   HTTPRequest.hpp                                    :+:      :+:    :+:   */</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/*                                                    +:+ +:+         +:+     */</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">/*   By: migarci2 &lt;migarci2@student.42malaga.com    +#+  +:+       +#+        */</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">/*   By: erivero- &lt;erivero-@student.42.fr&gt;          +#+  +:+       +#+        */</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">/*                                                +#+#+#+#+#+   +#+           */</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">/*   Created: 2024/04/06 12:36:18 by migarci2          #+#    #+#             */</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/*   Updated: 2024/04/20 21:11:40 by migarci2         ###   ########.fr       */</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">/*   Updated: 2024/04/24 14:54:47 by erivero-         ###   ########.fr       */</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">/*                                                                            */</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">/* ************************************************************************** */</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
@@ -103,44 +103,47 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        HTTPMethod method; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        std::string uri; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        std::string httpVersion; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::string body; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::map&lt;std::string, std::string&gt; headers; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classHTTPRequest.html">HTTPRequest</a>();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="classHTTPRequest.html">HTTPRequest</a>(<span class="keyword">const</span> <a class="code" href="classHTTPRequest.html">HTTPRequest</a> &amp;other);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        ~<a class="code" href="classHTTPRequest.html">HTTPRequest</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classHTTPRequest.html">HTTPRequest</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="classHTTPRequest.html">HTTPRequest</a> &amp;other);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        HTTPMethod getMethod() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        std::string getUri() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        std::string getHttpVersion() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        std::string getBody() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;getHeaders() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        std::map&lt;std::string, std::string&gt; &amp;getHeaders();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> setMethod(HTTPMethod method);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> setUri(<span class="keyword">const</span> std::string &amp;uri);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> setHttpVersion(<span class="keyword">const</span> std::string &amp;httpVersion);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> setBody(<span class="keyword">const</span> std::string &amp;body);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classHTTPRequest.html#a0cebbc1634daf277efe7321ff893caa6">addHeader</a>(<span class="keyword">const</span> std::string &amp;key, <span class="keyword">const</span> std::string &amp;value);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        std::string <a class="code" href="classHTTPRequest.html#abe91df1d97574dc2d3112213823358a8">getHeader</a>(<span class="keyword">const</span> std::string &amp;key) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classHTTPRequest.html#a492e033bc8c2e6022fdf2422269536aa">clear</a>();</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">static</span> HTTPMethod  <a class="code" href="classHTTPRequest.html#a6b830a0a96f181ee5ad6e43cbdee7495">getMethodFromString</a>(<span class="keyword">const</span> std::string &amp;method);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keyword">static</span> std::string <a class="code" href="classHTTPRequest.html#a668b3e5090cac6d60db069115239f7b1">getMethodString</a>(HTTPMethod method);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;};</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        std::string query;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::string httpVersion; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::string body; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        std::map&lt;std::string, std::string&gt; headers; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="classHTTPRequest.html">HTTPRequest</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="classHTTPRequest.html">HTTPRequest</a>(<span class="keyword">const</span> <a class="code" href="classHTTPRequest.html">HTTPRequest</a> &amp;other);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        ~<a class="code" href="classHTTPRequest.html">HTTPRequest</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classHTTPRequest.html">HTTPRequest</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="classHTTPRequest.html">HTTPRequest</a> &amp;other);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        HTTPMethod getMethod() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        std::string getUri() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        std::string getQuery() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        std::string getHttpVersion() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        std::string getBody() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">const</span> std::map&lt;std::string, std::string&gt; &amp;getHeaders() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        std::map&lt;std::string, std::string&gt; &amp;getHeaders();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> setMethod(HTTPMethod method);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> setUri(<span class="keyword">const</span> std::string &amp;uri);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> setHttpVersion(<span class="keyword">const</span> std::string &amp;httpVersion);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> setBody(<span class="keyword">const</span> std::string &amp;body);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">void</span> setQuery(<span class="keyword">const</span> std::string &amp;query);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classHTTPRequest.html#a0cebbc1634daf277efe7321ff893caa6">addHeader</a>(<span class="keyword">const</span> std::string &amp;key, <span class="keyword">const</span> std::string &amp;value);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        std::string <a class="code" href="classHTTPRequest.html#abe91df1d97574dc2d3112213823358a8">getHeader</a>(<span class="keyword">const</span> std::string &amp;key) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classHTTPRequest.html#a492e033bc8c2e6022fdf2422269536aa">clear</a>();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">static</span> HTTPMethod  <a class="code" href="classHTTPRequest.html#a6b830a0a96f181ee5ad6e43cbdee7495">getMethodFromString</a>(<span class="keyword">const</span> std::string &amp;method);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keyword">static</span> std::string <a class="code" href="classHTTPRequest.html#a668b3e5090cac6d60db069115239f7b1">getMethodString</a>(HTTPMethod method);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;};</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassHTTPRequest_html"><div class="ttname"><a href="classHTTPRequest.html">HTTPRequest</a></div><div class="ttdoc">Represents an HTTP request.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.hpp:44</div></div>
-<div class="ttc" id="aclassHTTPRequest_html_a0cebbc1634daf277efe7321ff893caa6"><div class="ttname"><a href="classHTTPRequest.html#a0cebbc1634daf277efe7321ff893caa6">HTTPRequest::addHeader</a></div><div class="ttdeci">void addHeader(const std::string &amp;key, const std::string &amp;value)</div><div class="ttdoc">Adds a header to the request.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:85</div></div>
-<div class="ttc" id="aclassHTTPRequest_html_a492e033bc8c2e6022fdf2422269536aa"><div class="ttname"><a href="classHTTPRequest.html#a492e033bc8c2e6022fdf2422269536aa">HTTPRequest::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clears the request content, resetting all fields to their default values.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:96</div></div>
-<div class="ttc" id="aclassHTTPRequest_html_a668b3e5090cac6d60db069115239f7b1"><div class="ttname"><a href="classHTTPRequest.html#a668b3e5090cac6d60db069115239f7b1">HTTPRequest::getMethodString</a></div><div class="ttdeci">static std::string getMethodString(HTTPMethod method)</div><div class="ttdoc">Converts an HTTPMethod enumeration value to an HTTP method string.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:119</div></div>
-<div class="ttc" id="aclassHTTPRequest_html_a6b830a0a96f181ee5ad6e43cbdee7495"><div class="ttname"><a href="classHTTPRequest.html#a6b830a0a96f181ee5ad6e43cbdee7495">HTTPRequest::getMethodFromString</a></div><div class="ttdeci">static HTTPMethod getMethodFromString(const std::string &amp;method)</div><div class="ttdoc">Converts an HTTP method string to an HTTPMethod enumeration value.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:105</div></div>
-<div class="ttc" id="aclassHTTPRequest_html_abe91df1d97574dc2d3112213823358a8"><div class="ttname"><a href="classHTTPRequest.html#abe91df1d97574dc2d3112213823358a8">HTTPRequest::getHeader</a></div><div class="ttdeci">std::string getHeader(const std::string &amp;key) const</div><div class="ttdoc">Gets a header from the request.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:90</div></div>
+<div class="ttc" id="aclassHTTPRequest_html_a0cebbc1634daf277efe7321ff893caa6"><div class="ttname"><a href="classHTTPRequest.html#a0cebbc1634daf277efe7321ff893caa6">HTTPRequest::addHeader</a></div><div class="ttdeci">void addHeader(const std::string &amp;key, const std::string &amp;value)</div><div class="ttdoc">Adds a header to the request.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:95</div></div>
+<div class="ttc" id="aclassHTTPRequest_html_a492e033bc8c2e6022fdf2422269536aa"><div class="ttname"><a href="classHTTPRequest.html#a492e033bc8c2e6022fdf2422269536aa">HTTPRequest::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clears the request content, resetting all fields to their default values.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:106</div></div>
+<div class="ttc" id="aclassHTTPRequest_html_a668b3e5090cac6d60db069115239f7b1"><div class="ttname"><a href="classHTTPRequest.html#a668b3e5090cac6d60db069115239f7b1">HTTPRequest::getMethodString</a></div><div class="ttdeci">static std::string getMethodString(HTTPMethod method)</div><div class="ttdoc">Converts an HTTPMethod enumeration value to an HTTP method string.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:129</div></div>
+<div class="ttc" id="aclassHTTPRequest_html_a6b830a0a96f181ee5ad6e43cbdee7495"><div class="ttname"><a href="classHTTPRequest.html#a6b830a0a96f181ee5ad6e43cbdee7495">HTTPRequest::getMethodFromString</a></div><div class="ttdeci">static HTTPMethod getMethodFromString(const std::string &amp;method)</div><div class="ttdoc">Converts an HTTP method string to an HTTPMethod enumeration value.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:115</div></div>
+<div class="ttc" id="aclassHTTPRequest_html_abe91df1d97574dc2d3112213823358a8"><div class="ttname"><a href="classHTTPRequest.html#abe91df1d97574dc2d3112213823358a8">HTTPRequest::getHeader</a></div><div class="ttdeci">std::string getHeader(const std::string &amp;key) const</div><div class="ttdoc">Gets a header from the request.</div><div class="ttdef"><b>Definition:</b> HTTPRequest.cpp:100</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

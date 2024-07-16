@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:41:20 by migarci2          #+#    #+#             */
-/*   Updated: 2024/04/20 22:46:09 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:07:26 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 			serverManager.addServer(new HTTPServer(serverConfigs[i]));
 			std::string serverName = (serverConfigs[i].getServerName() == "default") ? "" : serverConfigs[i].getServerName() + " ";
 			Logger::log("Server " + serverName
-						+ "started on "
+						+ "started on http://"
 						+ serverConfigs[i].getHost()
 						+ ":"
 						+ Utils::to_string(static_cast<int>(serverConfigs[i].getPort()))

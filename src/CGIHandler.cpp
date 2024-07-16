@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:42:28 by erivero-          #+#    #+#             */
-/*   Updated: 2024/05/15 20:48:58 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:59:34 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char **CGIHandler::setArgs(void)
 	else
 		query = request.getQuery();
 	std::vector<std::string> v_args = split(query, '&');
-	v_args.insert(v_args.begin(), this->file_path);
+	v_args.insert(v_args.begin(), Utils::getNodeName(this->file_path));
 	v_args.insert(v_args.begin(), this->cgi_path);
 	int n = v_args.size();
 	char **argv = new char*[n + 1];
@@ -88,7 +88,7 @@ void CGIHandler::setEnv()
 	if (cookie.find("=") != std::string::npos)
 		env.push_back("HTTP_COOKIE=" + cookie.substr(cookie.find("=") + 1));
 	else
-		env.push_back("HTTP_COOKIE=" + cookie);
+		env.push_back("HTTP_COOKIE=session=" + cookie);
 	env.push_back("REQUEST_METHOD=" + request.getMethodString(request.getMethod()));
     env.push_back("QUERY_STRING=" + request.getQuery());
     env.push_back("CONTENT_LENGTH=" + Utils::to_string(request.getBody().size()));
@@ -162,7 +162,6 @@ void	waitTimeOut(int pid, int status)
 
 std::string	CGIHandler::execCGI(void)
 {
-
 	int status = 0;
 	if (pipe(pipe_fd) < 0)
 		throw PipeError();
@@ -172,6 +171,9 @@ std::string	CGIHandler::execCGI(void)
 		throw ForkError();
 	if (!pid)
 	{
+		std::string scriptDir = Utils::reduceLastNode(Utils::joinPaths(root, request.getUri()));
+		if (chdir(scriptDir.c_str()) != 0)
+			throw RedirectionError();
 		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 			throw RedirectionError();

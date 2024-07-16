@@ -19,6 +19,8 @@ class \mbox{\hyperlink{classHTTPRequestParser_1_1InvalidRequestLine}{Invalid\+Re
 \doxysubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+static const std\+::string \mbox{\hyperlink{classHTTPRequestParser_a63d68bc86ae1741e0e899e7275cd09e8}{parse\+Query\+String}} (const std\+::string \&uri)
+\begin{DoxyCompactList}\small\item\em Parse the query string if it exist. \end{DoxyCompactList}\item 
 static \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \mbox{\hyperlink{classHTTPRequestParser_a0f360442bb2a9d904b5abce505b3e3b8}{parse\+Request}} (const std\+::string \&raw\+Request)
 \begin{DoxyCompactList}\small\item\em Parses a raw HTTP request string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -29,6 +31,23 @@ A parser class that interprets raw HTTP requests.
 This class provides static methods to parse raw HTTP request strings into an \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object. It processes the request line and headers and populates the \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} object with parsed data. 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHTTPRequestParser_a63d68bc86ae1741e0e899e7275cd09e8}\label{classHTTPRequestParser_a63d68bc86ae1741e0e899e7275cd09e8}} 
+\index{HTTPRequestParser@{HTTPRequestParser}!parseQueryString@{parseQueryString}}
+\index{parseQueryString@{parseQueryString}!HTTPRequestParser@{HTTPRequestParser}}
+\doxysubsubsection{\texorpdfstring{parseQueryString()}{parseQueryString()}}
+{\footnotesize\ttfamily const std\+::string HTTPRequest\+Parser\+::parse\+Query\+String (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{uri }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Parse the query string if it exist. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & A string representing the request line. \\
+\hline
+{\em request\+Line} & The query string. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classHTTPRequestParser_a0f360442bb2a9d904b5abce505b3e3b8}\label{classHTTPRequestParser_a0f360442bb2a9d904b5abce505b3e3b8}} 
 \index{HTTPRequestParser@{HTTPRequestParser}!parseRequest@{parseRequest}}
 \index{parseRequest@{parseRequest}!HTTPRequestParser@{HTTPRequestParser}}

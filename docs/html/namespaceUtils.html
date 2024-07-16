@@ -78,11 +78,17 @@ Functions</h2></td></tr>
 <tr class="memitem:a4c0163fa60350b0910334b77e216f619"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtils.html#a4c0163fa60350b0910334b77e216f619">to_string</a> (int number)</td></tr>
 <tr class="memdesc:a4c0163fa60350b0910334b77e216f619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts an integer to a string.  <a href="namespaceUtils.html#a4c0163fa60350b0910334b77e216f619">More...</a><br /></td></tr>
 <tr class="separator:a4c0163fa60350b0910334b77e216f619"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85ab1e60065924fe1ebaad282d234227"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtils.html#a85ab1e60065924fe1ebaad282d234227">getExtensionFromFile</a> (const std::string &amp;filename)</td></tr>
-<tr class="memdesc:a85ab1e60065924fe1ebaad282d234227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the file extension from a filename.  <a href="namespaceUtils.html#a85ab1e60065924fe1ebaad282d234227">More...</a><br /></td></tr>
-<tr class="separator:a85ab1e60065924fe1ebaad282d234227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472ad1de8598ec053aa91cca2f9f00e5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtils.html#a472ad1de8598ec053aa91cca2f9f00e5">getExtensionFromFile</a> (const std::string &amp;filename, bool withPoint=true)</td></tr>
+<tr class="memdesc:a472ad1de8598ec053aa91cca2f9f00e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the file extension from a filename.  <a href="namespaceUtils.html#a472ad1de8598ec053aa91cca2f9f00e5">More...</a><br /></td></tr>
+<tr class="separator:a472ad1de8598ec053aa91cca2f9f00e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af721c59a9c61d380749bf3bba033637f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtils.html#af721c59a9c61d380749bf3bba033637f">cleanQueryFromPath</a> (const std::string &amp;uri)</td></tr>
+<tr class="memdesc:af721c59a9c61d380749bf3bba033637f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the file path from a uri, substracting the query.  <a href="namespaceUtils.html#af721c59a9c61d380749bf3bba033637f">More...</a><br /></td></tr>
+<tr class="separator:af721c59a9c61d380749bf3bba033637f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29af978ff9bdce77bf9e2da4631eaa02"><td class="memItemLeft" align="right" valign="top"><a id="a29af978ff9bdce77bf9e2da4631eaa02"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>reduceLastNode</b> (const std::string &amp;path)</td></tr>
+<tr class="separator:a29af978ff9bdce77bf9e2da4631eaa02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed8daf2d521b9259c9e401643715f342"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtils.html#aed8daf2d521b9259c9e401643715f342">getFileContent</a> (const std::string &amp;filename)</td></tr>
-<tr class="memdesc:aed8daf2d521b9259c9e401643715f342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the entire content of a file into a string.  <a href="namespaceUtils.html#aed8daf2d521b9259c9e401643715f342">More...</a><br /></td></tr>
+<tr class="memdesc:aed8daf2d521b9259c9e401643715f342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the last node from the given path.  <a href="namespaceUtils.html#aed8daf2d521b9259c9e401643715f342">More...</a><br /></td></tr>
 <tr class="separator:aed8daf2d521b9259c9e401643715f342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3716f1460538417b14e3058200e5c1c3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceUtils.html#a3716f1460538417b14e3058200e5c1c3">joinPaths</a> (const std::string &amp;path1, const std::string &amp;path2)</td></tr>
 <tr class="memdesc:a3716f1460538417b14e3058200e5c1c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenates two file path segments into a single path.  <a href="namespaceUtils.html#a3716f1460538417b14e3058200e5c1c3">More...</a><br /></td></tr>
@@ -128,6 +134,33 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility functions to assist with common file and network operations. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="af721c59a9c61d380749bf3bba033637f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af721c59a9c61d380749bf3bba033637f">&#9670;&nbsp;</a></span>cleanQueryFromPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Utils::cleanQueryFromPath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>uri</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extracts the file path from a uri, substracting the query. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The full uri. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the clean path. </dd></dl>
+
+</div>
+</div>
 <a id="a1462ff6026a5dabf14c3a4e23c44aceb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1462ff6026a5dabf14c3a4e23c44aceb">&#9670;&nbsp;</a></span>convertFromBase64()</h2>
 
@@ -339,8 +372,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a85ab1e60065924fe1ebaad282d234227"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85ab1e60065924fe1ebaad282d234227">&#9670;&nbsp;</a></span>getExtensionFromFile()</h2>
+<a id="a472ad1de8598ec053aa91cca2f9f00e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a472ad1de8598ec053aa91cca2f9f00e5">&#9670;&nbsp;</a></span>getExtensionFromFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,8 +382,18 @@ Functions</h2></td></tr>
           <td class="memname">std::string Utils::getExtensionFromFile </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>withPoint</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -358,7 +401,8 @@ Functions</h2></td></tr>
 <p>Extracts the file extension from a filename. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>The full name of the file. </td></tr>
+    <tr><td class="paramname">filename</td><td>The full name of the file or the full uri. </td></tr>
+    <tr><td class="paramname">withPoint</td><td>If true, the point is included in the extension. </td></tr>
   </table>
   </dd>
 </dl>
@@ -382,14 +426,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the entire content of a file into a string. </p>
+<p>Removes the last node from the given path. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>The path to the file. </td></tr>
+    <tr><td class="paramname">path</td><td>The input file path. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A string containing all the data in the file. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A string with the last node removed from the path. </dd></dl>
 
 </div>
 </div>

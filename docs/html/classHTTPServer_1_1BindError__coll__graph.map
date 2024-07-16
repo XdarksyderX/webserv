@@ -1,0 +1,4 @@
+<map id="HTTPServer::BindError" name="HTTPServer::BindError">
+<area shape="rect" id="node1" title="Exception thrown when the server fails to bind to a port." alt="" coords="5,80,172,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="31,5,146,32"/>
+</map>

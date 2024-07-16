@@ -1,9 +1,20 @@
 var searchData=
 [
-  ['haselement_162',['hasElement',['../namespaceUtils.html#a1e706287a757bb86aecc958dba23608c',1,'Utils']]],
-  ['httpcookie_163',['HTTPCookie',['../classHTTPCookie.html#acffeb81ee14eae864c2327bbfa2ee97e',1,'HTTPCookie::HTTPCookie()'],['../classHTTPCookie.html#aac3b15e8a9ecda6cff530f07f4f1bd8a',1,'HTTPCookie::HTTPCookie(const HTTPCookie &amp;other)']]],
-  ['httpformfile_164',['HTTPFormFile',['../classHTTPFormFile.html#af7e252890b578ba44f1b2a57d736662f',1,'HTTPFormFile::HTTPFormFile(const std::string &amp;filename, const std::string &amp;contentType, const std::string &amp;content)'],['../classHTTPFormFile.html#a3d620f77a4bb4fe2355987d3db410e14',1,'HTTPFormFile::HTTPFormFile(const HTTPFormFile &amp;other)']]],
-  ['httpmultiformdata_165',['HTTPMultiFormData',['../classHTTPMultiFormData.html#a257c85e46f697de16df4ab86fbc871ff',1,'HTTPMultiFormData::HTTPMultiFormData(const HTTPRequest &amp;request)'],['../classHTTPMultiFormData.html#a53d2bb22c192a8cb1a4b239bfa26a8b6',1,'HTTPMultiFormData::HTTPMultiFormData(const HTTPMultiFormData &amp;other)']]],
-  ['httpresponsebuilder_166',['HTTPResponseBuilder',['../classHTTPResponseBuilder.html#aba2bdf17129c7af88e8e0c901b7c701c',1,'HTTPResponseBuilder']]],
-  ['httpserver_167',['HTTPServer',['../classHTTPServer.html#a13fc55a31339acd160caed8310c5ea1a',1,'HTTPServer']]]
+  ['getclientsocketip_178',['getClientSocketIP',['../classLogger.html#a505a8c58d86230025e3d471346b5f188',1,'Logger']]],
+  ['getcontent_179',['getContent',['../classHTTPFormFile.html#a367f1e8afab13aae982beb4dd2e7f57a',1,'HTTPFormFile']]],
+  ['getcontenttype_180',['getContentType',['../classHTTPFormFile.html#ac3ca870df1e7cba9f5eab9df49fe96e9',1,'HTTPFormFile']]],
+  ['getcurrenttime_181',['getCurrentTime',['../classTime.html#a7eaace5f1b4c837e14782b9af5dccdba',1,'Time']]],
+  ['getextensionfromfile_182',['getExtensionFromFile',['../namespaceUtils.html#a472ad1de8598ec053aa91cca2f9f00e5',1,'Utils']]],
+  ['getfilecontent_183',['getFileContent',['../namespaceUtils.html#aed8daf2d521b9259c9e401643715f342',1,'Utils']]],
+  ['getfilename_184',['getFilename',['../classHTTPFormFile.html#a5f5e066993586f62acb32e76d8fde778',1,'HTTPFormFile']]],
+  ['getfiles_185',['getFiles',['../classHTTPMultiFormData.html#af920f3fb53527df13938e516d00167fe',1,'HTTPMultiFormData']]],
+  ['getheader_186',['getHeader',['../classHTTPRequest.html#abe91df1d97574dc2d3112213823358a8',1,'HTTPRequest::getHeader()'],['../classHTTPResponse.html#a2b8eb3f2e5c8418a8e9226077a2d21a4',1,'HTTPResponse::getHeader()']]],
+  ['getkey_187',['getKey',['../classHTTPCookie.html#ad6f78ffd6891cee321ec6a8ea8ff786f',1,'HTTPCookie']]],
+  ['getmethodfromstring_188',['getMethodFromString',['../classHTTPRequest.html#a6b830a0a96f181ee5ad6e43cbdee7495',1,'HTTPRequest']]],
+  ['getmethodstring_189',['getMethodString',['../classHTTPRequest.html#a668b3e5090cac6d60db069115239f7b1',1,'HTTPRequest']]],
+  ['getnodename_190',['getNodeName',['../namespaceUtils.html#ae9e19b64e7ae67760c67f21bdee1ca01',1,'Utils']]],
+  ['getpath_191',['getPath',['../classCGIHandler.html#a37bec86bd8382c2be314b70bbfc69c2c',1,'CGIHandler']]],
+  ['getrequest_192',['getRequest',['../classHTTPMultiFormData.html#a1e6dc7e4238ed7c7305f4a121a5439da',1,'HTTPMultiFormData']]],
+  ['getsocketfd_193',['getSocketFD',['../classHTTPServer.html#a280645e990daa676b3f441bfe2fe31cf',1,'HTTPServer']]],
+  ['gettime_194',['getTime',['../classHTTPCookie.html#ab7f849c39978e8db69e42b8dd47ba505',1,'HTTPCookie']]]
 ];

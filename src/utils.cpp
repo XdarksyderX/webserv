@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:27:51 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/15 19:23:35 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:31:41 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,19 @@ std::string Utils::to_string(int number)
 	std::stringstream ss;
 	ss << number;
 	return ss.str();
+}
+
+std::string Utils::reduceLastNode(const std::string &path)
+{
+    if (path.empty())
+		return path;
+	std::string tempPath = path;
+	if (tempPath[tempPath.size() - 1] == '/')
+		tempPath.erase(tempPath.size() - 1);
+	size_t lastSlashPos = tempPath.find_last_of('/');
+	if (lastSlashPos == std::string::npos)
+		return "/";
+	return tempPath.substr(0, lastSlashPos + 1);
 }
 
 std::string Utils::getExtensionFromFile(const std::string &uri, bool withPoint) {

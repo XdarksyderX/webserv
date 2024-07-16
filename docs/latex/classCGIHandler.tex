@@ -1,0 +1,159 @@
+\hypertarget{classCGIHandler}{}\doxysection{CGIHandler Class Reference}
+\label{classCGIHandler}\index{CGIHandler@{CGIHandler}}
+
+
+Handles the execution of CGI scripts based on HTTP requests and server configurations.  
+
+
+
+
+{\ttfamily \#include $<$CGIHandler.\+hpp$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classCGIHandler_1_1ForkError}{Fork\+Error}}
+\item 
+class \mbox{\hyperlink{classCGIHandler_1_1PipeError}{Pipe\+Error}}
+\item 
+class \mbox{\hyperlink{classCGIHandler_1_1PipeReadError}{Pipe\+Read\+Error}}
+\item 
+class \mbox{\hyperlink{classCGIHandler_1_1RedirectionError}{Redirection\+Error}}
+\item 
+class \mbox{\hyperlink{classCGIHandler_1_1TimeoutError}{Timeout\+Error}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCGIHandler_a382736c29587351bedc0a4c51ca342d4}{CGIHandler}} (\mbox{\hyperlink{classLocationConfig}{Location\+Config}} \&config, const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&req, std\+::string root)
+\begin{DoxyCompactList}\small\item\em Constructor for \mbox{\hyperlink{classCGIHandler}{CGIHandler}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classCGIHandler_a8ec3e58234a5c97deb2859baa1f886e7}\label{classCGIHandler_a8ec3e58234a5c97deb2859baa1f886e7}} 
+\mbox{\hyperlink{classCGIHandler_a8ec3e58234a5c97deb2859baa1f886e7}{$\sim$\+CGIHandler}} (void)
+\begin{DoxyCompactList}\small\item\em Destructor for \mbox{\hyperlink{classCGIHandler}{CGIHandler}}. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classCGIHandler_a37bec86bd8382c2be314b70bbfc69c2c}{get\+Path}} (std\+::string extension)
+\begin{DoxyCompactList}\small\item\em Determines the executable path for a given file extension. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classCGIHandler_ae1b826442d8fe3420681d44de4da8184}{prepare\+File\+Path}} (std\+::string uri)
+\begin{DoxyCompactList}\small\item\em Prepares the file path from a given URI. \end{DoxyCompactList}\item 
+char $\ast$$\ast$ \mbox{\hyperlink{classCGIHandler_a8b86bf5a2c4ed9a10c4b5f8d65948175}{set\+Args}} (void)
+\begin{DoxyCompactList}\small\item\em Sets up the arguments for the execve system call used to execute the CGI script. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classCGIHandler_ac0c6244a83005e91d3c96e2b9b2b0c4b}\label{classCGIHandler_ac0c6244a83005e91d3c96e2b9b2b0c4b}} 
+void \mbox{\hyperlink{classCGIHandler_ac0c6244a83005e91d3c96e2b9b2b0c4b}{set\+Env}} (void)
+\begin{DoxyCompactList}\small\item\em Sets up the environment variables for the CGI script execution. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classCGIHandler_af71efbff60c537ad54c7022a5b9231a9}\label{classCGIHandler_af71efbff60c537ad54c7022a5b9231a9}} 
+void \mbox{\hyperlink{classCGIHandler_af71efbff60c537ad54c7022a5b9231a9}{prepare\+CGI}} (void)
+\begin{DoxyCompactList}\small\item\em Prepares the CGI environment, including paths and arguments for execution. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classCGIHandler_a6e8c372ce8c8c4b504ce7768c54e6e48}{exec\+CGI}} (void)
+\begin{DoxyCompactList}\small\item\em Executes the CGI script using fork and execve, capturing output via a pipe. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCGIHandler_ae6d900b4a842a90d9c393183a61f09e6}{is\+CGI}} (void)
+\begin{DoxyCompactList}\small\item\em Checks if the current request is to be handled as a CGI request. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles the execution of CGI scripts based on HTTP requests and server configurations. 
+
+This class is responsible for managing CGI processes including setting up the environment, parsing the HTTP request, determining the script to execute, handling input and output through pipes, and executing the script while capturing its output. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classCGIHandler_a382736c29587351bedc0a4c51ca342d4}\label{classCGIHandler_a382736c29587351bedc0a4c51ca342d4}} 
+\index{CGIHandler@{CGIHandler}!CGIHandler@{CGIHandler}}
+\index{CGIHandler@{CGIHandler}!CGIHandler@{CGIHandler}}
+\doxysubsubsection{\texorpdfstring{CGIHandler()}{CGIHandler()}}
+{\footnotesize\ttfamily CGIHandler\+::\+CGIHandler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classLocationConfig}{Location\+Config}} \&}]{config,  }\item[{const \mbox{\hyperlink{classHTTPRequest}{HTTPRequest}} \&}]{req,  }\item[{std\+::string}]{root }\end{DoxyParamCaption})}
+
+
+
+Constructor for \mbox{\hyperlink{classCGIHandler}{CGIHandler}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & Reference to the \mbox{\hyperlink{classLocationConfig}{Location\+Config}} object containing location-\/specific settings. \\
+\hline
+{\em req} & The HTTP request that needs CGI processing. \\
+\hline
+{\em root} & The root directory from which files are served. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classCGIHandler_a6e8c372ce8c8c4b504ce7768c54e6e48}\label{classCGIHandler_a6e8c372ce8c8c4b504ce7768c54e6e48}} 
+\index{CGIHandler@{CGIHandler}!execCGI@{execCGI}}
+\index{execCGI@{execCGI}!CGIHandler@{CGIHandler}}
+\doxysubsubsection{\texorpdfstring{execCGI()}{execCGI()}}
+{\footnotesize\ttfamily std\+::string CGIHandler\+::exec\+CGI (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Executes the CGI script using fork and execve, capturing output via a pipe. 
+
+\begin{DoxyReturn}{Returns}
+A string containing the output from the CGI script execution. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCGIHandler_a37bec86bd8382c2be314b70bbfc69c2c}\label{classCGIHandler_a37bec86bd8382c2be314b70bbfc69c2c}} 
+\index{CGIHandler@{CGIHandler}!getPath@{getPath}}
+\index{getPath@{getPath}!CGIHandler@{CGIHandler}}
+\doxysubsubsection{\texorpdfstring{getPath()}{getPath()}}
+{\footnotesize\ttfamily std\+::string CGIHandler\+::get\+Path (\begin{DoxyParamCaption}\item[{std\+::string}]{extension }\end{DoxyParamCaption})}
+
+
+
+Determines the executable path for a given file extension. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em extension} & A string containing the file extension. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string containing the path to the executable associated with the extension. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCGIHandler_ae6d900b4a842a90d9c393183a61f09e6}\label{classCGIHandler_ae6d900b4a842a90d9c393183a61f09e6}} 
+\index{CGIHandler@{CGIHandler}!isCGI@{isCGI}}
+\index{isCGI@{isCGI}!CGIHandler@{CGIHandler}}
+\doxysubsubsection{\texorpdfstring{isCGI()}{isCGI()}}
+{\footnotesize\ttfamily bool CGIHandler\+::is\+CGI (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the current request is to be handled as a CGI request. 
+
+\begin{DoxyReturn}{Returns}
+True if the request is a CGI request, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCGIHandler_ae1b826442d8fe3420681d44de4da8184}\label{classCGIHandler_ae1b826442d8fe3420681d44de4da8184}} 
+\index{CGIHandler@{CGIHandler}!prepareFilePath@{prepareFilePath}}
+\index{prepareFilePath@{prepareFilePath}!CGIHandler@{CGIHandler}}
+\doxysubsubsection{\texorpdfstring{prepareFilePath()}{prepareFilePath()}}
+{\footnotesize\ttfamily std\+::string CGIHandler\+::prepare\+File\+Path (\begin{DoxyParamCaption}\item[{std\+::string}]{uri }\end{DoxyParamCaption})}
+
+
+
+Prepares the file path from a given URI. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em uri} & The URI from which the file path will be extracted. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string containing the file path derived from the URI. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCGIHandler_a8b86bf5a2c4ed9a10c4b5f8d65948175}\label{classCGIHandler_a8b86bf5a2c4ed9a10c4b5f8d65948175}} 
+\index{CGIHandler@{CGIHandler}!setArgs@{setArgs}}
+\index{setArgs@{setArgs}!CGIHandler@{CGIHandler}}
+\doxysubsubsection{\texorpdfstring{setArgs()}{setArgs()}}
+{\footnotesize\ttfamily char $\ast$$\ast$ CGIHandler\+::set\+Args (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Sets up the arguments for the execve system call used to execute the CGI script. 
+
+\begin{DoxyReturn}{Returns}
+An array of char pointers representing the arguments for execve. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/include/CGIHandler.\+hpp\item 
+/home/xdarksyderx/\+Escritorio/42\+PROJECTS/webserv/src/CGIHandler.\+cpp\end{DoxyCompactItemize}

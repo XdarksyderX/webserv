@@ -67,7 +67,16 @@
 					</div>
 				</div>
 			</div>
-
+			
+			<!-- File Upload Section -->
+			<div class="file-upload">
+				<h2>Upload Your Photos</h2>
+				<form action="/web_uploads" method="post" enctype="multipart/form-data">
+					<input type="file" name="file" id="file" class="inputfile" multiple>
+					<label for="file"><i class="fa fa-cloud-upload"></i> Choose a file</label>
+					<button type="submit">Upload</button>
+				</form>
+			</div>
 		</section>
 		<div class="image-gallery" id="image-gallery"></div>
 	</div>

@@ -33,10 +33,16 @@ std\+::vector$<$ HTTPMethod $>$ {\bfseries get\+Allow\+Methods} () const
 \mbox{\Hypertarget{classLocationConfig_a5c84236dd97844397435ebcf6cc1246b}\label{classLocationConfig_a5c84236dd97844397435ebcf6cc1246b}} 
 std\+::string {\bfseries get\+Index} () const
 \item 
+\mbox{\Hypertarget{classLocationConfig_a907e88ee70aae7166cb36c594801c4d5}\label{classLocationConfig_a907e88ee70aae7166cb36c594801c4d5}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries get\+Cgi\+Paths} () const
+\item 
+\mbox{\Hypertarget{classLocationConfig_a52fd0d6ad6c1e96a880d6788018d796a}\label{classLocationConfig_a52fd0d6ad6c1e96a880d6788018d796a}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries get\+Cgi\+Extensions} () const
+\item 
 \mbox{\Hypertarget{classLocationConfig_a66498e8dd71d810593afd3c08c554f82}\label{classLocationConfig_a66498e8dd71d810593afd3c08c554f82}} 
 bool {\bfseries get\+Autoindex} () const
 \item 
-\mbox{\Hypertarget{classLocationConfig_a74df1989800c37e6659cb5446c4a8767}\label{classLocationConfig_a74df1989800c37e6659cb5446c4a8767}} 
+\mbox{\Hypertarget{classLocationConfig_a757a60aeacb673a8d1f63d52c63dd80e}\label{classLocationConfig_a757a60aeacb673a8d1f63d52c63dd80e}} 
 std\+::map$<$ std\+::string, std\+::string $>$ {\bfseries get\+Cgi\+Info} () const
 \item 
 \mbox{\Hypertarget{classLocationConfig_acd609dc90d3e610abd427b0f505f2447}\label{classLocationConfig_acd609dc90d3e610abd427b0f505f2447}} 
@@ -60,20 +66,14 @@ void {\bfseries set\+Autoindex} (bool autoindex)
 \mbox{\Hypertarget{classLocationConfig_a0c401caa50730263dbfa5a07e8c357f9}\label{classLocationConfig_a0c401caa50730263dbfa5a07e8c357f9}} 
 void {\bfseries set\+Upload\+Path} (const std\+::string \&upload\+Path)
 \item 
-\mbox{\Hypertarget{classLocationConfig_a907e88ee70aae7166cb36c594801c4d5}\label{classLocationConfig_a907e88ee70aae7166cb36c594801c4d5}} 
-std\+::vector$<$ std\+::string $>$ {\bfseries get\+Cgi\+Paths} () const
+\mbox{\Hypertarget{classLocationConfig_a83b73939b2cd86ef08814aaaebd6075b}\label{classLocationConfig_a83b73939b2cd86ef08814aaaebd6075b}} 
+void {\bfseries set\+Cgi\+Paths} (const std\+::vector$<$ std\+::string $>$ \&cgi\+Paths)
 \item 
-\mbox{\Hypertarget{classLocationConfig_a52fd0d6ad6c1e96a880d6788018d796a}\label{classLocationConfig_a52fd0d6ad6c1e96a880d6788018d796a}} 
-std\+::vector$<$ std\+::string $>$ {\bfseries get\+Cgi\+Extensions} () const
+\mbox{\Hypertarget{classLocationConfig_a90597c55a624bfd6e79a078c7fe44ca9}\label{classLocationConfig_a90597c55a624bfd6e79a078c7fe44ca9}} 
+void {\bfseries set\+Cgi\+Extensions} (const std\+::vector$<$ std\+::string $>$ \&cgi\+Extensions)
 \item 
 \mbox{\Hypertarget{classLocationConfig_ac07f6a79b02ee68553836a05b326ee35}\label{classLocationConfig_ac07f6a79b02ee68553836a05b326ee35}} 
 void {\bfseries add\+Allow\+Method} (HTTPMethod method)
-\item 
-\mbox{\Hypertarget{classLocationConfig_a2e78f6db053fe26a55c3ca9e04e123fe}\label{classLocationConfig_a2e78f6db053fe26a55c3ca9e04e123fe}} 
-void {\bfseries add\+Cgi\+Path} (const std\+::string \&interpreter\+Path)
-\item 
-\mbox{\Hypertarget{classLocationConfig_a455a9ac2d00a9bc5713677d67d89be10}\label{classLocationConfig_a455a9ac2d00a9bc5713677d67d89be10}} 
-void {\bfseries add\+Cgi\+Extension} (const std\+::string \&extension)
 \end{DoxyCompactItemize}
 \doxysubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}

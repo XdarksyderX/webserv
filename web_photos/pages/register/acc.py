@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#!/usr/bin/python3
 from http import cookies
 import os
 import cgi
@@ -7,16 +7,22 @@ import hashlib
 import pickle
 import sys
 
+# Obtener el directorio actual
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+
 class Session:
     def __init__(self, name):
         self.name = name
         self.sid = hashlib.sha1(str(time.time()).encode("utf-8")).hexdigest()
-        with open('pages/register/sessions/session_' + self.sid, 'wb') as f:
+        session_path = os.path.join(current_directory, 'sessions', 'session_' + self.sid)
+        os.makedirs(os.path.dirname(session_path), exist_ok=True)
+        with open(session_path, 'wb') as f:
             pickle.dump(self, f)
     def getSid(self):
         return self.sid
 
-""" Stores Users and thier data  """
+""" Stores Users and their data """
 class UserDataBase:
     def __init__(self):
         self.user_pass = {}
@@ -24,9 +30,9 @@ class UserDataBase:
     def addUser(self, username, password, firstname):
         self.user_pass[username] = password
         self.user_firstname[username] = firstname
-        with open('pages/register/user_database', 'wb') as f:
+        database_path = os.path.join(current_directory, 'user_database')
+        with open(database_path, 'wb') as f:
             pickle.dump(self, f)
-
 
 def printAccPage(session):
     print("Content-type: text/html\r\n")
@@ -76,12 +82,10 @@ def printLogin():
     print("</body>   ")
     print("</html>")
 
-
-
-
 def authUser(name, password):
-    if os.path.exists('pages/register/user_database'):
-        with open('pages/register/user_database', 'rb') as f:
+    database_path = os.path.join(current_directory, 'user_database')
+    if os.path.exists(database_path):
+        with open(database_path, 'rb') as f:
             database = pickle.load(f)
             if name in database.user_pass and database.user_pass[name] == password:
                 session = Session(database.user_firstname[name])
@@ -95,37 +99,38 @@ def handleLogin():
     username = form.getvalue('username')
     password = form.getvalue('password')
     firstname = form.getvalue('firstname')
-    if username == None:
+    if username is None:
         printLogin()
-    elif firstname == None:
+    elif firstname is None:
         session = authUser(form.getvalue('username'), form.getvalue('password'))
-        if(session == None):
-            printUserMsg("Failed To Login, Username or Passowrd is wrong!")
+        if session is None:
+            printUserMsg("Failed To Login, Username or Password is wrong!")
         else:
-            print("Correct Crenditales :D",file=sys.stderr)
+            print("Correct Credentials :D", file=sys.stderr)
             cookies.clear()
             cookies["SID"] = session.getSid()
-            cookies["SID"]["expires"] = 120 # Session Expires after 2 mins
+            cookies["SID"]["expires"] = 120  # Session Expires after 2 mins
             print("HTTP/1.1 301 OK")
             print(cookies.output())
             print("location: acc.py")
             print("\r\n")
-    else :
-        if os.path.exists('pages/register/user_database'):
-            with open('pages/register/user_database', 'rb') as f:
+    else:
+        database_path = os.path.join(current_directory, 'user_database')
+        if os.path.exists(database_path):
+            with open(database_path, 'rb') as f:
                 database = pickle.load(f)
                 if username in database.user_pass:
-                    printUserMsg("Username is already Registerd !")
+                    printUserMsg("Username is already registered!")
                 else:
                     database.addUser(username, password, firstname)
-                    printUserMsg("Account Registerd Successfully!")
+                    printUserMsg("Account registered successfully!")
         else:
             database = UserDataBase()
             if username in database.user_pass:
-                printUserMsg("Username is already Registerd !")
+                printUserMsg("Username is already registered!")
             else:
                 database.addUser(username, password, firstname)
-                printUserMsg("Account Registerd Successfully!")
+                printUserMsg("Account registered successfully!")
 
 form = cgi.FieldStorage()
 if 'HTTP_COOKIE' in os.environ:
@@ -133,10 +138,14 @@ if 'HTTP_COOKIE' in os.environ:
     cookies.load(os.environ["HTTP_COOKIE"])
 
     if "SID" in cookies:
-        print("Your Session ID is", cookies["SID"].value,file=sys.stderr)
-        with open('pages/register/sessions/session_'+ cookies["SID"].value, 'rb') as f:
-            sess = pickle.load(f)
-        printAccPage(sess)
+        print("Your Session ID is", cookies["SID"].value, file=sys.stderr)
+        session_path = os.path.join(current_directory, 'sessions', 'session_' + cookies["SID"].value)
+        if os.path.exists(session_path):
+            with open(session_path, 'rb') as f:
+                sess = pickle.load(f)
+            printAccPage(sess)
+        else:
+            handleLogin()
     else:
         handleLogin()
 else:

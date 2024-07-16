@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 23:24:48 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 20:18:58 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:07:56 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,15 @@ namespace Utils
      */
     std::string cleanQueryFromPath(const std::string &uri);
 
+    /**
+     * @brief 
+     */
+    std::string reduceLastNode(const std::string &path);
 
     /**
-     * @brief Reads the entire content of a file into a string.
-     * @param filename The path to the file.
-     * @return A string containing all the data in the file.
+     * @brief Removes the last node from the given path.
+     * @param path The input file path.
+     * @return A string with the last node removed from the path.
      */
     std::string getFileContent(const std::string &filename);
 

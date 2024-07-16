@@ -6,7 +6,7 @@
 /*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 15:41:13 by migarci2          #+#    #+#             */
-/*   Updated: 2024/06/10 15:14:37 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:46:11 by migarci2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ HTTPResponse HTTPResponseBuilder::handlePostRequest(const LocationConfig *locati
 
     fullPath = Utils::preventFileTraversal(fullPath);
 
-    std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
+    std::string allowedUploadURI = Utils::joinPaths("/" + location->getName(), location->getUploadPath());
     std::string uriToCheck = request.getUri();
     std::string contentType = request.getHeader("Content-Type");
     if (contentType.find("multipart/form-data") != std::string::npos)
@@ -316,7 +316,7 @@ HTTPResponse HTTPResponseBuilder::handleDeleteRequest(const LocationConfig *loca
 
     fullPath = Utils::preventFileTraversal(fullPath);
 
-    std::string allowedUploadURI = Utils::joinPaths("/" + location->getName() + "/" + location->getUploadPath(), "/");
+    std::string allowedUploadURI = Utils::joinPaths("/" + location->getName(), location->getUploadPath());
     std::string uriToCheck = request.getUri();
     if (uriToCheck.find(allowedUploadURI) == std::string::npos)
     {

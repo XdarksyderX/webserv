@@ -1,0 +1,23 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,517,120,544"/>
+<area shape="rect" id="node2" href="$classCGIHandler_1_1ForkError.html" title=" " alt="" coords="192,5,355,32"/>
+<area shape="rect" id="node3" href="$classCGIHandler_1_1PipeError.html" title=" " alt="" coords="192,56,355,83"/>
+<area shape="rect" id="node4" href="$classCGIHandler_1_1PipeReadError.html" title=" " alt="" coords="175,107,371,133"/>
+<area shape="rect" id="node5" href="$classCGIHandler_1_1RedirectionError.html" title=" " alt="" coords="169,157,378,184"/>
+<area shape="rect" id="node6" href="$classCGIHandler_1_1TimeoutError.html" title=" " alt="" coords="179,208,368,235"/>
+<area shape="rect" id="node7" href="$classHTTPRequestParser_1_1InvalidRequestHeader.html" title="An exception indicating an invalid request header." alt="" coords="190,259,357,301"/>
+<area shape="rect" id="node8" href="$classHTTPRequestParser_1_1InvalidRequestLine.html" title="An exception indicating an invalid request line." alt="" coords="195,325,352,366"/>
+<area shape="rect" id="node9" href="$classHTTPServer_1_1AcceptError.html" title="Exception thrown when the server fails to accept a new connection." alt="" coords="183,391,364,417"/>
+<area shape="rect" id="node10" href="$classHTTPServer_1_1BindError.html" title="Exception thrown when the server fails to bind to a port." alt="" coords="190,441,357,468"/>
+<area shape="rect" id="node11" href="$classHTTPServer_1_1ListenError.html" title="Exception thrown when the server fails to listen on a port." alt="" coords="185,492,361,519"/>
+<area shape="rect" id="node12" href="$classHTTPServer_1_1SocketError.html" title="Exception thrown when a socket operation fails." alt="" coords="183,543,363,569"/>
+<area shape="rect" id="node13" href="$classHTTPServer_1_1SocketOptionError.html" title="Exception thrown when setting socket options fails." alt="" coords="177,594,369,635"/>
+<area shape="rect" id="node14" href="$classParser_1_1ConfigFileNotFoundException.html" title=" " alt="" coords="175,659,371,701"/>
+<area shape="rect" id="node15" href="$classParser_1_1InvalidDirectiveException.html" title=" " alt="" coords="187,725,360,766"/>
+<area shape="rect" id="node16" href="$classParser_1_1MissingMandatoryException.html" title=" " alt="" coords="178,790,369,831"/>
+<area shape="rect" id="node17" href="$classParser_1_1ResourceNotFoundException.html" title=" " alt="" coords="177,855,369,897"/>
+<area shape="rect" id="node18" href="$classParser_1_1SyntaxErrorException.html" title=" " alt="" coords="168,921,379,948"/>
+<area shape="rect" id="node19" href="$classServerManager_1_1PollError.html" title="Exception thrown when an error occurs during polling." alt="" coords="181,972,365,999"/>
+<area shape="rect" id="node20" href="$classServerManager_1_1ServerNotFound.html" title="Exception thrown when a server is not found." alt="" coords="176,1023,371,1065"/>
+<area shape="rect" id="node21" href="$classServerManager_1_1SocketNotFound.html" title="Exception thrown when a socket file descriptor is not found." alt="" coords="176,1089,371,1130"/>
+</map>

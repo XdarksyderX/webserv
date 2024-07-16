@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['_7ehttpcookie_187',['~HTTPCookie',['../classHTTPCookie.html#aa07d684586dc8dba4e2eebff7747cee9',1,'HTTPCookie']]],
-  ['_7ehttpformfile_188',['~HTTPFormFile',['../classHTTPFormFile.html#ab9823364035754a1faa28651add897e8',1,'HTTPFormFile']]],
-  ['_7ehttpmultiformdata_189',['~HTTPMultiFormData',['../classHTTPMultiFormData.html#a4b37bbfe2ed6718eeac1cf83b13d5b1a',1,'HTTPMultiFormData']]],
-  ['_7ehttpserver_190',['~HTTPServer',['../classHTTPServer.html#af09066b05417f9a9ce9f1cd8e5ad9e18',1,'HTTPServer']]],
-  ['_7eparser_191',['~Parser',['../classParser.html#a3e658b5917a93a3ef648050d060e3a93',1,'Parser']]]
+  ['what_225',['what',['../classHTTPRequestParser_1_1InvalidRequestLine.html#a9daa7d7fa0c466c486dc7180cf40b0b3',1,'HTTPRequestParser::InvalidRequestLine::what()'],['../classHTTPRequestParser_1_1InvalidRequestHeader.html#a7b096a14841b718b3d3b4f49cc0fb614',1,'HTTPRequestParser::InvalidRequestHeader::what()'],['../classParser_1_1ConfigFileNotFoundException.html#ac48d4f194eaec339b2633c4edc718b26',1,'Parser::ConfigFileNotFoundException::what()'],['../classParser_1_1SyntaxErrorException.html#a2382311ff85c4cb518115e9364f050a9',1,'Parser::SyntaxErrorException::what()'],['../classParser_1_1InvalidDirectiveException.html#a3db9ce38c4052d155201843dca0d5acd',1,'Parser::InvalidDirectiveException::what()'],['../classParser_1_1MissingMandatoryException.html#a2d76f14857c7c3413a299c83e70748d6',1,'Parser::MissingMandatoryException::what()'],['../classParser_1_1ResourceNotFoundException.html#ad58bc186e902364104e0746bb66f0a75',1,'Parser::ResourceNotFoundException::what()']]]
 ];

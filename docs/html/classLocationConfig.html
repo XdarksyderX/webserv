@@ -101,12 +101,18 @@ std::vector&lt; HTTPMethod &gt;&#160;</td><td class="memItemRight" valign="botto
 <tr class="memitem:a5c84236dd97844397435ebcf6cc1246b"><td class="memItemLeft" align="right" valign="top"><a id="a5c84236dd97844397435ebcf6cc1246b"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getIndex</b> () const</td></tr>
 <tr class="separator:a5c84236dd97844397435ebcf6cc1246b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a907e88ee70aae7166cb36c594801c4d5"><td class="memItemLeft" align="right" valign="top"><a id="a907e88ee70aae7166cb36c594801c4d5"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCgiPaths</b> () const</td></tr>
+<tr class="separator:a907e88ee70aae7166cb36c594801c4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52fd0d6ad6c1e96a880d6788018d796a"><td class="memItemLeft" align="right" valign="top"><a id="a52fd0d6ad6c1e96a880d6788018d796a"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCgiExtensions</b> () const</td></tr>
+<tr class="separator:a52fd0d6ad6c1e96a880d6788018d796a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66498e8dd71d810593afd3c08c554f82"><td class="memItemLeft" align="right" valign="top"><a id="a66498e8dd71d810593afd3c08c554f82"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>getAutoindex</b> () const</td></tr>
 <tr class="separator:a66498e8dd71d810593afd3c08c554f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74df1989800c37e6659cb5446c4a8767"><td class="memItemLeft" align="right" valign="top"><a id="a74df1989800c37e6659cb5446c4a8767"></a>
+<tr class="memitem:a757a60aeacb673a8d1f63d52c63dd80e"><td class="memItemLeft" align="right" valign="top"><a id="a757a60aeacb673a8d1f63d52c63dd80e"></a>
 std::map&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCgiInfo</b> () const</td></tr>
-<tr class="separator:a74df1989800c37e6659cb5446c4a8767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a757a60aeacb673a8d1f63d52c63dd80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd609dc90d3e610abd427b0f505f2447"><td class="memItemLeft" align="right" valign="top"><a id="acd609dc90d3e610abd427b0f505f2447"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getUploadPath</b> () const</td></tr>
 <tr class="separator:acd609dc90d3e610abd427b0f505f2447"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,21 +134,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setAutoindex</b> (boo
 <tr class="memitem:a0c401caa50730263dbfa5a07e8c357f9"><td class="memItemLeft" align="right" valign="top"><a id="a0c401caa50730263dbfa5a07e8c357f9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setUploadPath</b> (const std::string &amp;uploadPath)</td></tr>
 <tr class="separator:a0c401caa50730263dbfa5a07e8c357f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a907e88ee70aae7166cb36c594801c4d5"><td class="memItemLeft" align="right" valign="top"><a id="a907e88ee70aae7166cb36c594801c4d5"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCgiPaths</b> () const</td></tr>
-<tr class="separator:a907e88ee70aae7166cb36c594801c4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52fd0d6ad6c1e96a880d6788018d796a"><td class="memItemLeft" align="right" valign="top"><a id="a52fd0d6ad6c1e96a880d6788018d796a"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCgiExtensions</b> () const</td></tr>
-<tr class="separator:a52fd0d6ad6c1e96a880d6788018d796a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83b73939b2cd86ef08814aaaebd6075b"><td class="memItemLeft" align="right" valign="top"><a id="a83b73939b2cd86ef08814aaaebd6075b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCgiPaths</b> (const std::vector&lt; std::string &gt; &amp;cgiPaths)</td></tr>
+<tr class="separator:a83b73939b2cd86ef08814aaaebd6075b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90597c55a624bfd6e79a078c7fe44ca9"><td class="memItemLeft" align="right" valign="top"><a id="a90597c55a624bfd6e79a078c7fe44ca9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCgiExtensions</b> (const std::vector&lt; std::string &gt; &amp;cgiExtensions)</td></tr>
+<tr class="separator:a90597c55a624bfd6e79a078c7fe44ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac07f6a79b02ee68553836a05b326ee35"><td class="memItemLeft" align="right" valign="top"><a id="ac07f6a79b02ee68553836a05b326ee35"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addAllowMethod</b> (HTTPMethod method)</td></tr>
 <tr class="separator:ac07f6a79b02ee68553836a05b326ee35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e78f6db053fe26a55c3ca9e04e123fe"><td class="memItemLeft" align="right" valign="top"><a id="a2e78f6db053fe26a55c3ca9e04e123fe"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addCgiPath</b> (const std::string &amp;interpreterPath)</td></tr>
-<tr class="separator:a2e78f6db053fe26a55c3ca9e04e123fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a455a9ac2d00a9bc5713677d67d89be10"><td class="memItemLeft" align="right" valign="top"><a id="a455a9ac2d00a9bc5713677d67d89be10"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addCgiExtension</b> (const std::string &amp;extension)</td></tr>
-<tr class="separator:a455a9ac2d00a9bc5713677d67d89be10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>

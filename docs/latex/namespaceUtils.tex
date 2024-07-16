@@ -10,10 +10,15 @@ Utility functions to assist with common file and network operations.
 \item 
 std\+::string \mbox{\hyperlink{namespaceUtils_a4c0163fa60350b0910334b77e216f619}{to\+\_\+string}} (int number)
 \begin{DoxyCompactList}\small\item\em Converts an integer to a string. \end{DoxyCompactList}\item 
-std\+::string \mbox{\hyperlink{namespaceUtils_a85ab1e60065924fe1ebaad282d234227}{get\+Extension\+From\+File}} (const std\+::string \&filename)
+std\+::string \mbox{\hyperlink{namespaceUtils_a472ad1de8598ec053aa91cca2f9f00e5}{get\+Extension\+From\+File}} (const std\+::string \&filename, bool with\+Point=true)
 \begin{DoxyCompactList}\small\item\em Extracts the file extension from a filename. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceUtils_af721c59a9c61d380749bf3bba033637f}{clean\+Query\+From\+Path}} (const std\+::string \&uri)
+\begin{DoxyCompactList}\small\item\em Extracts the file path from a uri, substracting the query. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceUtils_a29af978ff9bdce77bf9e2da4631eaa02}\label{namespaceUtils_a29af978ff9bdce77bf9e2da4631eaa02}} 
+std\+::string {\bfseries reduce\+Last\+Node} (const std\+::string \&path)
+\item 
 std\+::string \mbox{\hyperlink{namespaceUtils_aed8daf2d521b9259c9e401643715f342}{get\+File\+Content}} (const std\+::string \&filename)
-\begin{DoxyCompactList}\small\item\em Reads the entire content of a file into a string. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Removes the last node from the given path. \end{DoxyCompactList}\item 
 std\+::string \mbox{\hyperlink{namespaceUtils_a3716f1460538417b14e3058200e5c1c3}{join\+Paths}} (const std\+::string \&path1, const std\+::string \&path2)
 \begin{DoxyCompactList}\small\item\em Concatenates two file path segments into a single path. \end{DoxyCompactList}\item 
 std\+::string \mbox{\hyperlink{namespaceUtils_a5ae26b46059a456310228f38c216c058}{create\+HTMLDirectory\+Listing}} (const std\+::string \&directory, const std\+::string \&path=\char`\"{}\char`\"{})
@@ -46,6 +51,24 @@ std\+::string \mbox{\hyperlink{namespaceUtils_a709fc9d3286a8b90de822055fed9ca88}
 Utility functions to assist with common file and network operations. 
 
 \doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceUtils_af721c59a9c61d380749bf3bba033637f}\label{namespaceUtils_af721c59a9c61d380749bf3bba033637f}} 
+\index{Utils@{Utils}!cleanQueryFromPath@{cleanQueryFromPath}}
+\index{cleanQueryFromPath@{cleanQueryFromPath}!Utils@{Utils}}
+\doxysubsubsection{\texorpdfstring{cleanQueryFromPath()}{cleanQueryFromPath()}}
+{\footnotesize\ttfamily std\+::string Utils\+::clean\+Query\+From\+Path (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{uri }\end{DoxyParamCaption})}
+
+
+
+Extracts the file path from a uri, substracting the query. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & The full uri. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the clean path. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{namespaceUtils_a1462ff6026a5dabf14c3a4e23c44aceb}\label{namespaceUtils_a1462ff6026a5dabf14c3a4e23c44aceb}} 
 \index{Utils@{Utils}!convertFromBase64@{convertFromBase64}}
 \index{convertFromBase64@{convertFromBase64}!Utils@{Utils}}
@@ -177,11 +200,11 @@ True if the file exists, otherwise false.
 \begin{DoxyNote}{Note}
 If the path is a directory, even if it exists, returns false. 
 \end{DoxyNote}
-\mbox{\Hypertarget{namespaceUtils_a85ab1e60065924fe1ebaad282d234227}\label{namespaceUtils_a85ab1e60065924fe1ebaad282d234227}} 
+\mbox{\Hypertarget{namespaceUtils_a472ad1de8598ec053aa91cca2f9f00e5}\label{namespaceUtils_a472ad1de8598ec053aa91cca2f9f00e5}} 
 \index{Utils@{Utils}!getExtensionFromFile@{getExtensionFromFile}}
 \index{getExtensionFromFile@{getExtensionFromFile}!Utils@{Utils}}
 \doxysubsubsection{\texorpdfstring{getExtensionFromFile()}{getExtensionFromFile()}}
-{\footnotesize\ttfamily std\+::string Utils\+::get\+Extension\+From\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily std\+::string Utils\+::get\+Extension\+From\+File (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename,  }\item[{bool}]{with\+Point = {\ttfamily true} }\end{DoxyParamCaption})}
 
 
 
@@ -189,7 +212,9 @@ Extracts the file extension from a filename.
 
 
 \begin{DoxyParams}{Parameters}
-{\em filename} & The full name of the file. \\
+{\em filename} & The full name of the file or the full uri. \\
+\hline
+{\em with\+Point} & If true, the point is included in the extension. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -203,15 +228,15 @@ The extension of the file as a string.
 
 
 
-Reads the entire content of a file into a string. 
+Removes the last node from the given path. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em filename} & The path to the file. \\
+{\em path} & The input file path. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-A string containing all the data in the file. 
+A string with the last node removed from the path. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{namespaceUtils_ae9e19b64e7ae67760c67f21bdee1ca01}\label{namespaceUtils_ae9e19b64e7ae67760c67f21bdee1ca01}} 
 \index{Utils@{Utils}!getNodeName@{getNodeName}}

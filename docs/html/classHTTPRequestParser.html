@@ -88,6 +88,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a63d68bc86ae1741e0e899e7275cd09e8"><td class="memItemLeft" align="right" valign="top">static const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHTTPRequestParser.html#a63d68bc86ae1741e0e899e7275cd09e8">parseQueryString</a> (const std::string &amp;uri)</td></tr>
+<tr class="memdesc:a63d68bc86ae1741e0e899e7275cd09e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the query string if it exist.  <a href="classHTTPRequestParser.html#a63d68bc86ae1741e0e899e7275cd09e8">More...</a><br /></td></tr>
+<tr class="separator:a63d68bc86ae1741e0e899e7275cd09e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f360442bb2a9d904b5abce505b3e3b8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classHTTPRequest.html">HTTPRequest</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHTTPRequestParser.html#a0f360442bb2a9d904b5abce505b3e3b8">parseRequest</a> (const std::string &amp;rawRequest)</td></tr>
 <tr class="memdesc:a0f360442bb2a9d904b5abce505b3e3b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a raw HTTP request string.  <a href="classHTTPRequestParser.html#a0f360442bb2a9d904b5abce505b3e3b8">More...</a><br /></td></tr>
 <tr class="separator:a0f360442bb2a9d904b5abce505b3e3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -96,6 +99,41 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>A parser class that interprets raw HTTP requests. </p>
 <p>This class provides static methods to parse raw HTTP request strings into an <a class="el" href="classHTTPRequest.html" title="Represents an HTTP request.">HTTPRequest</a> object. It processes the request line and headers and populates the <a class="el" href="classHTTPRequest.html" title="Represents an HTTP request.">HTTPRequest</a> object with parsed data. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a63d68bc86ae1741e0e899e7275cd09e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63d68bc86ae1741e0e899e7275cd09e8">&#9670;&nbsp;</a></span>parseQueryString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string HTTPRequestParser::parseQueryString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>uri</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parse the query string if it exist. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>A string representing the request line. </td></tr>
+    <tr><td class="paramname">requestLine</td><td>The query string. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a0f360442bb2a9d904b5abce505b3e3b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f360442bb2a9d904b5abce505b3e3b8">&#9670;&nbsp;</a></span>parseRequest()</h2>
 

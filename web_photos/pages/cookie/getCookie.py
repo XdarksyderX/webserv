@@ -1,54 +1,74 @@
-# #! /usr/bin/python3
-
-# import os
-# from http import cookies
-# # Import modules for CGI handling
-# import cgi, cgitb
-
-# # Create instance of FieldStorage
-# form = cgi.FieldStorage()
-
-# # Get data from fields
-# key = form.getvalue('name')
-# cookie = cookies.SimpleCookie()
-# if 'HTTP_COOKIE' in os.environ:
-#     cookie.load(os.environ["HTTP_COOKIE"])
-# if key in cookie:
-#     print("HTTP/1.1 200 OK")
-#     print("Content-Type: text/plain\r\n")
-#     print("The Value of Cookie", key, "is", cookie[key].value)
-# else:
-#     print("HTTP/1.1 200 OK")
-#     print("Content-Type: text/plain\r\n")
-#     print("Cookie was not found !")
-
-#! /usr/bin/python3
+#!/usr/bin/python3
 
 import os
-from http import cookies
-import cgi, cgitb
+import cgitb
+import sqlite3
 
 # Enable error handling
 cgitb.enable()
 
-# Get the cookies from the HTTP header
-cookie = cookies.SimpleCookie(os.environ.get('HTTP_COOKIE'))
+# Path to the SQLite database file
+db_path = 'database.db'
+
+# Function to initialize the database
+def init_db():
+    conn = sqlite3.connect(db_path)
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS kv_store (
+            cookie TEXT,
+            key TEXT,
+            value TEXT,
+            PRIMARY KEY (cookie, key)
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# Initialize the database
+init_db()
+
+# Load the cookie value directly from HTTP_COOKIE
+if 'HTTP_COOKIE' in os.environ:
+    session = os.environ['HTTP_COOKIE']
+else:
+    print("Content-Type: text/html")
+    print()
+    print("<html>")
+    print("<head>")
+    print("<title>Error</title>")
+    print("</head>")
+    print("<body>")
+    print("<h2>Error: No session cookie found</h2>")
+    print("<a href='/pages/cookie/testCookies.html'>Go back to form</a>")
+    print("</body>")
+    print("</html>")
+    exit()
 
 print("Content-Type: text/html")
-print("\r\n")
+print()
 print("<html>")
 print("<head>")
-print("<title>Cookie Value</title>")
+print("<title>View Cookies</title>")
 print("</head>")
 print("<body>")
-print("<h2>Cookie Value</h2>")
+print("<h2>Stored Cookie Data</h2>")
 
-# Display all cookies
-if cookie:
-    for key in cookie:
-        print(f"<p>{key}: {cookie[key].value}</p>")
+# Retrieve all key-value pairs for the user's session from the database
+conn = sqlite3.connect(db_path)
+c = conn.cursor()
+c.execute('SELECT key, value FROM kv_store WHERE cookie = ?', (session,))
+rows = c.fetchall()
+conn.close()
+
+if rows:
+    print("<table border='1'>")
+    print("<tr><th>Key</th><th>Value</th></tr>")
+    for key, value in rows:
+        print(f"<tr><td>{key}</td><td>{value}</td></tr>")
+    print("</table>")
 else:
-    print("<p>No cookies found</p>")
+    print("<p>No data found for your session.</p>")
 
 print("<a href='/pages/cookie/testCookies.html'>Go back to form</a>")
 print("</body>")
