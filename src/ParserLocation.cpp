@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ParserLocation.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:28:14 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/15 20:30:59 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:30:42 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,9 @@ void Parser::processCgiPathDirective(std::istringstream &iss, LocationConfig &lo
     std::string cgiPath;
     while (iss >> cgiPath)
     {
-        if (!Utils::fileExists(cgiPath))
+        if (!Utils::fileExists(cgiPath)) {
             throw Parser::ResourceNotFoundException();
+        }
         cgiPaths.push_back(cgiPath);
     }
     locationConfig.setCgiPaths(cgiPaths);
@@ -143,6 +144,8 @@ void Parser::processUploadPathDirective(std::istringstream &iss, LocationConfig 
     if (!(iss >> uploadPath))
         throw Parser::InvalidDirectiveException();
     if (!Utils::directoryExists(Utils::joinPaths(serverConfig.getUploadsDirectory(), uploadPath)))
+    {
         throw Parser::ResourceNotFoundException();
+    }
     locationConfig.setUploadPath(uploadPath);
 }

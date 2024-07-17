@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LocationConfig.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 17:20:30 by migarci2          #+#    #+#             */
-/*   Updated: 2024/05/07 20:36:31 by migarci2         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:10:04 by erivero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ class LocationConfig
 		void addAllowMethod(HTTPMethod method);
 
 		/**
-		 * @brief Creates a default LocationConfig object with default values for /.
+		 * @brief Fill a default LocationConfig object with default values for /.
 		 * @return A LocationConfig object with default values.
 		 */
-		static LocationConfig	createDefaultLocation(const ServerConfig &serverConfig);
+		static LocationConfig	fillDefaultLocation(const ServerConfig &serverConfig, const LocationConfig *defaultLocation = NULL);
 
 		friend std::ostream& operator<<(std::ostream& os, const LocationConfig& config);
 };
