@@ -76,7 +76,7 @@ def printLogin():
     print("<label>Password : </label> ")
     print("<input type=\"password\" placeholder=\"Enter Password\" name=\"password\" required>")
     print("<button type=\"submit\">Login</button> ")
-    print("No Account?<a href=\"/register.html\"> Register Here </a> ")
+    print("No Account?<a href=\"/pages/register/register.html\"> Register Here </a> ")
     print("</div> ")
     print("</form>   ")
     print("</body>   ")
