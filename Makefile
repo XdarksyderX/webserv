@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: migarci2 <migarci2@student.42malaga.com    +#+  +:+       +#+         #
+#    By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 16:30:49 by migarci2          #+#    #+#              #
-#    Updated: 2024/06/10 15:17:24 by migarci2         ###   ########.fr        #
+#    Updated: 2024/07/17 15:41:56 by erivero-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,9 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+
+test: $(NAME)
+	@mkdir -p web_photos/uploads/web_uploads
 
 re: fclean all
 
