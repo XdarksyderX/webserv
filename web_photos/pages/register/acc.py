@@ -56,7 +56,7 @@ def printUserMsg(msg):
     print("<body>")
     print("<h1>", msg ,"</h1>")
     print("</body>")
-    print("<a href=\"/login.html\"> Click here to go back to login page </a>")
+    print("<a href=\"/pages/register/register.html\"> Click here to go back to login page </a>")
     print("</html>")
 
 def printLogin():
