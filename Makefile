@@ -6,7 +6,7 @@
 #    By: erivero- <erivero-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/05 16:30:49 by migarci2          #+#    #+#              #
-#    Updated: 2024/07/17 15:41:56 by erivero-         ###   ########.fr        #
+#    Updated: 2024/07/18 09:18:51 by erivero-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 	@echo "webserv compiled"
+	@mkdir -p web_photos/uploads/web_uploads
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(OBJ_DIR)
@@ -46,9 +47,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-
-test: $(NAME)
-	@mkdir -p web_photos/uploads/web_uploads
+	@rm -rf	web_photos/uploads
 
 re: fclean all
 
